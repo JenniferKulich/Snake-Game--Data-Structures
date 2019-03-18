@@ -1,5 +1,8 @@
 March 17:
-   * Downloaded Hinker's startup code
-   * Made a new repository (csc315_sp2019_project3)
-   * Got the startup code compiling and running
-   * Made first commit of the startup code source
+	* Downloaded Hinker's startup code
+	* Made a new repository (csc315_sp2019_project3)
+	* Made first commit of the startup code source
+
+March 18:
+	* Got the new tar file
+	* Got the startup code compiling and running

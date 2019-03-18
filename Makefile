@@ -24,7 +24,7 @@ LIBS = -lglut -lGL -lGLU -lm -lpthread
 all : snake
 
 snake: $(LIBNAME) $(SNAKE_OBJS)
-	$(GCC) -o $@ $(LIBNAME) $(SNAKE_OBJS) $(LIBS) -Wl,-rpath=.
+	$(GCC) -o $@ $(SNAKE_OBJS) $(LIBS) -Wl,-rpath=. $(LIBNAME)
 
 driver: $(LIBNAME) $(DRIVER_OBJS)
 	$(GCC) -o $@ $(LIBNAME) $(DRIVER_OBJS) -Wl,-rpath=.
