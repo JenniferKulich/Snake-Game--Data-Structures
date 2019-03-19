@@ -6,3 +6,5 @@ March 17:
 March 18:
 	* Got the new tar file
 	* Got the startup code compiling and running
+	* Tried messing around with the code. Have code written for the zig-zag
+		pattern- Hamilton patter that just works for even height board 
