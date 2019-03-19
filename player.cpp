@@ -37,26 +37,32 @@ ValidMove Player::makeMove(const Playfield *pf)
    //if there an odd number of rows, do the zig zag thing but skip the row
    //before the food
 
+    //check to see if rows (height) is odd
+    if(PLAYFIELD_HEIGHT % 2 != 0)
+    {
+        return rowsOdd(head.first, head.second, food.first, food.second);
 
+    }
     //check to see if rows (height) is even
    if(PLAYFIELD_HEIGHT % 2 == 0)
    {
-/*
+     /*
+     std::cout << "(" << head.first << " , " << head.second << ")" << std::endl;
      //check to see if snake on top row and not in top left corner
-     if(head.second == 15 && head.first != 0)
+     if(head.second == PLAYFIELD_HEIGHT - 1 && head.first != 0)
        return LEFT;
     //check to see if snake in the bottom row
-    if(head.second == 0  && head.first != 16)
+    if(head.second == 0  && head.first != PLAYFIELD_WIDTH - 1)
       return RIGHT;
      //check to see if in middle of play field
      if(head.first > 0 && head.second > 0)
      {
        //if on spot (--,1), move up
        //if on spot (--,PLAYFIELD_WIDTH), move up
-       if(head.first == 1 || head.first == PLAYFIELD_HEIGHT)
+       if(head.first == 1 || head.first == PLAYFIELD_WIDTH - 1)
        {
          //check to see if it should be moving Left
-         if(head.first == PLAYFIELD_HEIGHT && head.second % 2 != 0)
+         if(head.first == PLAYFIELD_WIDTH - 1 && head.second % 2 != 0)
           return LEFT;
         //check if should be moving right
         if(head.first == 1 && head.second % 2 == 0)
@@ -82,9 +88,16 @@ ValidMove Player::makeMove(const Playfield *pf)
             return RIGHT;
 
       //check to see if the snake is in the bottom right corner
-      if(head.first == 16 && head.second == 0)
-            return UP;
+      if(head.first == PLAYFIELD_WIDTH - 1 && head.second == 0)
+      {
+        std::cout << "Here" << std::endl;
+        return UP;
+      }
+            //return UP;
 */
+//std::cout<<"Before Call." << std::endl;
+//std::cout <<"(" << head.first << " , " << head.second << ")" << std::endl;
+
     return rowsEven(head.first, head.second);
 
    }
@@ -150,23 +163,21 @@ ValidMove Player::rowsEven(int headX, int headY)
   //will go down left side of board and then zig zag up- only works on even
   //number of rows and no obstacles
 
-
-
   //check to see if snake on top row and not in top left corner
-  if(headY == 15 && headX != 0)
+  if(headY == PLAYFIELD_HEIGHT - 1 && headX != 0)
     return LEFT;
  //check to see if snake in the bottom row
- if(headY == 0  && headX != 16)
+ if(headY == 0  && headX != PLAYFIELD_WIDTH - 1)
    return RIGHT;
   //check to see if in middle of play field
   if(headX > 0 && headY > 0)
   {
     //if on spot (--,1), move up
     //if on spot (--,PLAYFIELD_WIDTH), move up
-    if(headX == 1 || headX == PLAYFIELD_HEIGHT)
+    if(headX == 1 || headX == PLAYFIELD_WIDTH - 1)
     {
       //check to see if it should be moving Left
-      if(headX == PLAYFIELD_HEIGHT && headY % 2 != 0)
+      if(headX == PLAYFIELD_WIDTH - 1 && headY % 2 != 0)
        return LEFT;
      //check if should be moving right
      if(headX == 1 && headY % 2 == 0)
@@ -192,7 +203,19 @@ ValidMove Player::rowsEven(int headX, int headY)
          return RIGHT;
 
    //check to see if the snake is in the bottom right corner
-   if(headX == 16 && headY == 0)
+   if(headX == PLAYFIELD_WIDTH - 1 && headY == 0)
          return UP;
+}
+
+
+
+ValidMove Player::rowsOdd(int headX, int headY, int foodX, int foodY)
+{
+
+
+    //check to see if the food isn't on an outside edge. If it is, we'll
+    //get it on the pass around, but the second to top row
+  //  if(foodX )
+
 
 }
