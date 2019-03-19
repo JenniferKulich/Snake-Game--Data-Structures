@@ -9,6 +9,8 @@ public:
    Player ();
    ValidMove makeMove(const Playfield *);
 private:
+  ValidMove rowsEven(int headX, int headY);
+
 };
 
 #endif
