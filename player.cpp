@@ -211,11 +211,65 @@ ValidMove Player::rowsEven(int headX, int headY)
 
 ValidMove Player::rowsOdd(int headX, int headY, int foodX, int foodY)
 {
+  //check to see if snake on top row and not in top left corner
+  if(headY == PLAYFIELD_HEIGHT - 1 && headX != 0)
+    return LEFT;
+ //check to see if snake in the bottom row
+ if(headY == 0  && headX != PLAYFIELD_WIDTH - 1)
+   return RIGHT;
+  //check to see if in middle of play field
+  if(headX > 0 && headY > 0)
+  {
+    //if on spot (--,1), move up
+    //if on spot (--,PLAYFIELD_WIDTH), move up
+    if(headX == 1 || headX == PLAYFIELD_WIDTH - 1)
+    {
+
+      //if there's food in second from top row, skip the fourth from top
+      if(foodY == PLAYFIELD_HEIGHT - 2 && headY == PLAYFIELD_HEIGHT - 4)
+        return UP;
+
+      //if food isn't in second from top and head there, skip it
+      if(foodY != PLAYFIELD_HEIGHT - 2 && headY == PLAYFIELD_HEIGHT - 2)
+        return UP;
+      //check to see if it should be moving Left
+      if(headX == PLAYFIELD_WIDTH - 1 && headY % 2 != 0)
+       return LEFT;
+     //check if should be moving right
+     if(headX == 1 && headY % 2 == 0)
+       return RIGHT;
+      return UP;
+    }
+
+    //if on an odd row, be moving left
+    if(headY % 2 != 0)
+      return LEFT;
+    //if on even row, be moving right
+    if(headY % 2 == 0)
+      return RIGHT;
+  }
+
+    //start  by moving to top left corner
+    //check if starting on left side
+    if(headX == 0 && headY > 0)
+         return DOWN;
+
+   //check to see if the snake is in the bottom left corner
+    if(headX == 0 && headY == 0)
+         return RIGHT;
+
+   //check to see if the snake is in the bottom right corner
+   if(headX == PLAYFIELD_WIDTH - 1 && headY == 0)
+         return UP;
 
 
-    //check to see if the food isn't on an outside edge. If it is, we'll
+/*
+    //check to see if the food isn't on an outside edge or top edge. If it is, we'll
     //get it on the pass around, but the second to top row
-  //  if(foodX )
+    if(foodX == 0 || foodX == PLAYFIELD_WIDTH - 1 || foodY == PLAYFIELD_HEIGHT - 1)
+    {
 
+    }
+*/
 
 }

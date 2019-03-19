@@ -1,10 +1,15 @@
-March 17:
+March 17 (Sunday):
 	* Downloaded Hinker's startup code
 	* Made a new repository (csc315_sp2019_project3)
 	* Made first commit of the startup code source
 
-March 18:
+March 18 (Monday):
 	* Got the new tar file
 	* Got the startup code compiling and running
 	* Tried messing around with the code. Have code written for the zig-zag
-		pattern- Hamilton patter that just works for even height board 
+		pattern- Hamilton patter that just works for even height board
+	* Created a zig-zag pattern for an odd board. Works pretty well and long as
+		there aren't a lot of blocks in the second to top row.
+	* I know I could condense my code a lot more, but I know I can't keep using
+		this strategy- I only used it to get used to the code base and how things
+		worked. Works well enough for checkpoint 1.
