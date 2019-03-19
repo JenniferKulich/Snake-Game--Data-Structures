@@ -13,3 +13,7 @@ March 18 (Monday):
 	* I know I could condense my code a lot more, but I know I can't keep using
 		this strategy- I only used it to get used to the code base and how things
 		worked. Works well enough for checkpoint 1.
+
+March 19 (Tuesday):
+	* Cleaned up the code I wasn't using
+	* Waiting to change strategy until we go over more stuff in class
