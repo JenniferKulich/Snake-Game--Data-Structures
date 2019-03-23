@@ -17,3 +17,8 @@ March 18 (Monday):
 March 19 (Tuesday):
 	* Cleaned up the code I wasn't using
 	* Waiting to change strategy until we go over more stuff in class
+
+March 23 (Saturday): 
+	* fixed the driver issue 
+	* ran the average score
+	*going to try to implement a graph
