@@ -28,3 +28,7 @@ March 24 (Sunday)
 
 March 25 (Monday)
 	* Added code for BFS that we looked at in class so I can possibly use it later
+	* Tried using the BFS class from in class to make sure I could implement it
+	* Not quite sure how to be able to use the path list in order to make the
+	  moves - I think I could create a constant list in the player class, but I'm
+		not sure. I'll be asking Hinker tomorrow

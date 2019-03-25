@@ -23,6 +23,34 @@ ValidMove Player::makeMove(const Playfield *pf)
    std::pair<int, int> head = getLocation(grid, HEAD_VALUE);
    std::pair<int, int> food = getLocation(grid, FOOD_VALUE);
 
+//try bfs
+  /*
+  BFSPath(Graph *G, int s);
+  void bfs(Graph *G, int s);
+  bool hasPath(int v);
+  std::list<int> PathTo(int v);
+  int Distance(int v);
+
+  */
+
+  //calculate in the one-d array where the head is at
+  //index = row * width + column
+  //int index = (head.first * PLAYFIELD_WIDTH) + head.second;
+/*
+  int headspot =(head.first * PLAYFIELD_WIDTH) + head.second;
+  int foodspot = (food.first * PLAYFIELD_WIDTH) + food.second;
+  //construct BFS
+  BFSPaths path(grid, headspot);
+  //get the list of spots which is the path to the food
+  std::list<int>path = PathTo(foodspot);
+  //go through the list and determine what moves to make to get there
+*/
+  /* Can I create a constant list in the class that will hold the path? */
+
+
+
+
+
    //just trying to move the snake
    //return DOWN;
 
