@@ -24,4 +24,7 @@ March 23 (Saturday):
 	* going to try to implement a graph
 
 March 24 (Sunday)
-	* Add the graph class from the homework. 
+	* Add the graph class from the homework.
+
+March 25 (Monday)
+	* Added code for BFS that we looked at in class so I can possibly use it later
