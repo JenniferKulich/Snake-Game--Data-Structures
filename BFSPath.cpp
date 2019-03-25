@@ -15,7 +15,7 @@ std::list<int> BFSPaths::pathTo(int v)
   std::list<int>path;
   if(!hasPath(v))
     return path;
-  for(int x = v; x != s; x = infor[x].prev)
+  for(int x = v; x != s; x = info[x].prev)
     path.push_front(x);
   path.push_front(s);
   return path;
@@ -31,7 +31,7 @@ void BFSPaths::bfs(Graph *G, int s)
   {
     int v = frontier.front();
     frontier.pop();
-    for(int w : G->adg(v))
+    for(int w : G->adj(v))
     {
       if(!info[w].marked)
       {
