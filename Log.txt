@@ -18,7 +18,10 @@ March 19 (Tuesday):
 	* Cleaned up the code I wasn't using
 	* Waiting to change strategy until we go over more stuff in class
 
-March 23 (Saturday): 
-	* fixed the driver issue 
+March 23 (Saturday):
+	* fixed the driver issue
 	* ran the average score
-	*going to try to implement a graph
+	* going to try to implement a graph
+
+March 24 (Sunday)
+	* Add the graph class from the homework. 
