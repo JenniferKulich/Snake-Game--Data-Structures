@@ -2,6 +2,8 @@
 #define __PLAYER_H
 #include <list>
 #include "playfield.h"
+#include "BFSPath.h"
+
 
 class Player
 {
