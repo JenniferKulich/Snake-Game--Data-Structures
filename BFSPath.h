@@ -20,9 +20,9 @@ class BFSPaths
   int s; //start node
 
 public:
-    BFSPaths(/*Graph *G*/ const int *G, int s);
+    BFSPaths(Graph *G, int s);
 
-    void bfs(/*Graph *G*/ const int *G, int s);
+    void bfs(Graph *G, int s);
     bool hasPath(int v);
     std::list<int> PathTo(int v);
     int Distance(int v);

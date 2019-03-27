@@ -39,3 +39,6 @@ March 26 (Tuesday)
 		paths to the food while taking the shortest path. However, this will avoid
 		obstacles and will hopefully take a smart-ish path. I may be able to use
 		this later as part of my final algorithm.
+
+March 27 (Wednesday)
+	* Added a graph constructor to the BFS code- that's what was wrong yesterday

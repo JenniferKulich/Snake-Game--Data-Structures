@@ -1,6 +1,6 @@
 #include "BFSPath.h"
 
-BFSPaths::BFSPaths(/*Graphs *G*/ const int *G, int s)
+BFSPaths::BFSPaths(Graph *G, int s)
 {
   bfs(G,s);
 }
@@ -21,7 +21,7 @@ std::list<int> BFSPaths::PathTo(int v)
   return path;
 }
 
-void BFSPaths::bfs(/*Graph *G*/ const int *G, int s)
+void BFSPaths::bfs(Graph *G, int s)
 {
   std::queue<int> frontier;
   frontier.push(s);

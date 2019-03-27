@@ -32,15 +32,25 @@ ValidMove Player::makeMove(const Playfield *pf)
   int Distance(int v);
 
   */
+//   Graph(const int *grid, int width, int height);
 
+
+//TODO:
+    //construct a graph!!!!!!
+
+/*
   //calculate in the one-d array where the head is at
   //index = row * width + column
   //int index = (head.first * PLAYFIELD_WIDTH) + head.second;
   int nextIndex = 0;
   int headSpot =(head.first * PLAYFIELD_WIDTH) + head.second;
   int foodSpot = (food.first * PLAYFIELD_WIDTH) + food.second;
+
+  //construct a graph for BFS
+  Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
   //construct BFS
-  BFSPaths path(grid, headSpot);
+  BFSPaths path(&graph, headSpot);
+
   //get the list of spots which is the path to the food
   std::list<int>pathToFood = path.PathTo(foodSpot);
   //go through the first item in the list and determine where to move to
@@ -68,6 +78,9 @@ ValidMove Player::makeMove(const Playfield *pf)
    //just trying to move the snake
    //return DOWN;
 
+*/
+
+
    //int dX = head.first - food.first;
    //int dY = head.second - food.second;
 
@@ -78,7 +91,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
    //if there an odd number of rows, do the zig zag thing but skip the row
    //before the food
-/*
+
     //check to see if rows (height) is odd
     if(PLAYFIELD_HEIGHT % 2 != 0)
         return rowsOdd(head.first, head.second, food.first, food.second);
@@ -87,9 +100,10 @@ ValidMove Player::makeMove(const Playfield *pf)
    if(PLAYFIELD_HEIGHT % 2 == 0)
     return rowsEven(head.first, head.second);
 
-*/
+
   //#define PLAYFIELD_WIDTH 17
   //#define PLAYFIELD_HEIGHT 15
+
 
 }
 
