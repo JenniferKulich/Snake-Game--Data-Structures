@@ -23,6 +23,7 @@ std::list<int> BFSPaths::PathTo(int v)
 
 void BFSPaths::bfs(Graph *G, int s)
 {
+
   std::queue<int> frontier;
   frontier.push(s);
   info[s].marked = true;

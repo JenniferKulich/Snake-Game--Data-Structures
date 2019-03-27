@@ -42,3 +42,7 @@ March 26 (Tuesday)
 
 March 27 (Wednesday)
 	* Added a graph constructor to the BFS code- that's what was wrong yesterday
+	* Rewrote the graph constructor to add the edges correctly. Still working out
+		the bugs for BFS.
+	* I may possibly write a more simple path finding code for Friday if I don't
+		get very far with BFS. 

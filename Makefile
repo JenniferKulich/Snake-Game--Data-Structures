@@ -14,7 +14,7 @@ INCLUDE_FILES = game.h graphics.h player.h event.h playfield.h util.h
 GCC = g++
 
 # Compiler flags
-CXXFLAGS = -fPIC -Wall -O3 -std=c++11
+CXXFLAGS = -fPIC -Wall -g -std=c++11
 LIBS = -lglut -lGL -lGLU -lm -lpthread
 
 .PHONY: clean tar

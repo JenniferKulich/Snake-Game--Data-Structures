@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <set>
+#include "playfield.h"
 typedef std::map<int, std::set<int> > map_t;
 
 class Graph
