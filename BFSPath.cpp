@@ -15,6 +15,7 @@ std::list<int> BFSPaths::PathTo(int v)
   std::list<int>path;
   if(!hasPath(v))
     return path;
+  //GETS HUNG UP HERE
   for(int x = v; x != s; x = info[x].prev)
     path.push_front(x);
   path.push_front(s);
@@ -23,7 +24,6 @@ std::list<int> BFSPaths::PathTo(int v)
 
 void BFSPaths::bfs(Graph *G, int s)
 {
-
   std::queue<int> frontier;
   frontier.push(s);
   info[s].marked = true;

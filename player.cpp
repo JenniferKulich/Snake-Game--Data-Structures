@@ -37,7 +37,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
 //TODO:
     //construct a graph!!!!!!
-/*
+
     std::cout<< "Made it here 1" << std::endl << std::endl;
 
   //calculate in the one-d array where the head is at
@@ -88,9 +88,9 @@ ValidMove Player::makeMove(const Playfield *pf)
 
    //just trying to move the snake
    //return DOWN;
-*/
 
 
+/*
 
    //int dX = head.first - food.first;
    //int dY = head.second - food.second;
@@ -114,7 +114,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
   //#define PLAYFIELD_WIDTH 17
   //#define PLAYFIELD_HEIGHT 15
-
+*/
 
 }
 
