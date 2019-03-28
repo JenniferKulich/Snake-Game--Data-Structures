@@ -35,8 +35,6 @@ ValidMove Player::makeMove(const Playfield *pf)
   int nextIndex = 0;
   int headSpot =(head.second * PLAYFIELD_WIDTH) + head.first;
   int foodSpot = (food.second * PLAYFIELD_WIDTH) + food.first;
-  std::cout << "Headspot: " << headSpot << std::endl;
-  std::cout << "FoodSpot: " << foodSpot << std::endl;
 
   //construct a graph for BFS
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
@@ -48,37 +46,26 @@ ValidMove Player::makeMove(const Playfield *pf)
 //  std::cout << "Main 2." << std::endl;
   //get the list of spots which is the path to the food
   std::list<int>pathToFood = path.PathTo(foodSpot);
-  std::cout << "recalculated path" << std::endl;
 
   //go through the first item in the list and determine where to move to
   nextIndex = pathToFood.front();
 
   //calculate how this index relates to the head index
   //this will the be index for moving left
+  /*
   std::cout << "Headspot: " << headSpot << std::endl;
   std::cout << "FoodSpot: " << foodSpot << std::endl;
   std::cout << "nexIndex: " << nextIndex << std::endl;
+  */
   //check if the headspot is right next to the foodspot
   if(foodSpot == headSpot - 1)
-  {
-    std::cout << "NOM" << std::endl;
     return LEFT;
-  }
   else if(foodSpot == headSpot + 1)
-  {
-    std::cout << "NOM" << std::endl;
     return RIGHT;
-  }
    else if(foodSpot == headSpot + PLAYFIELD_WIDTH)
-   {
-     std::cout << "NOM" << std::endl;
      return UP;
-   }
   else if(foodSpot == headSpot - PLAYFIELD_WIDTH)
-  {
-    std::cout << "NOM" << std::endl;
     return DOWN;
-  }
   else if(nextIndex == headSpot - 1)
     return LEFT;
   //this will be index for moving right
@@ -91,11 +78,10 @@ ValidMove Player::makeMove(const Playfield *pf)
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
     return UP;
 
-  std::cout << "Done" << std::endl << std::endl;
 
 
     //if can't do anything, just go down
-    return DOWN;
+    return NONE;
 
 
    //just trying to move the snake

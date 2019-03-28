@@ -56,5 +56,8 @@ March 28 (Thursday)
 	* I'm thinking of doing something like a BFS/DFS combination. This would help
 		the snake not trap itself, and if it does, it'll move around until a
 		possible path is cleared.
-	* BFS now runs except it will seg fault randomly.
-	* Averages around 26 or 27 with and without obstacles. 
+	* BFS now runs except it will seg fault randomly- 1 to 4 times per 100 rounds.
+	* Averages around 30 to 35 with and without obstacles.
+	* The snake will run into itself if it thinks there is a path, so I'll have
+		to make sure that it doesn't think that it's a path.
+	* Will need to add a loitering algorithm if there is no path to the food.
