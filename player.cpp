@@ -24,21 +24,10 @@ ValidMove Player::makeMove(const Playfield *pf)
    std::pair<int, int> food = getLocation(grid, FOOD_VALUE);
 
 //try bfs
-  /*
-  BFSPath(Graph *G, int s);
-  void bfs(Graph *G, int s);
-  bool hasPath(int v);
-  std::list<int> PathTo(int v);
-  int Distance(int v);
-
-  */
-//   Graph(const int *grid, int width, int height);
 
 
-//TODO:
-    //construct a graph!!!!!!
 
-    std::cout<< "Made it here 1" << std::endl << std::endl;
+
 
   //calculate in the one-d array where the head is at
   //index = row * width + column
@@ -46,30 +35,27 @@ ValidMove Player::makeMove(const Playfield *pf)
   int nextIndex = 0;
   int headSpot =(head.second * PLAYFIELD_WIDTH) + head.first;
   int foodSpot = (food.second * PLAYFIELD_WIDTH) + food.first;
-  std::cout<< "Made it here 2" << std::endl << std::endl;
 
   //construct a graph for BFS
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
-  std::cout<< "Made it here 3" << std::endl << std::endl;
 
   //construct BFS
   BFSPaths path(&graph, headSpot);
-  std::cout<< "Made it here 4" << std::endl << std::endl;
 
 
   //get the list of spots which is the path to the food
   std::list<int>pathToFood = path.PathTo(foodSpot);
-  std::cout<< "Made it here 5" << std::endl << std::endl;
 
   //go through the first item in the list and determine where to move to
   nextIndex = pathToFood.front();
-  std::cout<< "Made it here 6" << std::endl << std::endl;
 
   //calculate how this index relates to the head index
   //this will the be index for moving left
-  std::cout<< "Made it here 7" << std::endl << std::endl;
+  std::cout << "Headspot: " << headSpot << std::endl;
+  std::cout << "FoodSpot: " << foodSpot << std::endl;
+  std::cout << "nexIndex: " << nextIndex << std::endl;
   if(nextIndex == headSpot - 1)
-      return LEFT;
+    return LEFT;
   //this will be index for moving right
   if(nextIndex == headSpot + 1)
     return RIGHT;
@@ -80,6 +66,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   if(nextIndex == ((head.first * PLAYFIELD_WIDTH) + (head.second - 1)))
     return DOWN;
 
+  std::cout << "Done" << std::endl << std::endl;
 
 
     //if can't do anything, just go down

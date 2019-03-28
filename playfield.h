@@ -18,8 +18,8 @@ enum ValidMove {NONE, LEFT, RIGHT, UP, DOWN};
 
 const std::string MoveNames[] = {"None", "Left", "Right", "Up", "Down"};
 
-#define PLAYFIELD_WIDTH 3
-#define PLAYFIELD_HEIGHT 3
+#define PLAYFIELD_WIDTH 17
+#define PLAYFIELD_HEIGHT 15
 #define CLEAR_VALUE 0
 #define TAIL_VALUE 1
 #define HEAD_VALUE 2

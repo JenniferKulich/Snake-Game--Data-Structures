@@ -45,4 +45,7 @@ March 27 (Wednesday)
 	* Rewrote the graph constructor to add the edges correctly. Still working out
 		the bugs for BFS.
 	* I may possibly write a more simple path finding code for Friday if I don't
-		get very far with BFS. 
+		get very far with BFS.
+	* Dalton helped look at my code and determine that my BFS constructor wasn't
+		actually using the headSpot number, so I had to initialize it
+	* 

@@ -16,21 +16,11 @@ std::list<int> BFSPaths::PathTo(int v)
   std::list<int>path;
   if(!hasPath(v))
     return path;
-    std::cout << "PathTo 1" << std::endl;
-  //GETS HUNG UP HERE
   for(int x = v; x != s; x = info[x].prev)
-  {
-    std::cout<< std::endl <<std::endl;
-    std::cout << "x: " << x << std::endl;
-    std::cout << "s: " << s << std::endl;
-    std::cout << "v: " << v <<std::endl;
-    std::cout << "info[x].prev: " << info[x].prev << std::endl;
-    path.push_front(x);
-    std::cout << "pushed!" << std::endl;
 
-  }
-  std::cout << "PathTo 2" << std::endl;
-  path.push_front(s);
+    path.push_front(x);
+    //we don't want the head because we only want the places to move to
+  //path.push_front(s);
   return path;
 }
 

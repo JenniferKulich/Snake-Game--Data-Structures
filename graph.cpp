@@ -140,7 +140,7 @@ void Graph::addEdge(int one, int two)
   if(vertices[one].find(two) == vertices[one].end())
   {
     numEdges++;
-    std::cout << "adding edge[" << one << ", " << two << "]\n" ;
+    //std::cout << "adding edge[" << one << ", " << two << "]\n" ;
     (vertices[one]).insert(two);
     (vertices[two]).insert(one);
     numVertices = vertices.size();
