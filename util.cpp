@@ -37,7 +37,7 @@ void updateScore(Game *game)
 void utilityCentral(Event *event)
 {
    static Player *player = new Player();
-   static Playfield *playfield = new Playfield(false); // true means add obj
+   static Playfield *playfield = new Playfield(true); // true means add obj
    static Game *game = new Game(player, playfield);
 
    if (game->isGameOver()) 
