@@ -45,6 +45,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
   //get the list of spots which is the path to the food
   std::list<int>pathToFood = path.PathTo(foodSpot);
+  std::cout << "recalculated path" << std::endl;
 
   //go through the first item in the list and determine where to move to
   nextIndex = pathToFood.front();
@@ -57,23 +58,23 @@ ValidMove Player::makeMove(const Playfield *pf)
   //check if the headspot is right next to the foodspot
   if(foodSpot == headSpot - 1)
     return LEFT;
-  if(foodSpot == headSpot + 1)
+  else if(foodSpot == headSpot + 1)
     return RIGHT;
-  if(foodSpot == ((head.first * PLAYFIELD_WIDTH) + (head.second + 1)))
+   else if(foodSpot == ((head.second * PLAYFIELD_WIDTH) + (head.first - 1)))
     return UP;
-  if(foodSpot == ((head.first * PLAYFIELD_WIDTH) + (head.second - 1)))
+  else if(foodSpot == ((head.second * PLAYFIELD_WIDTH) + (head.first + 1)))
     return DOWN;
-  if(nextIndex == headSpot - 1)
+  else if(nextIndex == headSpot - 1)
     return LEFT;
   //this will be index for moving right
-  if(nextIndex == headSpot + 1)
+  else if(nextIndex == headSpot + 1)
     return RIGHT;
   //this will be the index for moving up
-  if(nextIndex == ((head.first * PLAYFIELD_WIDTH) + (head.second + 1)))
-    return UP;
-  //this will be the index for moving down
-  if(nextIndex == ((head.first * PLAYFIELD_WIDTH) + (head.second - 1)))
+  else if(nextIndex == ((head.second * PLAYFIELD_WIDTH) + (head.first + 1)))
     return DOWN;
+  //this will be the index for moving down
+  else if(nextIndex == ((head.second * PLAYFIELD_WIDTH) + (head.first - 1)))
+    return UP;
 
   std::cout << "Done" << std::endl << std::endl;
 
