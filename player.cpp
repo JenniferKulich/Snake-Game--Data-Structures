@@ -57,23 +57,35 @@ ValidMove Player::makeMove(const Playfield *pf)
   std::cout << "nexIndex: " << nextIndex << std::endl;
   //check if the headspot is right next to the foodspot
   if(foodSpot == headSpot - 1)
+  {
+    std::cout << "NOM" << std::endl;
     return LEFT;
+  }
   else if(foodSpot == headSpot + 1)
+  {
+    std::cout << "NOM" << std::endl;
     return RIGHT;
-   else if(foodSpot == ((head.second * PLAYFIELD_WIDTH) + (head.first - 1)))
-    return UP;
-  else if(foodSpot == ((head.second * PLAYFIELD_WIDTH) + (head.first + 1)))
+  }
+   else if(foodSpot == headSpot + PLAYFIELD_WIDTH)
+   {
+     std::cout << "NOM" << std::endl;
+     return UP;
+   }
+  else if(foodSpot == headSpot - PLAYFIELD_WIDTH)
+  {
+    std::cout << "NOM" << std::endl;
     return DOWN;
+  }
   else if(nextIndex == headSpot - 1)
     return LEFT;
   //this will be index for moving right
   else if(nextIndex == headSpot + 1)
     return RIGHT;
   //this will be the index for moving up
-  else if(nextIndex == ((head.second * PLAYFIELD_WIDTH) + (head.first + 1)))
+  else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
     return DOWN;
   //this will be the index for moving down
-  else if(nextIndex == ((head.second * PLAYFIELD_WIDTH) + (head.first - 1)))
+  else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
     return UP;
 
   std::cout << "Done" << std::endl << std::endl;

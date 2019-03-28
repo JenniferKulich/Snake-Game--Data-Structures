@@ -48,4 +48,11 @@ March 27 (Wednesday)
 		get very far with BFS.
 	* Dalton helped look at my code and determine that my BFS constructor wasn't
 		actually using the headSpot number, so I had to initialize it
-	* 
+
+March 28 (Thursday)
+	* For some reason, there was a wrong calculation for the movement, and I
+		realized I had already done a index calculation and I could just use that.
+		Now the snake just runs into itself.
+	* I'm thinking of doing something like a BFS/DFS combination. This would help
+		the snake not trap itself, and if it does, it'll move around until a
+		possible path is cleared.
