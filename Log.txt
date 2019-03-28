@@ -57,3 +57,4 @@ March 28 (Thursday)
 		the snake not trap itself, and if it does, it'll move around until a
 		possible path is cleared.
 	* BFS now runs except it will seg fault randomly.
+	* Averages around 26 or 27 with and without obstacles. 

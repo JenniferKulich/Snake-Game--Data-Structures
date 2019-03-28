@@ -15,7 +15,11 @@ std::list<int> BFSPaths::PathTo(int v)
 {
   std::list<int>path;
   if(!hasPath(v))
+  {
+    std::cout << "NO PATH" << std::endl;
     return path;
+  }
+    //return path;
   for(int x = v; x != s; x = info[x].prev)
 
     path.push_front(x);

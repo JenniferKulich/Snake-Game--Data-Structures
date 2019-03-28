@@ -35,14 +35,17 @@ ValidMove Player::makeMove(const Playfield *pf)
   int nextIndex = 0;
   int headSpot =(head.second * PLAYFIELD_WIDTH) + head.first;
   int foodSpot = (food.second * PLAYFIELD_WIDTH) + food.first;
+  std::cout << "Headspot: " << headSpot << std::endl;
+  std::cout << "FoodSpot: " << foodSpot << std::endl;
 
   //construct a graph for BFS
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
+//  std::cout << "Main 1." << std::endl;
 
   //construct BFS
   BFSPaths path(&graph, headSpot);
 
-
+//  std::cout << "Main 2." << std::endl;
   //get the list of spots which is the path to the food
   std::list<int>pathToFood = path.PathTo(foodSpot);
   std::cout << "recalculated path" << std::endl;

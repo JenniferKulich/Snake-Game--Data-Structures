@@ -8,7 +8,7 @@ void keyboard(unsigned char key, int x, int y)
 void display()
 {
 // glClear(GL_COLOR_BUFFER_BIT);
-   utilityCentral(new DisplayEvent); 
+   utilityCentral(new DisplayEvent);
 // glutSwapBuffers();
 }
 
@@ -40,9 +40,9 @@ void utilityCentral(Event *event)
    static Playfield *playfield = new Playfield(true); // true means add obj
    static Game *game = new Game(player, playfield);
 
-   if (game->isGameOver()) 
+   if (game->isGameOver())
    {
-      std::cout << "GAME OVER!" << std::endl ; 
+      std::cout << "GAME OVER!" << std::endl ;
       std::cout << "Final Score: " << game->getScore() << std::endl;
       delete game;
       glutLeaveMainLoop();
