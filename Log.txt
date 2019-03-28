@@ -56,3 +56,4 @@ March 28 (Thursday)
 	* I'm thinking of doing something like a BFS/DFS combination. This would help
 		the snake not trap itself, and if it does, it'll move around until a
 		possible path is cleared.
+	* BFS now runs except it will seg fault randomly.
