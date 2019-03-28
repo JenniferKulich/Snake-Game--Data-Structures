@@ -54,6 +54,15 @@ ValidMove Player::makeMove(const Playfield *pf)
   std::cout << "Headspot: " << headSpot << std::endl;
   std::cout << "FoodSpot: " << foodSpot << std::endl;
   std::cout << "nexIndex: " << nextIndex << std::endl;
+  //check if the headspot is right next to the foodspot
+  if(foodSpot == headSpot - 1)
+    return LEFT;
+  if(foodSpot == headSpot + 1)
+    return RIGHT;
+  if(foodSpot == ((head.first * PLAYFIELD_WIDTH) + (head.second + 1)))
+    return UP;
+  if(foodSpot == ((head.first * PLAYFIELD_WIDTH) + (head.second - 1)))
+    return DOWN;
   if(nextIndex == headSpot - 1)
     return LEFT;
   //this will be index for moving right
