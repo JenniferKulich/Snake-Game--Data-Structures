@@ -3,6 +3,7 @@
 #include <list>
 #include "playfield.h"
 #include "BFSPath.h"
+#include "DFSPath.h"
 
 
 class Player

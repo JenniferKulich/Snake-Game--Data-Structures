@@ -23,12 +23,6 @@ ValidMove Player::makeMove(const Playfield *pf)
    std::pair<int, int> head = getLocation(grid, HEAD_VALUE);
    std::pair<int, int> food = getLocation(grid, FOOD_VALUE);
 
-//try bfs
-
-
-
-
-
   //calculate in the one-d array where the head is at
   //index = row * width + column
   //int index = (head.first * PLAYFIELD_WIDTH) + head.second;
@@ -36,16 +30,24 @@ ValidMove Player::makeMove(const Playfield *pf)
   int headSpot =(head.second * PLAYFIELD_WIDTH) + head.first;
   int foodSpot = (food.second * PLAYFIELD_WIDTH) + food.first;
 
-  //construct a graph for BFS
+
+  //construct a graph
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
-//  std::cout << "Main 1." << std::endl;
 
   //construct BFS
-  BFSPaths path(&graph, headSpot);
+  BFSPaths BFSpath(&graph, headSpot);
 
-//  std::cout << "Main 2." << std::endl;
   //get the list of spots which is the path to the food
-  std::list<int>pathToFood = path.PathTo(foodSpot);
+  std::list<int>pathToFood = BFSpath.PathTo(foodSpot);
+
+
+  //check if there is a path
+  //if there's not a path, get the DFS
+  if(!BFSpath.hasPath(foodSpot))
+  {
+    DFSPaths DFSpath(&graph, headSpot);
+    pathToFood = DFSpath.PathTo(foodSpot);
+  }
 
   //go through the first item in the list and determine where to move to
   nextIndex = pathToFood.front();

@@ -1,6 +1,6 @@
 LIBNAME = libPlayer.so
-LIB_SRC = player.cpp graph.cpp BFSPath.cpp
-DRIVER_SRC = driver.cpp game.cpp playfield.cpp player.cpp graph.cpp BFSPath.cpp
+LIB_SRC = player.cpp graph.cpp BFSPath.cpp DFSPath.cpp
+DRIVER_SRC = driver.cpp game.cpp playfield.cpp player.cpp graph.cpp BFSPath.cpp DFSPath.cpp
 
 SNAKE_SRC = main.cpp event.cpp game.cpp graphics.cpp playfield.cpp util.cpp
 
