@@ -72,4 +72,12 @@ April 1 (Monday)
 	* For when there is no path to the food, I may try findind a path to the
 		tail and go there in hopes on opening up a way to get to the food.
 	* I'm going to try implementing DFS for when the snake would trap itself but
-		make the target its tail. 
+		make the target its tail.
+	* Got DFS working, I'm pretty sure. I ran the driver for the obstacle map,
+		and my average is 37 with a max of 73, so I assume since my average went up,
+		the DFS is working.
+	* I'm trying to think how a weighted graph could possibly be implemented. I
+		found an implementation where it weighted the adjacent tiles based on how
+		far they were from the food tile. I may try something like this once we go
+		over weighted graphs more.
+		Here's the video for it: https://www.youtube.com/watch?v=-L-WgKMFuhE
