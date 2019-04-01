@@ -61,3 +61,15 @@ March 28 (Thursday)
 	* The snake will run into itself if it thinks there is a path, so I'll have
 		to make sure that it doesn't think that it's a path.
 	* Will need to add a loitering algorithm if there is no path to the food.
+
+April 1 (Monday)
+	* Had a busy weekend and wasn't able to work on the code at all
+	* Should add a check to make sure snake isn't trapping itself. I'll probably
+		add some check to make sure it would be able to find its tail again based on
+		the path. If a path cannot be found, it'll move around in a smart random
+		pattern. I had seen Dalton's move in a zig-zag sort of patter, so that might
+		be an option. Either that, or do something like a DFS move.
+	* For when there is no path to the food, I may try findind a path to the
+		tail and go there in hopes on opening up a way to get to the food.
+	* I'm going to try implementing DFS for when the snake would trap itself but
+		make the target its tail. 

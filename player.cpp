@@ -58,15 +58,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   std::cout << "nexIndex: " << nextIndex << std::endl;
   */
   //check if the headspot is right next to the foodspot
-  if(foodSpot == headSpot - 1)
-    return LEFT;
-  else if(foodSpot == headSpot + 1)
-    return RIGHT;
-   else if(foodSpot == headSpot + PLAYFIELD_WIDTH)
-     return UP;
-  else if(foodSpot == headSpot - PLAYFIELD_WIDTH)
-    return DOWN;
-  else if(nextIndex == headSpot - 1)
+  if(nextIndex == headSpot - 1)
     return LEFT;
   //this will be index for moving right
   else if(nextIndex == headSpot + 1)
@@ -82,38 +74,6 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     //if can't do anything, just go down
     return NONE;
-
-
-   //just trying to move the snake
-   //return DOWN;
-
-
-/*
-
-   //int dX = head.first - food.first;
-   //int dY = head.second - food.second;
-
-   //try the strategy where the snake goes around edge of board then then
-   //zig-zag ignore obstacles!!
-   //will go down left side of board and then zig zag up- only works on even
-   //number of rows and no obstacles
-
-   //if there an odd number of rows, do the zig zag thing but skip the row
-   //before the food
-
-    //check to see if rows (height) is odd
-    if(PLAYFIELD_HEIGHT % 2 != 0)
-        return rowsOdd(head.first, head.second, food.first, food.second);
-
-    //check to see if rows (height) is even
-   if(PLAYFIELD_HEIGHT % 2 == 0)
-    return rowsEven(head.first, head.second);
-
-
-  //#define PLAYFIELD_WIDTH 17
-  //#define PLAYFIELD_HEIGHT 15
-*/
-
 }
 
 
