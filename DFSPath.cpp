@@ -26,15 +26,15 @@ std::list<int>DFSPaths::PathTo(int v)
   return path;
 }
 
-void DFSPaths::dfs(Graph *G, int s)
+void DFSPaths::dfs(Graph *G, int v)
 {
-  DFSinfo[s].marked = true;
-  for(int w : G->adj(s))
+  DFSinfo[v].marked = true;
+  for(int w : G->adj(v))
   {
     if(!DFSinfo[w].marked)
     {
       dfs(G,w);
-      DFSinfo[w].prev = s;
+      DFSinfo[w].prev = v;
     }
   }
 }
