@@ -9,6 +9,7 @@
 
 int randomMove(const int *grid, int headSpot);
 ValidMove ManhattanMove(const int *grid);
+void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, int headIndex);
 
 class Player
 {

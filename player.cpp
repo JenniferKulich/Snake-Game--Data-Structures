@@ -167,6 +167,8 @@ ValidMove ManhattanMove(const int *grid)
   std::pair<int, int> food = getLocation(grid, FOOD_VALUE);
   int dX = head.first - food.first;
   int dY = head.second - food.second;
+  int headIndex =(head.second * PLAYFIELD_WIDTH) + head.first;
+
 
   //check if the player is in right column
   if(dX == 0)
@@ -187,5 +189,56 @@ ValidMove ManhattanMove(const int *grid)
       move = RIGHT;
   }
 
+  //call function to make sure the snake would not be killing self
+  newMove(grid, move, move, 0, headIndex);
+
+  std::cout << "Move: " << move << std::endl;
   return move;
+}
+
+void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, int headIndex)
+{
+  //function will take in a move, if the move cannot be made, a new move and
+  //call this function again to see if that move can be made
+
+  //if this is the first check, set the trialMove to the origional  move
+  std::cout << "Into permutation" << std::endl;
+  if(count == 0)
+    trialMove = move;
+
+  //if the origional move passd in was valid, don't do anything and return
+  if(count > 0 && move == trialMove)
+    return;
+
+  count = count + 1;
+
+  //if the right move cannot be made, try moving down and make sure it would
+  //work
+  if((move == RIGHT) && grid[headIndex - PLAYFIELD_WIDTH] == CLEAR_VALUE)
+  {
+    move = DOWN;
+    newMove(grid, move, trialMove, count, headIndex);
+  }
+
+  //if the down move cannot be made, try moving down and make sure it would
+  //work
+  else if((move == DOWN) && grid[headIndex - 1] == CLEAR_VALUE)
+  {
+    move = LEFT;
+    newMove(grid, move, trialMove,count,headIndex);
+  }
+
+  //if the LEFT move cannot be made, try moving up and make sure it would work
+  else if((move == LEFT) && grid[headIndex + PLAYFIELD_WIDTH] == CLEAR_VALUE)
+  {
+    move = UP;
+    newMove(grid,move,trialMove,count,headIndex);
+  }
+
+  //jf the UP move cannot be made, try moving right and make sure it would work
+  else if((move == UP) && grid[headIndex + 1] == CLEAR_VALUE)
+  {
+    move = RIGHT;
+    newMove(grid,move,trialMove,count,headIndex);
+  }
 }
