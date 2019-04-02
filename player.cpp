@@ -53,7 +53,10 @@ int moveToMake = 0;
     if(!DFSpath.hasPathTo(foodSpot))
       std::cout << "No path anywhere." << std::endl;
       */
+
+    //CODE FOR RANDOM MOVE
     //if no move can be made, pick a random move
+    /*
     moveToMake = randomMove(grid, headSpot);
     if(moveToMake == 0)
       return UP;
@@ -65,6 +68,11 @@ int moveToMake = 0;
       return RIGHT;
     if(moveToMake == 5)
       return NONE;
+    */
+
+    //CODE FOR MANHATTAN MOVE
+    std::cout << "Making Manhattan Move" <<std::endl;
+    return ManhattanMove(grid);
   }
 
   //go through the first item in the list and determine where to move to
@@ -150,4 +158,34 @@ int randomMove(const int *grid, int headSpot)
   }
 
   return 5;
+}
+
+ValidMove ManhattanMove(const int *grid)
+{
+  ValidMove move = NONE;
+  std::pair<int, int> head = getLocation(grid, HEAD_VALUE);
+  std::pair<int, int> food = getLocation(grid, FOOD_VALUE);
+  int dX = head.first - food.first;
+  int dY = head.second - food.second;
+
+  //check if the player is in right column
+  if(dX == 0)
+  {
+    //check if player is above the food
+    if(dY > 0)
+      move = DOWN;
+    else
+      move = UP;
+  }
+  //for when the player is not in the right column
+  else
+  {
+    //check if player is right to the food
+    if(dX > 0)
+      move = LEFT;
+    else
+      move = RIGHT;
+  }
+
+  return move;
 }

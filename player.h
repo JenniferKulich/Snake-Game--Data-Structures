@@ -8,14 +8,13 @@
 #include "DFSPath.h"
 
 int randomMove(const int *grid, int headSpot);
+ValidMove ManhattanMove(const int *grid);
 
 class Player
 {
 public:
    Player ();
    ValidMove makeMove(const Playfield *);
-
-
 
 };
 

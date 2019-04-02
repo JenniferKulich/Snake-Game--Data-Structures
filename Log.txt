@@ -91,4 +91,9 @@ April 2 (Tuesday)
 		function that would make valid random moves until a path to the food could
 		be found. This will probably trap the snake a some points, but I'm hoping
 		that it will be enough to improve my score by a little bit until I can talk
-		to someone. 
+		to someone.
+	* The random moves makes my snake kill itself a lot (will core dump), but the
+		average on a board with obstacles a 38 with a max of 93. I talked to Dalton,
+		and he used the original Manhattan code that Hinker gave us to make
+		'random' moves. He also checked to make sure that the move the snake was
+		making would not end the game. I'm going to try this.
