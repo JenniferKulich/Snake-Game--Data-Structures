@@ -27,7 +27,7 @@ snake: $(LIBNAME) $(SNAKE_OBJS)
 	$(GCC) -o $@ $(SNAKE_OBJS) $(LIBS) -Wl,-rpath=. $(LIBNAME)
 
 driver: $(LIBNAME) $(DRIVER_OBJS)
-	$(GCC) -o $@ $(LIBNAME) $(DRIVER_OBJS) -Wl,-rpath=.
+	$(GCC) -o $@ $(DRIVER_OBJS) -Wl,-rpath=. $(LIBNAME)
 
 $(LIBNAME): $(LIB_OBJS)
 	$(GCC) -o $@ $^ -shared
