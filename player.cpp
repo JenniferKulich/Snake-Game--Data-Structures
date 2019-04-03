@@ -99,6 +99,7 @@ int moveToMake = 0;
     return UP;
 
     //if can't do anything, just go down
+    std::cout << "Core Dump?"<< std::endl;
     return NONE;
 }
 
@@ -214,8 +215,8 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
   //if the right move cannot be made, try moving down and make sure it would
   //work
   //check to make sure right is not clear or on far right wall
-  if((move == RIGHT) && (grid[headIndex + 1] != CLEAR_VALUE ||
-    headIndex + 1 == PLAYFIELD_WIDTH))
+  if((move == RIGHT) && (grid[headIndex + 1] % 4 != 0/*grid[headIndex + 1] != CLEAR_VALUE */ ||
+    (headIndex + 1) % PLAYFIELD_WIDTH == 0))
   {
     move = DOWN;
     newMove(grid, move, trialMove, count, headIndex);
@@ -223,24 +224,24 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
 
   //if the down move cannot be made, try moving left and make sure it would
   //work
-  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE ||
-    headIndex - PLAYFIELD_WIDTH == 0))
+  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] % 4 != 0/*grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
+    (headIndex / PLAYFIELD_WIDTH) == 0))
   {
     move = LEFT;
     newMove(grid, move, trialMove,count,headIndex);
   }
 
   //if the LEFT move cannot be made, try moving up and make sure it would work
-  else if((move == LEFT) && (grid[headIndex - 1] != CLEAR_VALUE ||
-  headIndex - 1 == 0))
+  else if((move == LEFT) && (grid[headIndex - 1] % 4 != 0/*grid[headIndex - 1] != CLEAR_VALUE*/ ||
+  (headIndex % PLAYFIELD_WIDTH) == 0))
   {
     move = UP;
     newMove(grid,move,trialMove,count,headIndex);
   }
 
   //jf the UP move cannot be made, try moving right and make sure it would work
-  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE ||
-headIndex + PLAYFIELD_WIDTH == PLAYFIELD_HEIGHT))
+  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] % 4 != 0/*grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
+(headIndex / PLAYFIELD_WIDTH) == (PLAYFIELD_HEIGHT - 1)))
   {
     move = RIGHT;
     newMove(grid,move,trialMove,count,headIndex);
