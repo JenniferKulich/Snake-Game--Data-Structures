@@ -13,7 +13,6 @@ class Graph
    int numEdges;
 public:
    Graph();
-   Graph(std::istream &);
    Graph(const int *grid, int width, int height);
 
    std::set<int> adj(int);

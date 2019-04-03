@@ -18,6 +18,31 @@ DFSPaths::DFSPaths(Graph *G, int start)
   dfs(G,s);
 }
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * The DFS algorithm to find the path from the start node to the end node
+ *
+ * @param[in] G - The playfield
+ * @param[in] s - the start node
+ *
+ *****************************************************************************/
+void DFSPaths::dfs(Graph *G, int v)
+{
+  DFSinfo[v].marked = true;
+  for(int w : G->adj(v))
+  {
+    if(!DFSinfo[w].marked)
+    {
+      dfs(G,w);
+      DFSinfo[w].prev = v;
+    }
+  }
+}
+
+
 /**************************************************************************//**
  * @author Dr. Hinker
  *
@@ -59,28 +84,4 @@ std::list<int>DFSPaths::PathTo(int v)
     //we don't want the head because we only want the places to move to
   //path.push_front(s);
   return path;
-}
-
-
-/**************************************************************************//**
- * @author Dr. Hinker
- *
- * @par Description:
- * The DFS algorithm to find the path from the start node to the end node
- *
- * @param[in] G - The playfield
- * @param[in] s - the start node
- *
- *****************************************************************************/
-void DFSPaths::dfs(Graph *G, int v)
-{
-  DFSinfo[v].marked = true;
-  for(int w : G->adj(v))
-  {
-    if(!DFSinfo[w].marked)
-    {
-      dfs(G,w);
-      DFSinfo[w].prev = v;
-    }
-  }
 }

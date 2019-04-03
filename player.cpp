@@ -69,7 +69,6 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     //CODE FOR MANHATTAN MOVE
     ValidMove newPossibleMove = NONE;
-    std::cout << "Making Manhattan Move" <<std::endl;
     newPossibleMove = ManhattanMove(grid);
     if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE ||
     grid[headSpot + 1] != FOOD_VALUE))
@@ -152,7 +151,6 @@ ValidMove ManhattanMove(const int *grid)
   //call function to make sure the snake would not be killing self
   newMove(grid, move, move, 0, headIndex);
 
-  std::cout << "Move: " << move << std::endl;
   return move;
 }
 
