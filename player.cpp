@@ -3,7 +3,19 @@
 
 Player::Player() {}
 
-// Searches the playfield grid for a specific value
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Searches the playfield grid for a specific value
+ *
+ * @param[in] grid - The playfield
+ *
+ * @param[in] value - the value that's being looked for on the grid
+ *
+ * @return - set of coordinates for the value that's being looked for
+ *
+ *****************************************************************************/
 std::pair<int, int> getLocation(const int *grid, int value)
 {
    for (int row = 0 ; row < PLAYFIELD_HEIGHT ; row++)
@@ -14,9 +26,19 @@ std::pair<int, int> getLocation(const int *grid, int value)
    return std::pair<int, int>(0,0);
 }
 
-// Make a move that approaches the food.  Does not try to avoid
-// obstacles (like its own tail)
-//called in driver.cpp
+
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Calls functions or makes decision on how the snake should move on the board
+ * Called in driver.cpp
+ *
+ * @param[in] pf - the playfield
+ *
+ * @return - the move that is to be made
+ *
+ *****************************************************************************/
 ValidMove Player::makeMove(const Playfield *pf)
 {
    const int *grid = pf->getGrid();
@@ -41,34 +63,10 @@ ValidMove Player::makeMove(const Playfield *pf)
   std::list<int>pathToFood = BFSpath.PathTo(foodSpot);
 
 
-int moveToMake = 0;
   //check if there is a path
   //if there's not a path, get the DFS
   if(!BFSpath.hasPath(foodSpot))
   {
-    /*
-    std::cout << "In DFS" << std::endl;
-    DFSPaths DFSpath(&graph, headSpot);
-    pathToFood = DFSpath.PathTo(foodSpot);
-    if(!DFSpath.hasPathTo(foodSpot))
-      std::cout << "No path anywhere." << std::endl;
-      */
-
-    //CODE FOR RANDOM MOVE
-    //if no move can be made, pick a random move
-    /*
-    moveToMake = randomMove(grid, headSpot);
-    if(moveToMake == 0)
-      return UP;
-    if(moveToMake == 1)
-      return DOWN;
-    if(moveToMake == 2)
-      return LEFT;
-    if(moveToMake == 3)
-      return RIGHT;
-    if(moveToMake == 5)
-      return NONE;
-    */
 
     //CODE FOR MANHATTAN MOVE
     ValidMove newPossibleMove = NONE;
@@ -86,9 +84,6 @@ int moveToMake = 0;
     if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE ||
     grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
     return NONE;
-
-
-    //return ManhattanMove(grid);
   }
 
   //go through the first item in the list and determine where to move to
@@ -96,11 +91,6 @@ int moveToMake = 0;
 
   //calculate how this index relates to the head index
   //this will the be index for moving left
-  /*
-  std::cout << "Headspot: " << headSpot << std::endl;
-  std::cout << "FoodSpot: " << foodSpot << std::endl;
-  std::cout << "nexIndex: " << nextIndex << std::endl;
-  */
   //check if the headspot is right next to the foodspot
   if(nextIndex == headSpot - 1)
     return LEFT;
@@ -115,68 +105,22 @@ int moveToMake = 0;
     return UP;
 
     //if can't do anything, just go down
-    std::cout << "Core Dump?"<< std::endl;
     return NONE;
 }
 
 
-//function that will have the snake move around randomly until it can find a
-//path to the food
-int randomMove(const int *grid, int headSpot)
-{
-  //pick a random move if it is valid
-  bool canMove = false;
-  srand(time(NULL));
-  //0 = up
-  //1 = down
-  //2 = left
-  //3 = right
-  //check if that is a valid move
-  //while a valid move can be made, return it
-  while(canMove == false)
-  {
-    //std::cout<<"Made it to random move 2" <<std::endl;
-    int randNum = (rand() % 4);
-    //std::cout<<"Made it to random move 3" <<std::endl;
-    if(randNum == 0)
-    {
-      if(grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE)
-      {
-        canMove = true;
-        return 0;
-      }
-    }
-
-    else if(randNum == 1)
-    {
-      if(grid[headSpot - PLAYFIELD_WIDTH] == CLEAR_VALUE)
-      {
-        canMove = true;
-        return 1;
-
-      }
-    }
-    else if(randNum == 2)
-    {
-      if(grid[headSpot - 1] == CLEAR_VALUE)
-      {
-        canMove = true;
-        return 2;
-      }
-    }
-    else if(randNum == 3)
-    {
-      if(grid[headSpot + 1] == CLEAR_VALUE)
-      {
-        canMove = true;
-        return 3;
-      }
-    }
-  }
-
-  return 5;
-}
-
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * Used Dr. Hinker's code for Manhattan distace move. Will also call a function
+ * that will make sure that that move can be made.
+ *
+ * @param[in] grid - The playfield and everything in it
+ *
+ * @return - the move for the Manhattan move
+ *
+ *****************************************************************************/
 ValidMove ManhattanMove(const int *grid)
 {
   ValidMove move = NONE;
@@ -213,17 +157,32 @@ ValidMove ManhattanMove(const int *grid)
   return move;
 }
 
-void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, int headIndex)
+
+/**************************************************************************//**
+ * @author Jennifer Kulich with help of Dalton Baker
+ *
+ * @par Description:
+ * Will check if the move is valid. If it is not a valid move, will try to find
+ * a new valid move to make through a permutation
+ *
+ * @param[in] grid - The playfield with everything in it
+ * @param[in,out] move - the move that will be made
+ * @param[in]  origionalMove  - the origional move
+ * @param[in] count - how many times we've tried to make a different move
+ * @param[in] headIndex - where the head of the snake is located
+ *
+ *****************************************************************************/
+void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex)
 {
   //function will take in a move, if the move cannot be made, a new move and
   //call this function again to see if that move can be made
 
   //if this is the first check, set the trialMove to the origional  move
   if(count == 0)
-    trialMove = move;
+    origionalMove = move;
 
   //if the origional move passd in was valid, don't do anything and return
-  if(count > 0 && move == trialMove)
+  if(count > 0 && move == origionalMove)
     return;
 
   count = count + 1;
@@ -235,7 +194,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
     (headIndex + 1) % PLAYFIELD_WIDTH == 0))
   {
     move = DOWN;
-    newMove(grid, move, trialMove, count, headIndex);
+    newMove(grid, move, origionalMove, count, headIndex);
   }
 
   //if the down move cannot be made, try moving left and make sure it would
@@ -244,7 +203,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
     (headIndex / PLAYFIELD_WIDTH) == 0))
   {
     move = LEFT;
-    newMove(grid, move, trialMove,count,headIndex);
+    newMove(grid, move, origionalMove,count,headIndex);
   }
 
   //if the LEFT move cannot be made, try moving up and make sure it would work
@@ -252,7 +211,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
   (headIndex % PLAYFIELD_WIDTH) == 0))
   {
     move = UP;
-    newMove(grid,move,trialMove,count,headIndex);
+    newMove(grid,move,origionalMove,count,headIndex);
   }
 
   //jf the UP move cannot be made, try moving right and make sure it would work
@@ -260,6 +219,6 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
 (headIndex / PLAYFIELD_WIDTH) == (PLAYFIELD_HEIGHT - 1)))
   {
     move = RIGHT;
-    newMove(grid,move,trialMove,count,headIndex);
+    newMove(grid,move,origionalMove,count,headIndex);
   }
 }

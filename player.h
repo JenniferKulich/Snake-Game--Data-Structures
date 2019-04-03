@@ -7,9 +7,8 @@
 #include "BFSPath.h"
 #include "DFSPath.h"
 
-int randomMove(const int *grid, int headSpot);
 ValidMove ManhattanMove(const int *grid);
-void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, int headIndex);
+void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
 
 class Player
 {
