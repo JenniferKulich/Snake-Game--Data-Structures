@@ -97,4 +97,5 @@ April 2 (Tuesday)
 		and he used the original Manhattan code that Hinker gave us to make
 		'random' moves. He also checked to make sure that the move the snake was
 		making would not end the game. I'm going to try this.
-	* Added documentation and cleaned up the code 
+	* Added documentation and cleaned up the code
+	* Average for obstacles is now 41 with a high of 93

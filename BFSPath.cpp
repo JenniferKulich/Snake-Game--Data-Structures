@@ -1,16 +1,50 @@
 #include "BFSPath.h"
 
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Constructs the BFS class and calls BFS
+ *
+ * @param[in] G - The playfield
+ * @param[in] start - the node to start looking from
+ *
+ *****************************************************************************/
 BFSPaths::BFSPaths(Graph *G, int start)
 {
   s = start;
   bfs(G,s);
 }
 
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Gets the distance of the path from the start node to the end node
+ *
+ * @param[in] v - The end node
+ *
+ * @return - distance from the start node to the end node
+ *
+ *****************************************************************************/
 int BFSPaths::Distance(int v)
 {
   return info[v].dist;
 }
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Will get the path from the end node to the start node and store the indexes
+ * in a list
+ *
+ * @param[in] v - The end node
+ *
+ * @return - a linked list of the path from the start node to the end node
+ *
+ *****************************************************************************/
 std::list<int> BFSPaths::PathTo(int v)
 {
   std::list<int>path;
@@ -25,6 +59,16 @@ std::list<int> BFSPaths::PathTo(int v)
   return path;
 }
 
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * The BFS algorithm to find the path from the start node to the end node
+ *
+ * @param[in] G - The playfield
+ * @param[in] s - the start node
+ *
+ *****************************************************************************/
 void BFSPaths::bfs(Graph *G, int s)
 {
   std::queue<int> frontier;
@@ -49,6 +93,19 @@ void BFSPaths::bfs(Graph *G, int s)
 }
 
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * checks if there is a path from the start node to the end node by checking if
+ * the end node has been marked
+ *
+ * @param[in] v - the end node
+ *
+ * @return - if the end node has been marked or not
+ *
+ *****************************************************************************/
 bool BFSPaths::hasPath(int v)
 {
   return info[v].marked;

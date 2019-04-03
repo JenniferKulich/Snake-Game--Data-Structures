@@ -10,7 +10,6 @@ Player::Player() {}
  * Searches the playfield grid for a specific value
  *
  * @param[in] grid - The playfield
- *
  * @param[in] value - the value that's being looked for on the grid
  *
  * @return - set of coordinates for the value that's being looked for
@@ -190,7 +189,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
   //if the right move cannot be made, try moving down and make sure it would
   //work
   //check to make sure right is not clear or on far right wall
-  if((move == RIGHT) && (grid[headIndex + 1] % 4 != CLEAR_VALUE/*grid[headIndex + 1] != CLEAR_VALUE */ ||
+  if((move == RIGHT) && (grid[headIndex + 1] % 4 != CLEAR_VALUE ||
     (headIndex + 1) % PLAYFIELD_WIDTH == 0))
   {
     move = DOWN;
@@ -199,7 +198,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
 
   //if the down move cannot be made, try moving left and make sure it would
   //work
-  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] % 4 != CLEAR_VALUE/*grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
+  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] % 4 != CLEAR_VALUE ||
     (headIndex / PLAYFIELD_WIDTH) == 0))
   {
     move = LEFT;
@@ -207,7 +206,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
   }
 
   //if the LEFT move cannot be made, try moving up and make sure it would work
-  else if((move == LEFT) && (grid[headIndex - 1] % 4 != CLEAR_VALUE/*grid[headIndex - 1] != CLEAR_VALUE*/ ||
+  else if((move == LEFT) && (grid[headIndex - 1] % 4 != CLEAR_VALUE ||
   (headIndex % PLAYFIELD_WIDTH) == 0))
   {
     move = UP;
@@ -215,7 +214,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
   }
 
   //jf the UP move cannot be made, try moving right and make sure it would work
-  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] % 4 != CLEAR_VALUE/*grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
+  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] % 4 != CLEAR_VALUE ||
 (headIndex / PLAYFIELD_WIDTH) == (PLAYFIELD_HEIGHT - 1)))
   {
     move = RIGHT;
