@@ -71,8 +71,24 @@ int moveToMake = 0;
     */
 
     //CODE FOR MANHATTAN MOVE
+    ValidMove newPossibleMove = NONE;
     std::cout << "Making Manhattan Move" <<std::endl;
-    return ManhattanMove(grid);
+    newPossibleMove = ManhattanMove(grid);
+    if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE ||
+    grid[headSpot + 1] != FOOD_VALUE))
+      return NONE;
+    if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE ||
+    grid[headSpot - 1] != FOOD_VALUE))
+      return NONE;
+    if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE ||
+  grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
+    return NONE;
+    if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE ||
+    grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
+    return NONE;
+
+
+    //return ManhattanMove(grid);
   }
 
   //go through the first item in the list and determine where to move to
@@ -215,7 +231,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
   //if the right move cannot be made, try moving down and make sure it would
   //work
   //check to make sure right is not clear or on far right wall
-  if((move == RIGHT) && (grid[headIndex + 1] % 4 != 0/*grid[headIndex + 1] != CLEAR_VALUE */ ||
+  if((move == RIGHT) && (grid[headIndex + 1] % 4 != CLEAR_VALUE/*grid[headIndex + 1] != CLEAR_VALUE */ ||
     (headIndex + 1) % PLAYFIELD_WIDTH == 0))
   {
     move = DOWN;
@@ -224,7 +240,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
 
   //if the down move cannot be made, try moving left and make sure it would
   //work
-  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] % 4 != 0/*grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
+  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] % 4 != CLEAR_VALUE/*grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
     (headIndex / PLAYFIELD_WIDTH) == 0))
   {
     move = LEFT;
@@ -232,7 +248,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
   }
 
   //if the LEFT move cannot be made, try moving up and make sure it would work
-  else if((move == LEFT) && (grid[headIndex - 1] % 4 != 0/*grid[headIndex - 1] != CLEAR_VALUE*/ ||
+  else if((move == LEFT) && (grid[headIndex - 1] % 4 != CLEAR_VALUE/*grid[headIndex - 1] != CLEAR_VALUE*/ ||
   (headIndex % PLAYFIELD_WIDTH) == 0))
   {
     move = UP;
@@ -240,7 +256,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
   }
 
   //jf the UP move cannot be made, try moving right and make sure it would work
-  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] % 4 != 0/*grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
+  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] % 4 != CLEAR_VALUE/*grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE*/ ||
 (headIndex / PLAYFIELD_WIDTH) == (PLAYFIELD_HEIGHT - 1)))
   {
     move = RIGHT;
