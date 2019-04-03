@@ -16,48 +16,6 @@ BFSPaths::BFSPaths(Graph *G, int start)
   bfs(G,s);
 }
 
-/**************************************************************************//**
- * @author Dr. Hinker
- *
- * @par Description:
- * Gets the distance of the path from the start node to the end node
- *
- * @param[in] v - The end node
- *
- * @return - distance from the start node to the end node
- *
- *****************************************************************************/
-int BFSPaths::Distance(int v)
-{
-  return info[v].dist;
-}
-
-
-/**************************************************************************//**
- * @author Dr. Hinker
- *
- * @par Description:
- * Will get the path from the end node to the start node and store the indexes
- * in a list
- *
- * @param[in] v - The end node
- *
- * @return - a linked list of the path from the start node to the end node
- *
- *****************************************************************************/
-std::list<int> BFSPaths::PathTo(int v)
-{
-  std::list<int>path;
-  if(!hasPath(v))
-    return path;
-
-  for(int x = v; x != s; x = info[x].prev)
-
-    path.push_front(x);
-    //we don't want the head because we only want the places to move to
-  //path.push_front(s);
-  return path;
-}
 
 /**************************************************************************//**
  * @author Dr. Hinker
@@ -93,7 +51,6 @@ void BFSPaths::bfs(Graph *G, int s)
 }
 
 
-
 /**************************************************************************//**
  * @author Dr. Hinker
  *
@@ -110,4 +67,48 @@ bool BFSPaths::hasPath(int v)
 {
   return info[v].marked;
 
+}
+
+
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Will get the path from the end node to the start node and store the indexes
+ * in a list
+ *
+ * @param[in] v - The end node
+ *
+ * @return - a linked list of the path from the start node to the end node
+ *
+ *****************************************************************************/
+std::list<int> BFSPaths::PathTo(int v)
+{
+  std::list<int>path;
+  if(!hasPath(v))
+    return path;
+
+  for(int x = v; x != s; x = info[x].prev)
+
+    path.push_front(x);
+    //we don't want the head because we only want the places to move to
+  //path.push_front(s);
+  return path;
+}
+
+
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Gets the distance of the path from the start node to the end node
+ *
+ * @param[in] v - The end node
+ *
+ * @return - distance from the start node to the end node
+ *
+ *****************************************************************************/
+int BFSPaths::Distance(int v)
+{
+  return info[v].dist;
 }

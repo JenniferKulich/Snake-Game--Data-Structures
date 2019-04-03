@@ -1,26 +1,33 @@
 #include "graph.h"
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker and Jennifer Kulich
+ *
+ * @par Description:
+ * Default constructor for the graph class and sets the number of edges and
+ * vertices to 0
+ *
+ *****************************************************************************/
 Graph::Graph()
 {
   numVertices = 0;
   numEdges = 0;
 }
-Graph::Graph(std::istream &fin) : numVertices(0), numEdges(0)
-{
-   int v, w;
-
-   while (!fin.eof())
-   {
-      fin >> v >> w;
-      addEdge(v, w);
-   }
-
-   numVertices = vertices.size();
-//   for (int u : Vertices())
-//      numEdges += adj(u).size();
-}
 
 
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Constructor for the graph class that takes in a grid and its width and height
+ * and connect nodes if possible, keeping track of the number of vertices
+ *
+ * @param[in] grid - The playfield
+ * @param[in] width - width of the grid
+ * @param[int] height - height of the grid
+ *
+ *****************************************************************************/
 Graph::Graph(const int *grid, int width, int height)
 {
   for(int column = 0; column < width; column++)
@@ -29,20 +36,9 @@ Graph::Graph(const int *grid, int width, int height)
     {
 
       int index = (row * width) + column;
-      /*
-      std::cout << std::endl << std::endl;
-      std::cout << "column: " << column << std::endl;
-      std::cout << "row: " << row << std::endl;
-      std::cout << "width: " << width << std::endl;
-      std::cout << "height: "<< height << std:: endl;
-      std::cout << "index: " << index << std::endl;
-      std::cout << "Num in square: " << grid[index] << std::endl;
-      */
       //check to make sure the spots are open
-      //std::cout << "Here?" << std::endl;
       if(grid[index] != CLEAR_VALUE && grid[index] != FOOD_VALUE && grid[index] != HEAD_VALUE)
       {
-        //std::cout << "In here." << std::endl;
         continue;
       }
       //  continue;
@@ -137,7 +133,6 @@ Graph::Graph(const int *grid, int width, int height)
         continue;
       }
       //if in middle, do all of the add edges
-      //
       else
       {
         //add edge up down right and left
@@ -157,13 +152,31 @@ Graph::Graph(const int *grid, int width, int height)
 }
 
 
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Gets the adjacency list of the vertices
+ *
+ * @param[in] v - the vertice to get the adjacency list from
+ *
+ *****************************************************************************/
 std::set<int> Graph::adj(int v)
 {
   return vertices.at(v);
 }
 
 
-
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Will add the edges from one node to another and add to the number of edges
+ *
+ * @param[in] one - the one node to add a connection to
+ * @param[in] two - the second node to add a connection to
+ *
+ *****************************************************************************/
 void Graph::addEdge(int one, int two)
 {
   if(vertices[one].find(two) == vertices[one].end())
@@ -178,16 +191,45 @@ void Graph::addEdge(int one, int two)
 }
 
 
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Return the number of vertices in the graph
+ *
+ * @return - the number of vertices in the graph
+ *
+ *****************************************************************************/
 int Graph::V() const
 {
 	return numVertices;
 }
 
+
+/**************************************************************************//**
+ * @author Jenifer Kulich
+ *
+ * @par Description:
+ * Return the number of edges in the graph
+ *
+ * @return - the number of edges in the graph
+ *
+ *****************************************************************************/
 int Graph::E() const
 {
 	return numEdges;
 }
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker
+ *
+ * @par Description:
+ * Will return the set of vertices in the graph
+ *
+ * @return - the set of all of the vertices 
+ *
+ *****************************************************************************/
 std::set<int> Graph::Vertices() const
 {
   std::set<int>all;
