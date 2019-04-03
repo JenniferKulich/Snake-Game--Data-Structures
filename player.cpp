@@ -202,7 +202,6 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
   //call this function again to see if that move can be made
 
   //if this is the first check, set the trialMove to the origional  move
-  std::cout << "Into permutation" << std::endl;
   if(count == 0)
     trialMove = move;
 
@@ -214,29 +213,34 @@ void newMove(const int *grid, ValidMove &move, ValidMove trialMove, int count, i
 
   //if the right move cannot be made, try moving down and make sure it would
   //work
-  if((move == RIGHT) && grid[headIndex - PLAYFIELD_WIDTH] == CLEAR_VALUE)
+  //check to make sure right is not clear or on far right wall
+  if((move == RIGHT) && (grid[headIndex + 1] != CLEAR_VALUE ||
+    headIndex + 1 == PLAYFIELD_WIDTH))
   {
     move = DOWN;
     newMove(grid, move, trialMove, count, headIndex);
   }
 
-  //if the down move cannot be made, try moving down and make sure it would
+  //if the down move cannot be made, try moving left and make sure it would
   //work
-  else if((move == DOWN) && grid[headIndex - 1] == CLEAR_VALUE)
+  else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE ||
+    headIndex - PLAYFIELD_WIDTH == 0))
   {
     move = LEFT;
     newMove(grid, move, trialMove,count,headIndex);
   }
 
   //if the LEFT move cannot be made, try moving up and make sure it would work
-  else if((move == LEFT) && grid[headIndex + PLAYFIELD_WIDTH] == CLEAR_VALUE)
+  else if((move == LEFT) && (grid[headIndex - 1] != CLEAR_VALUE ||
+  headIndex - 1 == 0))
   {
     move = UP;
     newMove(grid,move,trialMove,count,headIndex);
   }
 
   //jf the UP move cannot be made, try moving right and make sure it would work
-  else if((move == UP) && grid[headIndex + 1] == CLEAR_VALUE)
+  else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE ||
+headIndex + PLAYFIELD_WIDTH == PLAYFIELD_HEIGHT))
   {
     move = RIGHT;
     newMove(grid,move,trialMove,count,headIndex);
