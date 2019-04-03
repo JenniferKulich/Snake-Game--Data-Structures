@@ -72,6 +72,11 @@ ValidMove Player::makeMove(const Playfield *pf)
     ValidMove newPossibleMove = NONE;
     newPossibleMove = ManhattanMove(grid);
     std::cout << "Possible Move 1: " << newPossibleMove << std::endl;
+    std::cout << "None: " << NONE << std::endl;
+    std::cout << "LEFT: " << LEFT << std::endl;
+    std::cout << "RIGHT: " << RIGHT << std::endl;
+    std::cout << "UP: " << UP << std::endl;
+    std::cout << "DOWN: " << DOWN << std::endl;
 
     if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
     grid[headSpot + 1] != FOOD_VALUE))
@@ -136,7 +141,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     }
 */
 
-
+    std::cout << "Returning: " << newPossibleMove << std::endl << std::endl;
     return newPossibleMove;
   }
 
@@ -229,7 +234,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
 {
   //function will take in a move, if the move cannot be made, a new move and
   //call this function again to see if that move can be made
-
+  std::cout << "Count: " << count << std::endl;
   //if this is the first check, set the trialMove to the origional  move
   if(count == 0)
     origionalMove = move;
@@ -242,15 +247,56 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
     return;
   }
 
+  int num;
+
   count = count + 1;
   std::cout << "move: " << move << std::endl;
   std::cout << "origionalMove: " << origionalMove << std::endl;
+
+  if(move == UP)
+  {
+    std::cout << "headIndex: " << headIndex << std::endl;
+    //std::cout << "What headIndex needs to be greater than:" << (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH << std::endl;
+    std::cout << "trying Dalton's code:" << std::endl;
+    std::cout << "headIndex / PLAYFIELD_WIDTH: " << (headIndex / PLAYFIELD_WIDTH) << std::endl;
+    std::cout << "PLAYFIELD_HEIGHT - 1: " << (PLAYFIELD_HEIGHT - 1) << std::endl;
+   }
+   if(move == LEFT)
+   {
+     num = grid[headIndex - 1];
+     std::cout << "So you want to move left?" << std::endl;
+     std::cout << "headIndex: " << headIndex << std::endl;
+     std::cout << "grid[headIndex - 1]: " << num << std::endl;
+     std::cout << "headIndex - 1: " << headIndex - 1 << std::endl;
+     std::cout << "headIndex mod PLAYFIELD_WIDTH: " << headIndex % PLAYFIELD_WIDTH << std::endl;
+   }
+   if(move == RIGHT)
+   {
+     num = grid[headIndex + 1];
+     std::cout << "So you want to move right?" << std::endl;
+     std::cout << "headIndex: " << headIndex << std::endl;
+     std::cout << "grid[headIndex + 1]: " << num << std::endl;
+     std::cout << "headIndex + 1: " << headIndex + 1 << std::endl;
+     std::cout << "PLAYFIELD_WIDTH - 1: " << PLAYFIELD_WIDTH - 1 << std::endl;
+    }
+   if(move == DOWN)
+   {
+     num = grid[headIndex - PLAYFIELD_WIDTH];
+     std::cout << "So you want to move down?" << std::endl;
+     std::cout << "headIndex: " << headIndex << std::endl;
+     std::cout << "grid[headIndex - PLAYFIELD_WIDTH]: " << num << std::endl;
+     std::cout << "PLAYFIELD_WIDTH - 1: " << PLAYFIELD_WIDTH - 1 << std::endl;
+   }
   //if the right move cannot be made, try moving down and make sure it would
   //work
   //check to make sure right is not clear or on far right wall
   if((move == RIGHT) && ((grid[headIndex + 1] != CLEAR_VALUE /*&& grid[headIndex + 1] != FOOD_VALUE*/) ||
     (headIndex + 1) == PLAYFIELD_WIDTH - 1))
   {
+    num = grid[headIndex + 1];
+    std::cout << "Cannot move right" << std::endl;
+    std::cout << "grid[headIndex + 1]: " << num << std::endl;
+    std::cout << "headIndex + 1: " << headIndex + 1 << std::endl;
     move = DOWN;
     newMove(grid, move, origionalMove, count, headIndex);
   }
@@ -260,6 +306,9 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
   else if((move == DOWN) && ((grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE /*&& grid[headIndex - PLAYFIELD_WIDTH] != FOOD_VALUE*/)||
     (headIndex <= PLAYFIELD_WIDTH - 1)))
   {
+    std::cout << "Cannot move DOWN" << std::endl;
+    std::cout << "grid[headIndex - PLAYFIELD_WIDTH]: " << grid[headIndex - PLAYFIELD_WIDTH] << std::endl;
+    std::cout << "headIndex: " << headIndex << std::endl;
     move = LEFT;
     newMove(grid, move, origionalMove,count,headIndex);
   }
@@ -268,16 +317,28 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
   else if((move == LEFT) && ((grid[headIndex - 1] != CLEAR_VALUE /*&& grid[headIndex - 1] != FOOD_VALUE*/ ) ||
   (headIndex % PLAYFIELD_WIDTH) == 0))
   {
+    num = grid[headIndex - 1];
+    std::cout << "Cannot move LEFT" << std::endl;
+    std::cout << "grid[headIndex - 1]: " << num << std::endl;
+    std::cout << "headIndex mod PLAYFIELD_WIDTH: " << headIndex % PLAYFIELD_WIDTH << std::endl;
     move = UP;
     newMove(grid,move,origionalMove,count,headIndex);
   }
 
+
   //jf the UP move cannot be made, try moving right and make sure it would work
   else if((move == UP) && ((grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE /*&& grid[headIndex + PLAYFIELD_WIDTH] != FOOD_VALUE*/)||
-(headIndex > ((PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH))))
+((headIndex / PLAYFIELD_WIDTH) == (PLAYFIELD_HEIGHT - 1)/*headIndex >= ((PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH)))*/)))
   {
+    std::cout << "Cannot move UP" << std::endl;
+    std::cout << "grid[headIndex + PLAYFIELD_WIDTH]: " << grid[headIndex + PLAYFIELD_WIDTH] << std::endl;
+    std::cout << "headIndex: " << headIndex << std::endl;
+    std::cout << "What the headIndex should be greater than: " << ((PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH) << std::endl;
     move = RIGHT;
     newMove(grid,move,origionalMove,count,headIndex);
   }
+
+
+
 
 }
