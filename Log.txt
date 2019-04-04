@@ -115,3 +115,6 @@ April 3 (Wednsday)
 		added something more simples. It doesn't core dump anymore and it doesn't
 		run as slow.
 	* Things to do tomorrow: clean up code and time it
+
+April 4 (Thursday)
+	* Cleaned up code that I didn't need
