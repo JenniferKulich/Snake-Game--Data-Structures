@@ -100,7 +100,7 @@ April 2 (Tuesday)
 	* Added documentation and cleaned up the code
 	* Average for obstacles is now 41 with a high of 93
 
-April 3 (Wednsday)
+April 3 (Wednesday)
 	* For some reason, I found that my code wasn't working the way I wanted it to
 		when the Manhattan function was called. I spent a lot of time trying to
 		debug it, thinking that I just did it wrong. I then realized that this
@@ -124,4 +124,4 @@ April 4 (Thursday)
 	* Dijkstra's algorithm looks to be very similar to what the video was showing, so I
 		may wait until tomorrow when Hinker shows the code to actually implement anything.
 	* Going to add a heap class since that's what we talked about using in class for
-		Dijkstra's, and that's what the video was showing to use to optimize their code 
+		Dijkstra's, and that's what the video was showing to use to optimize their code
