@@ -112,5 +112,6 @@ April 3 (Wednsday)
 		core dump.
 	* Tried what Dalton was talking about, but it made my code very slow and
 		it wasn't working properly, so I reverted back to what I had before, and
-		I'll be taking it in tomorrow to show Dr. Hinker and see what was going on
-		with it.
+		added something more simples. It doesn't core dump anymore and it doesn't
+		run as slow.
+	* Things to do tomorrow: clean up code and time it

@@ -30,6 +30,13 @@ Graph::Graph()
  *****************************************************************************/
 Graph::Graph(const int *grid, int width, int height)
 {
+  //create all the nodes
+ for(int i = 0; i < width*height; i++)
+ {
+    //passing in the same number twice will create a node with no edges
+    addEdge(i, i);
+ }
+
   for(int column = 0; column < width; column++)
   {
     for(int row = 0; row < height; row++)
