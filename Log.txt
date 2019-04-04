@@ -99,3 +99,15 @@ April 2 (Tuesday)
 		making would not end the game. I'm going to try this.
 	* Added documentation and cleaned up the code
 	* Average for obstacles is now 41 with a high of 93
+
+April 3 (Wednsday)
+	* For some reason, I found that my code wasn't working the way I wanted it to
+		when the Manhattan function was called. I spent a lot of time trying to
+		debug it, thinking that I just did it wrong. I then realized that this
+		only happened when the snake was completely surrounded and trapped. My code
+		should have been returning NONE as the move, but it was returning a move and
+		causing the core dumps. After debugging for 2-3 hours, I asked Dalton to
+		look at my code. He found my error when I was building the graph class.
+		Essentially, I was accessing a map item that wasn't there thus causing the
+		core dump.
+	* 
