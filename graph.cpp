@@ -1,4 +1,6 @@
 #include "graph.h"
+
+
 /**************************************************************************//**
  * @author Dr. Hinker and Jennifer Kulich
  *
@@ -28,43 +30,6 @@ Graph::Graph()
  *****************************************************************************/
 Graph::Graph(const int *grid, int width, int height)
 {
-  //create all the nodes
-  for(int i = 0; i < width * height; i++)
-  {
-    //passing the same number twice will create a node with no edges
-    addEdge(i,i);
-  }
-
-/*
-     //add all edges that should exist
-     for(int i = 0; i < width*height; i++)
-     {
-        //check the node above the node we are looking at
-        if((grid[i+width]%2 == 0) && (grid[i] == 0) && ((i/width) != (width-1)))
-        {
-           addEdge(i, i+width);
-        }
-
-        //check the node to the left of the node we are looking at
-        if((grid[i-1]%2 == 0) && (grid[i] == 0) && ((i%width) != 0))
-        {
-           addEdge(i, i-1);
-        }
-
-        //check the node bellow the node we are looking at
-        if((grid[i-width]%2 == 0) && (grid[i] == 0) && ((i/width) != 0))
-        {
-           addEdge(i, i-width);
-        }
-
-        //check the node to the right of the node we are looking at
-        if((grid[i+1]%2 == 0) && (grid[i] == 0) && ((i%width) != (width-1)))
-        {
-           addEdge(i, i+1);
-        }
-     }
-     */
-
   for(int column = 0; column < width; column++)
   {
     for(int row = 0; row < height; row++)
@@ -184,7 +149,6 @@ Graph::Graph(const int *grid, int width, int height)
     }
   }
   numVertices = vertices.size();
-
 }
 
 
@@ -215,25 +179,15 @@ std::set<int> Graph::adj(int v)
  *****************************************************************************/
 void Graph::addEdge(int one, int two)
 {
-  //if they are the same, create a single node
-  if(two == one)
-    vertices[one];
-  else
+  if(vertices[one].find(two) == vertices[one].end())
   {
-    //add each node to the other nodes list of connected nodes
-    vertices[one].insert(two);
-    vertices[two].insert(one);
+    numEdges++;
+    //std::cout << "adding edge[" << one << ", " << two << "]\n" ;
+    (vertices[one]).insert(two);
+    (vertices[two]).insert(one);
+    numVertices = vertices.size();
+
   }
-
-  //recalculat the number of vertices
-  numVertices = vertices.size();
-  numEdges = 0;
-
-  //recalculate the number of edges
-  for(int x : Vertices())
-    numEdges += adj(x).size();
-
-  numEdges = numEdges / 2;
 }
 
 
