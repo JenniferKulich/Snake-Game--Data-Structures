@@ -118,3 +118,6 @@ April 3 (Wednsday)
 
 April 4 (Thursday)
 	* Cleaned up code that I didn't need
+	* I want to try to implement a weighted graph next and then try to implement the
+		algorithm from the video mentioned above. I think this will help make my snake a
+		a little smarter.
