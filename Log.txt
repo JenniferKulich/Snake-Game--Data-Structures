@@ -110,4 +110,7 @@ April 3 (Wednsday)
 		look at my code. He found my error when I was building the graph class.
 		Essentially, I was accessing a map item that wasn't there thus causing the
 		core dump.
-	* 
+	* Tried what Dalton was talking about, but it made my code very slow and
+		it wasn't working properly, so I reverted back to what I had before, and
+		I'll be taking it in tomorrow to show Dr. Hinker and see what was going on
+		with it.
