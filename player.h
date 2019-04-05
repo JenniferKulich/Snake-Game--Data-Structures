@@ -6,6 +6,7 @@
 #include "playfield.h"
 #include "BFSPath.h"
 #include "DFSPath.h"
+#include "videoAlgorithm.h"
 
 ValidMove ManhattanMove(const int *grid);
 void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
