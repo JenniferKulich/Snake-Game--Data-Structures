@@ -125,3 +125,7 @@ April 4 (Thursday)
 		may wait until tomorrow when Hinker shows the code to actually implement anything.
 	* Going to add a heap class since that's what we talked about using in class for
 		Dijkstra's, and that's what the video was showing to use to optimize their code
+	* Added the code from the video to some files just so I can mess around with it and
+		see how stuff works. I'm not quite sure how it implements things yet- especially
+		the path, and I'm not sure what happens if there's little dead end paths. This
+		looks like a more complicated version of Dijkstra's.
