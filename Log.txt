@@ -131,7 +131,7 @@ April 4 (Thursday)
 		looks like a more complicated version of Dijkstra's. I'm naming it
 		'complicated Dijkstra'
 
-	April 5 (Sunday)
+	April 7 (Sunday)
 		* Worked on trying to get complicated Dijkstra to work. I spent
 			quite some time just debugging  it and trying not to get any errors or
 			warning. This didn't help because in the video, a list was used, but I
@@ -145,3 +145,14 @@ April 4 (Thursday)
 			on that before I start using a heap. I probably don't need to, but I want
 			to make sure that I understand what's going on first.
 		* I'll investigate tomorrow why this is happening.
+
+	April 8 (Monday)
+		* Integrated the code from Hinker so that the graph will not produced a
+			biconnected graph.
+		* Deleted my complicated Dijkstras code. I realized that it was just not
+			going to work- there were too many things wrong with it, and if Hinker was
+			going to put up the code for it, I didn't think it was worth my time.
+			Also, what I was doing didn't make a weighted graph class, and at this
+			point, I would much rather use that, but I'm not sure how I would put it
+			in with my code. Also, it was horribly inefficient especially using
+			vecotrs.
