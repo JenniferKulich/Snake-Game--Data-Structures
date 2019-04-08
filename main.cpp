@@ -41,6 +41,7 @@ void initOpenGL(int msec)
    glutReshapeFunc(reshape);           // how to resize window
    glutKeyboardFunc(keyboard);         // how to handle a key press
    glutTimerFunc(msec, ticktock, msec);
+
    glClear(GL_COLOR_BUFFER_BIT);
    glFlush();
 }

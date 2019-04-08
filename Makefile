@@ -1,8 +1,8 @@
 LIBNAME = libPlayer.so
-LIB_SRC = player.cpp graph.cpp BFSPath.cpp DFSPath.cpp videoAlgorithm.cpp
-DRIVER_SRC = driver.cpp game.cpp playfield.cpp player.cpp graph.cpp BFSPath.cpp DFSPath.cpp
+LIB_SRC = player.cpp graph.cpp BFSPath.cpp DFSPath.cpp snakeGraph.cpp biconnected.cpp cc.cpp
+DRIVER_SRC = driver.cpp game.cpp playfield.cpp player.cpp graph.cpp BFSPath.cpp DFSPath.cpp snakeGraph.cpp biconnected.cpp cc.cpp
 
-SNAKE_SRC = main.cpp event.cpp game.cpp graphics.cpp playfield.cpp util.cpp
+SNAKE_SRC = main.cpp event.cpp game.cpp graphics.cpp playfield.cpp util.cpp snakeGraph.cpp biconnected.cpp cc.cpp
 
 LIB_OBJS = $(LIB_SRC:.cpp=.o)
 DRIVER_OBJS = $(DRIVER_SRC:.cpp=.o)

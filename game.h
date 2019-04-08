@@ -12,7 +12,6 @@ class Game
    Playfield *playfield;
    bool gameOver;
    int  score;
-   int  turnCount;
 
 public:
    Game(Player *, Playfield *);

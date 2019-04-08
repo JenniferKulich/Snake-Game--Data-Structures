@@ -7,9 +7,7 @@ void keyboard(unsigned char key, int x, int y)
 
 void display()
 {
-// glClear(GL_COLOR_BUFFER_BIT);
-   utilityCentral(new DisplayEvent);
-// glutSwapBuffers();
+   utilityCentral(new DisplayEvent); 
 }
 
 void reshape(int w, int h)
@@ -37,12 +35,15 @@ void updateScore(Game *game)
 void utilityCentral(Event *event)
 {
    static Player *player = new Player();
-   static Playfield *playfield = new Playfield(true); // true means add obj
+   // Passing a true parameter to the Playfield constructor will include
+   // obstacles on the playfield.  Passing nothing or false prevents
+   // obstacles from being added
+   static Playfield *playfield = new Playfield(true);
    static Game *game = new Game(player, playfield);
 
-   if (game->isGameOver())
+   if (game->isGameOver()) 
    {
-      std::cout << "GAME OVER!" << std::endl ;
+      std::cout << "GAME OVER!" << std::endl ; 
       std::cout << "Final Score: " << game->getScore() << std::endl;
       delete game;
       glutLeaveMainLoop();

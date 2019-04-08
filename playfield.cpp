@@ -3,10 +3,14 @@
  ***********************************************************************/
 #include "playfield.h"
 #include <iostream>
+#include <iomanip>
 
 Playfield::Playfield(bool obst) : tailLength(0), cellWidth(0), cellHeight(0),
    hasObstacles(obst)
 {
+   // Seed pseudo-random generator
+   srand(time(NULL));
+
    // Start head of snake in the middle of the playfield
    head = std::pair<int, int>(rand() % PLAYFIELD_WIDTH, rand() % PLAYFIELD_HEIGHT);
    food = std::pair<int, int>(rand() % PLAYFIELD_WIDTH, rand() % PLAYFIELD_HEIGHT);
@@ -17,16 +21,43 @@ Playfield::Playfield(bool obst) : tailLength(0), cellWidth(0), cellHeight(0),
    cellWidth = 1;
    cellHeight = 1;
 #endif
+
+   int count;
    grid = new int[PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT];
-   std::memset(grid, CLEAR_VALUE, sizeof(int)*PLAYFIELD_WIDTH*PLAYFIELD_HEIGHT);
+
+   do
+   {
+      std::memset(grid, CLEAR_VALUE, sizeof(int)*PLAYFIELD_WIDTH*PLAYFIELD_HEIGHT);
+      placeObstacles();
+      SnakeGraph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
+      Biconnected bicon(&graph);
+      CC cc(&graph);
+      count = cc.count() + bicon.articulationNodes().size(); 
+   } while (count > 1);
+
    grid[head.first + head.second * PLAYFIELD_WIDTH] = HEAD_VALUE;
    grid[food.first + food.second * PLAYFIELD_WIDTH] = FOOD_VALUE;
-   placeObstacles();
+   updatePlayfield();
+   drawObstacles();
 }
 
 Playfield::~Playfield()
 {
    delete[] grid;
+}
+
+void Playfield::drawObstacles()
+{
+   for (int cell = 0 ; cell < PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT ; cell++)
+   {
+      if (grid[cell] == TAIL_VALUE)
+      {
+#ifdef GRAPHICS
+         std::pair<int, int> obstacle(cell % PLAYFIELD_WIDTH, cell / PLAYFIELD_WIDTH);
+         DrawFilledRectangle(obstacle, cellWidth, cellHeight, BLUE);
+#endif
+      }
+   }
 }
 
 void Playfield::placeObstacles()
@@ -42,10 +73,6 @@ void Playfield::placeObstacles()
          placement = rand() % (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT);
       } while (grid[placement] != CLEAR_VALUE);
       grid[placement] = TAIL_VALUE;
-#ifdef GRAPHICS
-      std::pair<int, int> obstacle(placement % PLAYFIELD_WIDTH, placement / PLAYFIELD_WIDTH);
-      DrawFilledRectangle(obstacle, cellWidth, cellHeight, BLUE);
-#endif
    }
 }
  

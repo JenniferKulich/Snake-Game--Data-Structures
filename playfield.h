@@ -13,6 +13,8 @@
 #include <thread>         // std::this_thread::sleep_for
 #include <chrono>         // std::chrono::seconds
 #include "graphics.h"
+#include "biconnected.h"
+#include "cc.h"
 
 enum ValidMove {NONE, LEFT, RIGHT, UP, DOWN};
 
@@ -26,7 +28,7 @@ const std::string MoveNames[] = {"None", "Left", "Right", "Up", "Down"};
 #define FOOD_VALUE 4
 #define OutOfBounds(x) ((x.first < 0 || x.first == PLAYFIELD_WIDTH ||\
                          x.second < 0|| x.second == PLAYFIELD_HEIGHT))
-
+                    
 /********************************************************************//**
  * @class Playfield
  **********************************************************************/
@@ -43,14 +45,15 @@ class Playfield
 public:
    Playfield(bool placeObst = false);
    ~Playfield();
-
+  
    void draw();
-   bool moveHead(ValidMove);
+   bool moveHead(ValidMove); 
    void updatePlayfield();
    std::pair<int, int> translateHead(ValidMove);
    std::pair<int, int> placeNewFood();
    const int* getGrid() const;
    int getScore();
    void placeObstacles();
+   void drawObstacles();
 };
 #endif

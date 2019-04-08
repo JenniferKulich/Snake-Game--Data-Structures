@@ -67,32 +67,6 @@ ValidMove Player::makeMove(const Playfield *pf)
   //if there's not a path, get the DFS
   if(!BFSpath.hasPath(foodSpot))
   {
-    /*
-    //going to try to use the video algorithm
-    std::vector<int>pathFood = FindPath(grid, headSpot, foodSpot);
-
-    nextIndex = pathFood.front();
-
-    //calculate how this index relates to the head index
-    //this will the be index for moving left
-    //check if the headspot is right next to the foodspot
-    if(nextIndex == headSpot - 1)
-      return LEFT;
-    //this will be index for moving right
-    else if(nextIndex == headSpot + 1)
-      return RIGHT;
-    //this will be the index for moving down
-    else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
-      return DOWN;
-    //this will be the index for moving up
-    else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
-      return UP;
-
-      //if can't do anything, just go down
-      return NONE;
-    */
-
-
     //CODE FOR MANHATTAN MOVE
     ValidMove newPossibleMove = NONE;
     newPossibleMove = ManhattanMove(grid);
@@ -117,7 +91,7 @@ ValidMove Player::makeMove(const Playfield *pf)
       return NONE;
 
     return newPossibleMove;
-    
+
   }
 
   //go through the first item in the list and determine where to move to
