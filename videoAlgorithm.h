@@ -3,18 +3,22 @@
 
 #include <iostream>
 #include <list>
+#include <vector>
 #include "playfield.h"
+#include "graph.h"
+#include "BFSPath.h"
 
-struct VideoPath
-{
-  int fcost;
-  int hcost;
-  int parent;
-};
+using namespace std;
 
-void FindPath(int startIndex, int targetIndex);
-std::list<int> getNeightbors(int currentIndex);
-void retracePath(int startIndex, int endIndex);
+
+std::vector<int> FindPath( const int *grid, int startIndex, int targetIndex);
+std::vector<int> getNeighbors(const int *grid, int currentIndex);
+std::vector<int> retracePath(vector<int> parent, int startIndex, int endIndex);
+int findGCost(const int *grid, int currentSpot, int startSpot);
+int findHCost(const int *grid, int currentSpot, int endSpot);
+int getDistance(int startIndex, int endIndex);
+
+
 
 
 #endif

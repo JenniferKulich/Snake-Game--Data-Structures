@@ -13,7 +13,7 @@ int main()
    time_point<system_clock> start, end;
 
    Player *player = new Player();
-   Playfield *playfield = new Playfield();
+   Playfield *playfield = new Playfield(true);
    Game *game = new Game(player, playfield);
 
    while (!game->isGameOver())

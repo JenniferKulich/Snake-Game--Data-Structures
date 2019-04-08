@@ -128,4 +128,20 @@ April 4 (Thursday)
 	* Added the code from the video to some files just so I can mess around with it and
 		see how stuff works. I'm not quite sure how it implements things yet- especially
 		the path, and I'm not sure what happens if there's little dead end paths. This
-		looks like a more complicated version of Dijkstra's.
+		looks like a more complicated version of Dijkstra's. I'm naming it
+		'complicated Dijkstra'
+
+	April 5 (Sunday)
+		* Worked on trying to get complicated Dijkstra to work. I spent
+			quite some time just debugging  it and trying not to get any errors or
+			warning. This didn't help because in the video, a list was used, but I
+			realized that using a vector would be much better since I needed random
+			access. Looking back, a list would have a smaller complexity (an insertion
+			in the front for a vector is O(n) while a list would have been O(1)). I
+			should definitely change this! However, I also know that for this
+			algorithm, it would much cheaper to use a heap, so I may not convert
+			everything to lists.
+		* Complicated Dijkstra will seg fault when implemented, so I'll have to work
+			on that before I start using a heap. I probably don't need to, but I want
+			to make sure that I understand what's going on first.
+		* I'll investigate tomorrow why this is happening.
