@@ -32,7 +32,7 @@ Playfield::Playfield(bool obst) : tailLength(0), cellWidth(0), cellHeight(0),
       SnakeGraph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
       Biconnected bicon(&graph);
       CC cc(&graph);
-      count = cc.count() + bicon.articulationNodes().size(); 
+      count = cc.count() + bicon.articulationNodes().size();
    } while (count > 1);
 
    grid[head.first + head.second * PLAYFIELD_WIDTH] = HEAD_VALUE;
@@ -65,6 +65,14 @@ void Playfield::placeObstacles()
    if (!hasObstacles) return;
    int obstacleCount = 0.05 * PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
 
+//place in bottom right corner for trial
+  int trialPlacement = PLAYFIELD_WIDTH  - 1;
+  grid[trialPlacement] = TAIL_VALUE;
+
+//place in top right corner for trial
+  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1;
+  grid[trialPlacement] = TAIL_VALUE;
+
    while (obstacleCount--)
    {
       int placement;
@@ -75,7 +83,7 @@ void Playfield::placeObstacles()
       grid[placement] = TAIL_VALUE;
    }
 }
- 
+
 const int *Playfield::getGrid() const { return grid ; }
 
 void Playfield::updatePlayfield()
@@ -116,7 +124,7 @@ std::pair<int, int> Playfield::translateHead(ValidMove move)
 std::pair<int, int> Playfield::placeNewFood()
 {
    int x, y;
-   do 
+   do
    {
       x = rand() % PLAYFIELD_WIDTH;
       y = rand() % PLAYFIELD_HEIGHT;
@@ -129,13 +137,13 @@ int Playfield::getScore() { return tailLength+1 ; }
 
 bool Playfield::moveHead(ValidMove move)
 {
-   if (move == NONE) 
+   if (move == NONE)
       return false;
 
    std::pair<int, int> newHeadPosition = translateHead(move);
 
    // Hit the border
-   if (OutOfBounds(newHeadPosition)) 
+   if (OutOfBounds(newHeadPosition))
       return false;
 
    // Hit its tail

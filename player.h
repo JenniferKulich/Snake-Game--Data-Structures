@@ -11,6 +11,9 @@
 ValidMove ManhattanMove(const int *grid);
 void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
 
+int  newBottomRightCorner(const int *grid);
+int newTopRightCorner(const int *grid);
+
 class Player
 {
   bool searchingFood = true;
