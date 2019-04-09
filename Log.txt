@@ -155,4 +155,12 @@ April 4 (Thursday)
 			Also, what I was doing didn't make a weighted graph class, and at this
 			point, I would much rather use that, but I'm not sure how I would put it
 			in with my code. Also, it was horribly inefficient especially using
-			vecotrs.
+			vectors.
+		* I've been thinking about other potential ideas. One of them being a
+			strategy where I eat the food and then try to coil my snake up in the
+			quadrant it's in as much as I possibly can while still having a path
+			to the food. Then, I would take the shortest path to the food and continue
+			the process.  I could also coil my way through the quadrants to the food.
+			This would work super well on the no obstacle grid but not as much on the
+			obstacle one. I could make it potentially work by making sure that the
+			next move would still have a path to the food.
