@@ -7,7 +7,7 @@ void keyboard(unsigned char key, int x, int y)
 
 void display()
 {
-   utilityCentral(new DisplayEvent); 
+   utilityCentral(new DisplayEvent);
 }
 
 void reshape(int w, int h)
@@ -38,12 +38,12 @@ void utilityCentral(Event *event)
    // Passing a true parameter to the Playfield constructor will include
    // obstacles on the playfield.  Passing nothing or false prevents
    // obstacles from being added
-   static Playfield *playfield = new Playfield(true);
+   static Playfield *playfield = new Playfield(true); //run without obstacles
    static Game *game = new Game(player, playfield);
 
-   if (game->isGameOver()) 
+   if (game->isGameOver())
    {
-      std::cout << "GAME OVER!" << std::endl ; 
+      std::cout << "GAME OVER!" << std::endl ;
       std::cout << "Final Score: " << game->getScore() << std::endl;
       delete game;
       glutLeaveMainLoop();

@@ -55,6 +55,226 @@ ValidMove Player::makeMove(const Playfield *pf)
   //construct a graph
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
 
+  //if searching for food, do a BFS to the food
+
+  //if not searching for food, do BFS to the the bottom right, then top right
+  //corner, then top left corner, then bottom left corner. Will set searching
+  //for food to false and where've you're heading to true
+  //if cannot do the BFS to the walls/corners, then do manhattan path to it
+  
+  while(!searchingFood)
+  {
+    BFSPaths BFSpath(&graph, headSpot);
+
+    //if the botom right is set to true, go to the bottom right corner
+    if(toBottomRight)
+    {
+      std::list<int>pathToFood = BFSpath.PathTo(PLAYFIELD_WIDTH - 1);
+
+      // go to it
+      nextIndex = pathToFood.front();
+      if(nextIndex == headSpot - 1)
+      {
+        if(nextIndex == PLAYFIELD_WIDTH - 1)
+        {
+          toBottomRight = false;
+          toTopRight = true;
+        }
+        return LEFT;
+      }
+      //this will be index for moving right
+      else if(nextIndex == headSpot + 1)
+      {
+        if(nextIndex == PLAYFIELD_WIDTH - 1)
+        {
+          toBottomRight = false;
+          toTopRight = true;
+        }
+        return RIGHT;
+      }
+      //this will be the index for moving down
+      else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == PLAYFIELD_WIDTH - 1)
+        {
+          toBottomRight = false;
+          toTopRight = true;
+        }
+            return DOWN;
+      }
+
+      //this will be the index for moving up
+      else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == PLAYFIELD_WIDTH - 1)
+        {
+          toBottomRight = false;
+          toTopRight = true;
+        }
+        return UP;
+      }
+
+        //if can't do anything, do nothing
+        return NONE;
+    }
+
+    if(toTopRight)
+    {
+      std::list<int>pathToFood = BFSpath.PathTo((PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1);
+
+
+      // go to it
+      nextIndex = pathToFood.front();
+      if(nextIndex == headSpot - 1)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1)
+        {
+          toTopRight = false;
+          toTopLeft = true;
+        }
+        return LEFT;
+      }
+      //this will be index for moving right
+      else if(nextIndex == headSpot + 1)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1)
+        {
+          toTopRight = false;
+          toTopLeft = true;
+        }
+        return RIGHT;
+      }
+      //this will be the index for moving down
+      else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1)
+        {
+          toTopRight = false;
+          toTopLeft = true;
+        }
+            return DOWN;
+      }
+
+      //this will be the index for moving up
+      else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1)
+        {
+          toTopRight = false;
+          toTopLeft = true;
+        }
+        return UP;
+      }
+
+        //if can't do anything, do nothing
+        return NONE;
+    }
+
+    if(toTopLeft)
+    {
+      std::list<int>pathToFood = BFSpath.PathTo((PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH);
+
+      // go to it
+      nextIndex = pathToFood.front();
+      if(nextIndex == headSpot - 1)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        {
+          toTopLeft = false;
+          toBottomLeft = true;
+        }
+        return LEFT;
+      }
+      //this will be index for moving right
+      else if(nextIndex == headSpot + 1)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        {
+          toTopLeft = false;
+          toBottomLeft = true;
+        }
+        return RIGHT;
+      }
+      //this will be the index for moving down
+      else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        {
+          toTopLeft = false;
+          toBottomLeft = true;
+        }
+            return DOWN;
+      }
+
+      //this will be the index for moving up
+      else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        {
+          toTopLeft = false;
+          toBottomLeft = true;
+        }
+        return UP;
+      }
+
+        //if can't do anything, do nothing
+        return NONE;
+    }
+
+    if(toBottomLeft)
+    {
+      std::list<int>pathToFood = BFSpath.PathTo(0);
+
+      // go to it
+      nextIndex = pathToFood.front();
+      if(nextIndex == headSpot - 1)
+      {
+        if(nextIndex == 0)
+        {
+          searchingFood = true;
+          toBottomLeft = false;
+        }
+        return LEFT;
+      }
+      //this will be index for moving right
+      else if(nextIndex == headSpot + 1)
+      {
+        if(nextIndex == 0)
+        {
+          searchingFood = true;
+          toBottomLeft = false;
+        }
+        return RIGHT;
+      }
+      //this will be the index for moving down
+      else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == 0)
+        {
+          searchingFood = true;
+          toBottomLeft = false;
+        }
+            return DOWN;
+      }
+
+      //this will be the index for moving up
+      else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+      {
+        if(nextIndex == 0)
+        {
+          searchingFood = true;
+          toBottomLeft = false;
+        }
+        return UP;
+      }
+
+        //if can't do anything, do nothing
+        return NONE;
+    }
+
+  }
+
+
   //construct BFS
   BFSPaths BFSpath(&graph, headSpot);
 
@@ -100,19 +320,49 @@ ValidMove Player::makeMove(const Playfield *pf)
   //calculate how this index relates to the head index
   //this will the be index for moving left
   //check if the headspot is right next to the foodspot
+  //check to see if the next thing doing is eating food. If so, change the bools
   if(nextIndex == headSpot - 1)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      searchingFood = false;
+      toBottomRight = true;
+    }
     return LEFT;
+  }
   //this will be index for moving right
   else if(nextIndex == headSpot + 1)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      searchingFood = false;
+      toBottomRight = true;
+    }
     return RIGHT;
+  }
   //this will be the index for moving down
   else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
-    return DOWN;
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      searchingFood = false;
+      toBottomRight = true;
+    }
+        return DOWN;
+  }
+
   //this will be the index for moving up
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      searchingFood = false;
+      toBottomRight = true;
+    }
     return UP;
+  }
 
-    //if can't do anything, just go down
+    //if can't do anything, do nothing
     return NONE;
 }
 

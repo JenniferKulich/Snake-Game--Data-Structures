@@ -164,3 +164,19 @@ April 4 (Thursday)
 			This would work super well on the no obstacle grid but not as much on the
 			obstacle one. I could make it potentially work by making sure that the
 			next move would still have a path to the food.
+
+April 9 (Tuesday)
+	* Tried a new strategy where the snake will take the BFS to the food. It will
+		then take BFS to get to the bottom right corner, then the top right corner
+		then the top left corner, then the bottom left corner. Once it gets to the
+		bottom left corner, it will take BFS to the next food and will loop through
+		again. This should help keep the playfield clear up the playfield for the
+		snake. If there is food along the BFS path to a corner, the snake will eat
+		it and continue on its way to the corner.
+	* Problems as of now before I commit code: if there is an obstacle in the
+		corner it's trying to go to, the game ends. Sometimes, the snake will trap
+		itself in the corner by not being in the top row if possible (fix: do a
+		check to make sure the snake cannot move up into top row- or sides too I
+		guess).
+	* Ideas I have before I commit: Maybe only do this after snake gets a certain
+		length????

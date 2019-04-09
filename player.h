@@ -13,6 +13,11 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
 
 class Player
 {
+  bool searchingFood = true;
+  bool toBottomRight = false;
+  bool toTopRight = false;
+  bool toTopLeft = false;
+  bool toBottomLeft = false;
 public:
    Player ();
    ValidMove makeMove(const Playfield *);
