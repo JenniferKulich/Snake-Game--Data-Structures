@@ -112,6 +112,7 @@ ValidMove Player::makeMove(const Playfield *pf)
         else if(newPossibleMove == NONE)
           return NONE;
 
+        std::cout << "newPossibleMove: " << newPossibleMove << std::endl;
         return newPossibleMove;
 
       }
@@ -234,6 +235,7 @@ ValidMove Player::makeMove(const Playfield *pf)
         else if(newPossibleMove == NONE)
           return NONE;
 
+        std::cout << "newPossibleMove: " << newPossibleMove << std::endl;
         return newPossibleMove;
 
       }
@@ -312,8 +314,7 @@ ValidMove Player::makeMove(const Playfield *pf)
           //check if can move over to top wall at all, if can, do that and
           //override BFS- don't want to trap self if there's a block in the corner
           //check if the moving up will not allow it to move left after
-          if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH - 2
-          && headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - (2 * PLAYFIELD_WIDTH) + 1)
+          if(headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
           {
             //check if can move up, if so, check if can also move left after the
             //move up
@@ -353,6 +354,7 @@ ValidMove Player::makeMove(const Playfield *pf)
         else if(newPossibleMove == NONE)
           return NONE;
 
+        std::cout << "newPossibleMove: " << newPossibleMove << std::endl;
         return newPossibleMove;
 
       }
@@ -467,6 +469,7 @@ ValidMove Player::makeMove(const Playfield *pf)
         else if(newPossibleMove == NONE)
           return NONE;
 
+        std::cout << "newPossibleMove: " << newPossibleMove << std::endl;
         return newPossibleMove;
 
       }
