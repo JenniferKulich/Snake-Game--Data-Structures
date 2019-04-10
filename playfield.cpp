@@ -148,6 +148,7 @@ std::pair<int, int> Playfield::placeNewFood()
    } while (grid[y * PLAYFIELD_WIDTH + x] != CLEAR_VALUE);
    grid[x + y * PLAYFIELD_WIDTH] = FOOD_VALUE;
    return std::pair<int, int>(x, y);
+
 }
 
 int Playfield::getScore() { return tailLength+1 ; }

@@ -576,7 +576,12 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      toBottomRight = true;
+
+      //check if food it's in top row, if it is, set toTopLeft to true
+      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else
+        toBottomRight = true;
     }
     return LEFT;
   }
@@ -586,7 +591,10 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      toBottomRight = true;
+      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else
+        toBottomRight = true;
     }
     return RIGHT;
   }
@@ -596,7 +604,10 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      toBottomRight = true;
+      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else
+        toBottomRight = true;
     }
         return DOWN;
   }
@@ -607,7 +618,10 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      toBottomRight = true;
+      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else
+        toBottomRight = true;
     }
     return UP;
   }
