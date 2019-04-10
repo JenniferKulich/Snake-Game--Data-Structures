@@ -65,12 +65,22 @@ void Playfield::placeObstacles()
    if (!hasObstacles) return;
    int obstacleCount = 0.05 * PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
 
+int trialPlacement;
+/*
 //place in bottom right corner for trial
-  int trialPlacement = PLAYFIELD_WIDTH  - 1;
+   trialPlacement = PLAYFIELD_WIDTH  - 1;
   grid[trialPlacement] = TAIL_VALUE;
 
 //place in top right corner for trial
   trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1;
+  grid[trialPlacement] = TAIL_VALUE;
+
+//place in top left corner for trial
+  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH;
+  grid[trialPlacement] = TAIL_VALUE;
+*/
+//place in bottom left corner for trial
+  trialPlacement = 0;
   grid[trialPlacement] = TAIL_VALUE;
 
    while (obstacleCount--)

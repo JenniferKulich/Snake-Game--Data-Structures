@@ -180,3 +180,8 @@ April 9 (Tuesday)
 		guess).
 	* Ideas I have before I commit: Maybe only do this after snake gets a certain
 		length????
+	* Fixed what to do if there is a block in the corner. Also changed it so that
+		the snake will just go to the far right after eating the food instead of
+		going to the bottom corner.
+	* What to do next: If the snake is not in the top or side rows when it can be,
+		that move will override the BFS move. 

@@ -13,6 +13,9 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
 
 int  newBottomRightCorner(const int *grid);
 int newTopRightCorner(const int *grid);
+int newTopLeftCorner(const int *grid);
+int toRightSide(const int *grid, int playerIndex);
+int newBottomLeftCorner(const int *grid);
 
 class Player
 {
