@@ -29,6 +29,10 @@ public:
    ValidMove makeMove(const Playfield *);
    static int food;
    static int moveCount;
+   ValidMove moveBottomRight(const int *grid, int headSpot, int foodSpot, int &contin);
+   ValidMove ManhattanChecker(const int *grid, int headSpot, int foodSpot);
+
+
 private:
 };
 
