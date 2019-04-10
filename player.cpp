@@ -191,20 +191,14 @@ ValidMove Player::makeMove(const Playfield *pf)
       //check if can move over to right wall at all, if can, do that and
       //override BFS- don't want to trap self if there's a block in the corner
       //check if the moving right will not allow it to move up after
+      if((headSpot + 1) % PLAYFIELD_WIDTH != 0)
+      {
+        //see if can move right and will be able to move up after it
+        if((grid[headSpot + 1] == CLEAR_VALUE || grid[headSpot + 1] == FOOD_VALUE)
+        && (grid[headSpot + 1 + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot + 1 + PLAYFIELD_WIDTH] == FOOD_VALUE))
+          return RIGHT;
+      }
 
-/*
-      if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH - 2
-        && headSpot > (2 * PLAYFIELD_WIDTH) - 2)
-        {
-            std::cout << "Causing problems?" << std::endl;
-            //check if can move right, if so, check if can also move up after the
-            //move up
-            if((grid[headSpot + 1] == CLEAR_VALUE || grid[headSpot + 1] == FOOD_VALUE)
-              && (grid[headSpot + PLAYFIELD_WIDTH + 1] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH + 1] == FOOD_VALUE))
-                return RIGHT;
-        }
-
-*/
       std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1*/ corner);
 
       //check if there is a path
@@ -578,7 +572,7 @@ ValidMove Player::makeMove(const Playfield *pf)
       searchingFood = false;
 
       //check if food it's in top row, if it is, set toTopLeft to true
-      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
       else
         toBottomRight = true;
@@ -591,7 +585,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
       else
         toBottomRight = true;
@@ -604,7 +598,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
       else
         toBottomRight = true;
@@ -618,7 +612,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     if(grid[nextIndex] == FOOD_VALUE)
     {
       searchingFood = false;
-      if(nextIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
       else
         toBottomRight = true;

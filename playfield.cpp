@@ -67,6 +67,9 @@ void Playfield::placeObstacles()
 
 int trialPlacement;
 
+//place a brick on right side just for trying stuff
+trialPlacement = (6 * PLAYFIELD_WIDTH) - 1;
+grid[trialPlacement] = TAIL_VALUE;
 //place in bottom right corner for trial
 //   trialPlacement = PLAYFIELD_WIDTH  - 1;
 //  grid[trialPlacement] = TAIL_VALUE;
