@@ -144,7 +144,33 @@ ValidMove Player::makeMove(const Playfield *pf)
         continue;
       }
 
+      //try to stick to the very right wall
 
+    //if on right wall and can keep being in top row, do it
+      if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH && headSpot > PLAYFIELD_WIDTH)
+      {
+          //check if can keep moving right
+          if(grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH] == FOOD_VALUE)
+              return UP;
+      }
+
+      //check if can move over to right wall at all, if can, do that and
+      //override BFS- don't want to trap self if there's a block in the corner
+      //check if the moving right will not allow it to move up after
+
+/*
+      if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH - 2
+        && headSpot > (2 * PLAYFIELD_WIDTH) - 2)
+        {
+            std::cout << "Causing problems?" << std::endl;
+            //check if can move right, if so, check if can also move up after the
+            //move up
+            if((grid[headSpot + 1] == CLEAR_VALUE || grid[headSpot + 1] == FOOD_VALUE)
+              && (grid[headSpot + PLAYFIELD_WIDTH + 1] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH + 1] == FOOD_VALUE))
+                return RIGHT;
+        }
+
+*/
       std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1*/ corner);
 
 
@@ -219,7 +245,7 @@ ValidMove Player::makeMove(const Playfield *pf)
             if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
               return LEFT;
           }
-          //check if can move over to right wall at all, if can, do that and
+          //check if can move over to top wall at all, if can, do that and
           //override BFS- don't want to trap self if there's a block in the corner
           //check if the moving up will not allow it to move left after
           if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH - 2
@@ -293,6 +319,25 @@ ValidMove Player::makeMove(const Playfield *pf)
         toTopLeft = false;
         searchingFood = true;
         continue;
+      }
+
+      //if on column, keep there if can
+      if(headSpot % PLAYFIELD_WIDTH == 0 && (headSpot > 0 && headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH))
+      {
+        //check if can keep moving down
+        if(grid[headSpot - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE)
+          return DOWN;
+      }
+      //check if can move over to top wall at all, if can, do that and
+      //override BFS- don't want to trap self if there's a block in the corner
+      //check if the moving up will not allow it to move left after
+
+    //if not on the column, the go to it
+      if(headSpot % PLAYFIELD_WIDTH != 0)
+      {
+        //check if can move left to get to spot
+        if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
+          return LEFT;
       }
 
 

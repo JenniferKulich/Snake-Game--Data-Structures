@@ -75,13 +75,16 @@ int trialPlacement;
   trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1;
   grid[trialPlacement] = TAIL_VALUE;
 
-//place in top left corner for trial
-  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH;
+//place a brick on the left wall
+  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (5 * PLAYFIELD_WIDTH);
   grid[trialPlacement] = TAIL_VALUE;
+//place in top left corner for trial
+//  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH;
+//  grid[trialPlacement] = TAIL_VALUE;
 
 //place a block on the top row for testing
-  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT - 5);
-  grid[trialPlacement] = TAIL_VALUE;
+//  trialPlacement = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT - 5);
+//  grid[trialPlacement] = TAIL_VALUE;
 
 //place in bottom left corner for trial
 //  trialPlacement = 0;
