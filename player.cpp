@@ -208,6 +208,30 @@ ValidMove Player::makeMove(const Playfield *pf)
         continue;
       }
 
+      //to handle from any row, check if less than the playfield but within the
+      //correct columns- make sure you can move up, if on row below the top row, make
+      //sure you can also move left after moving into the top row
+
+          //if in top row and can keep being in top row, do it
+          if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 && headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH)
+          {
+            //check if can keep moving right
+            if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
+              return LEFT;
+          }
+          //check if can move over to right wall at all, if can, do that and
+          //override BFS- don't want to trap self if there's a block in the corner
+          //check if the moving up will not allow it to move left after
+          if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH - 2
+          && headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - (2 * PLAYFIELD_WIDTH) + 1)
+          {
+            //check if can move up, if so, check if can also move left after the
+            //move up
+            if((grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH] == FOOD_VALUE)
+              && (grid[headSpot + PLAYFIELD_WIDTH - 1] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH - 1] == FOOD_VALUE))
+                return UP;
+          }
+
 
       std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH*/ corner);
 
