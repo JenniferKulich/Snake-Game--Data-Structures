@@ -84,6 +84,39 @@ ValidMove Player::makeMove(const Playfield *pf)
 
       std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo/*PLAYFIELD_WIDTH - 1*/);
 
+      //check if there is a path
+      //if there's not a path, do the Manhattan move
+      if(!BFSpath.hasPath(rightMoveTo))
+      {
+        std::cout << "Manhattan Move" << std::endl;
+        //CODE FOR MANHATTAN MOVE
+        ValidMove newPossibleMove = NONE;
+        newPossibleMove = ManhattanMove(grid);
+
+        if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
+        grid[headSpot + 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE &&
+        grid[headSpot - 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+      grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+        grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == NONE)
+          return NONE;
+
+        return newPossibleMove;
+
+      }
+
+
       // go to it
       nextIndex = pathToFood.front();
       if(nextIndex == headSpot - 1)
@@ -173,6 +206,37 @@ ValidMove Player::makeMove(const Playfield *pf)
 */
       std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 1*/ corner);
 
+      //check if there is a path
+      //if there's not a path, do the Manhattan move
+      if(!BFSpath.hasPath(corner))
+      {
+        std::cout << "Manhattan Move" << std::endl;
+        //CODE FOR MANHATTAN MOVE
+        ValidMove newPossibleMove = NONE;
+        newPossibleMove = ManhattanMove(grid);
+
+        if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
+        grid[headSpot + 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE &&
+        grid[headSpot - 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+      grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+        grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == NONE)
+          return NONE;
+
+        return newPossibleMove;
+
+      }
 
       // go to it
       nextIndex = pathToFood.front();
@@ -261,6 +325,38 @@ ValidMove Player::makeMove(const Playfield *pf)
 
       std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH*/ corner);
 
+      //check if there is a path
+      //if there's not a path, do the Manhattan move
+      if(!BFSpath.hasPath(corner))
+      {
+        std::cout << "Manhattan Move" << std::endl;
+        //CODE FOR MANHATTAN MOVE
+        ValidMove newPossibleMove = NONE;
+        newPossibleMove = ManhattanMove(grid);
+
+        if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
+        grid[headSpot + 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE &&
+        grid[headSpot - 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+      grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+        grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == NONE)
+          return NONE;
+
+        return newPossibleMove;
+
+      }
+
       // go to it
       nextIndex = pathToFood.front();
       if(nextIndex == headSpot - 1)
@@ -343,6 +439,39 @@ ValidMove Player::makeMove(const Playfield *pf)
 
       std::list<int>pathToFood = BFSpath.PathTo(corner);
 
+      //check if there is a path
+      //if there's not a path, do the Manhattan move
+      if(!BFSpath.hasPath(corner))
+      {
+        std::cout << "Manhattan Move" << std::endl;
+        //CODE FOR MANHATTAN MOVE
+        ValidMove newPossibleMove = NONE;
+        newPossibleMove = ManhattanMove(grid);
+
+        if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
+        grid[headSpot + 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE &&
+        grid[headSpot - 1] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+      grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+        grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
+          return NONE;
+
+        else if(newPossibleMove == NONE)
+          return NONE;
+
+        return newPossibleMove;
+
+      }
+
+
       // go to it
       nextIndex = pathToFood.front();
       if(nextIndex == headSpot - 1)
@@ -402,7 +531,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
 
   //check if there is a path
-  //if there's not a path, get the DFS
+  //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(foodSpot))
   {
     //CODE FOR MANHATTAN MOVE

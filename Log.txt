@@ -197,4 +197,8 @@ April 10 (Wednesday)
 		bottom
 	* Maybe if can't get to the corner, try to go to the next food and start over
 		the loop and if can't get to the food, just loiter with intent to get the
-		what opens first- food or corner 
+		what opens first- food or corner
+	* Added code that will have the snake do the Manhattan route. My average score
+		did not go up by much which is concerning to me. I feel like it should have
+		gone up by more than one point. I'm going to go through and watch the snake
+		play to see where it's going wrong.
