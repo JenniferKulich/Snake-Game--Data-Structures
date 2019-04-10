@@ -32,6 +32,7 @@ public:
    ValidMove moveBottomRight(const int *grid, int headSpot, int foodSpot, bool &contin);
    ValidMove moveTopRight(const int *grid, int headSpot, int foodSpot, bool &contin);
    ValidMove moveTopLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
+   ValidMove moveBottomLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
    ValidMove ManhattanChecker(const int *grid, int headSpot, int foodSpot);
 
 

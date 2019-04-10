@@ -61,8 +61,6 @@ ValidMove Player::makeMove(const Playfield *pf)
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
   //if cannot do the BFS to the walls/corners, then do manhattan path to it
-  int corner;
-  int rightMoveTo;
   bool contin = false;
   ValidMove nonSearchingMove;
   while(!searchingFood)
@@ -99,120 +97,12 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     if(toBottomLeft)
     {
-      corner = 0;
-      if(grid[corner] != CLEAR_VALUE && grid[corner] != FOOD_VALUE)
-        corner = newBottomLeftCorner(grid);
-
-      if(corner == 20000)
-      {
-        toTopLeft = false;
-        searchingFood = true;
+      nonSearchingMove= moveBottomLeft(grid,headSpot, foodSpot, contin);
+      if(contin == true)
         continue;
-      }
-
-      //if on column, keep there if can
-      if(headSpot % PLAYFIELD_WIDTH == 0 && (headSpot > 0 && headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH))
-      {
-        //check if can keep moving down
-        if(grid[headSpot - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE)
-          return DOWN;
-      }
-      //check if can move over to top wall at all, if can, do that and
-      //override BFS- don't want to trap self if there's a block in the corner
-      //check if the moving up will not allow it to move left after
-
-    //if not on the column, the go to it
-      if(headSpot % PLAYFIELD_WIDTH != 0)
-      {
-        //check if can move left to get to spot
-        if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
-          return LEFT;
-      }
-
-
-      std::list<int>pathToFood = BFSpath.PathTo(corner);
-
-      //check if there is a path
-      //if there's not a path, do the Manhattan move
-      if(!BFSpath.hasPath(corner))
-      {
-        std::cout << "Manhattan Move" << std::endl;
-        //CODE FOR MANHATTAN MOVE
-        ValidMove newPossibleMove = NONE;
-        newPossibleMove = ManhattanMove(grid);
-
-        if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
-        grid[headSpot + 1] != FOOD_VALUE))
-          return NONE;
-
-        else if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE &&
-        grid[headSpot - 1] != FOOD_VALUE))
-          return NONE;
-
-        else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
-      grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
-          return NONE;
-
-        else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
-        grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
-          return NONE;
-
-        else if(newPossibleMove == NONE)
-          return NONE;
-
-        std::cout << "newPossibleMove: " << newPossibleMove << std::endl;
-        return newPossibleMove;
-
-      }
-
-
-      // go to it
-      nextIndex = pathToFood.front();
-      if(nextIndex == headSpot - 1)
-      {
-        if(nextIndex == corner)
-        {
-          searchingFood = true;
-          toBottomLeft = false;
-        }
-        return LEFT;
-      }
-      //this will be index for moving right
-      else if(nextIndex == headSpot + 1)
-      {
-        if(nextIndex == corner)
-        {
-          searchingFood = true;
-          toBottomLeft = false;
-        }
-        return RIGHT;
-      }
-      //this will be the index for moving down
-      else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
-      {
-        if(nextIndex == corner)
-        {
-          searchingFood = true;
-          toBottomLeft = false;
-        }
-            return DOWN;
-      }
-
-      //this will be the index for moving up
-      else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
-      {
-        if(nextIndex == corner)
-        {
-          searchingFood = true;
-          toBottomLeft = false;
-        }
-        return UP;
-      }
-
-        //if can't do anything, do nothing
-        return NONE;
+      else
+        return nonSearchingMove;
     }
-
   }
 
 
@@ -227,33 +117,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(foodSpot))
-  {
-    //CODE FOR MANHATTAN MOVE
-    ValidMove newPossibleMove = NONE;
-    newPossibleMove = ManhattanMove(grid);
-
-    if(newPossibleMove == RIGHT && (grid[headSpot + 1] != CLEAR_VALUE &&
-    grid[headSpot + 1] != FOOD_VALUE))
-      return NONE;
-
-    else if(newPossibleMove == LEFT && (grid[headSpot - 1] != CLEAR_VALUE &&
-    grid[headSpot - 1] != FOOD_VALUE))
-      return NONE;
-
-    else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
-  grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
-      return NONE;
-
-    else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
-    grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
-      return NONE;
-
-    else if(newPossibleMove == NONE)
-      return NONE;
-
-    return newPossibleMove;
-
-  }
+    return ManhattanChecker(grid, headSpot, foodSpot);
 
   //go through the first item in the list and determine where to move to
   nextIndex = pathToFood.front();
@@ -740,7 +604,78 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool 
     return NONE;
 }
 
+ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bool &contin)
+{
+  int corner;
+  int nextIndex;
+  Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
 
+  BFSPaths BFSpath(&graph, headSpot);
+
+  corner = 0;
+  if(grid[corner] != CLEAR_VALUE && grid[corner] != FOOD_VALUE)
+    corner = newBottomLeftCorner(grid);
+
+  if(corner == 20000)
+  {
+    toTopLeft = false;
+    searchingFood = true;
+    contin = true;
+    return NONE;
+  }
+
+  //if on column, keep there if can
+  if(headSpot % PLAYFIELD_WIDTH == 0 && (headSpot > 0 && headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH))
+  {
+    //check if can keep moving down
+    if(grid[headSpot - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE)
+      return DOWN;
+  }
+  //check if can move over to top wall at all, if can, do that and
+  //override BFS- don't want to trap self if there's a block in the corner
+  //check if the moving up will not allow it to move left after
+
+//if not on the column, the go to it
+  if(headSpot % PLAYFIELD_WIDTH != 0)
+  {
+    //check if can move left to get to spot
+    if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
+      return LEFT;
+  }
+
+
+  std::list<int>pathToFood = BFSpath.PathTo(corner);
+
+  //check if there is a path
+  //if there's not a path, do the Manhattan move
+  if(!BFSpath.hasPath(corner))
+    return ManhattanChecker(grid, headSpot, foodSpot);
+
+
+  // go to it
+  nextIndex = pathToFood.front();
+  if(nextIndex == corner)
+  {
+    searchingFood = true;
+    toBottomLeft = false;
+  }
+
+  if(nextIndex == headSpot - 1)
+    return LEFT;
+  //this will be index for moving right
+  else if(nextIndex == headSpot + 1)
+    return RIGHT;
+  //this will be the index for moving down
+  else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
+        return DOWN;
+
+  //this will be the index for moving up
+  else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+    return UP;
+
+    //if can't do anything, do nothing
+    return NONE;
+}
 
 
 ValidMove Player::ManhattanChecker(const int *grid, int headSpot, int foodSpot)
