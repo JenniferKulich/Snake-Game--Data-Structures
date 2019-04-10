@@ -143,6 +143,7 @@ std::pair<int, int> Playfield::translateHead(ValidMove move)
 
 std::pair<int, int> Playfield::placeNewFood()
 {
+  
    int x, y;
    do
    {
@@ -151,7 +152,6 @@ std::pair<int, int> Playfield::placeNewFood()
    } while (grid[y * PLAYFIELD_WIDTH + x] != CLEAR_VALUE);
    grid[x + y * PLAYFIELD_WIDTH] = FOOD_VALUE;
    return std::pair<int, int>(x, y);
-
 }
 
 int Playfield::getScore() { return tailLength+1 ; }
