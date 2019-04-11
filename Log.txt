@@ -259,4 +259,8 @@ April 10 (Wednesday)
 			helped the score some.
 		* Put functions in the private part of the class. The user does not need
 			to use them at all since they're all about determining what move should
-			be made based on where the snake is in the game. 
+			be made based on where the snake is in the game.
+		* Cleaned up code (took out commented out code that I forgot about, took out
+			a surprising amount of unused variables that were being passed into
+			function, made lines less than 80 characters, etc)
+		* Added documentation to code. 
