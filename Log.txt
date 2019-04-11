@@ -192,13 +192,54 @@ April 10 (Wednesday)
 		a path.
 	* I'm also going to add code that will have the snake move to the top or the
 		side rows if it can- this will cause less problems for BFS
-	* NOTE: if it's seeking food and the food is on the top border, just skip the
-		BFS to the food! - if on top row, to go to right wall, just go to the
-		bottom
-	* Maybe if can't get to the corner, try to go to the next food and start over
+	* Quick thought before I commit just so I remember:
+		Maybe if can't get to the corner, try to go to the next food and start over
 		the loop and if can't get to the food, just loiter with intent to get the
 		what opens first- food or corner
 	* Added code that will have the snake do the Manhattan route. My average score
 		did not go up by much which is concerning to me. I feel like it should have
 		gone up by more than one point. I'm going to go through and watch the snake
 		play to see where it's going wrong.
+
+	* Ok so an overview of what I did today: I added code that will have the
+		snake do a BFS to the food until it reaches a certain length. The length
+		will either be the PLAYFIELD_WIDTH or PLAYFIELD_HEIGHT- whichever one is
+		shorter. This will make sure that the board will never be split in 2 and
+		possibly trap the snake. Even if it were to happen, the Manhattan code is
+		in place to help this. (Side note for later: maybe I should do this up until
+		I need to use the Manhattan code...). The snake will then go to the right
+		wall and hug it until it gets to the top right corner. After that, it'll
+		hug the top row until it reaches the top left corner. After that, it'll hug
+		the very left column until it reaches the bottom left corner. Then it will
+		do a BFS to the food and the cycle will repeat. The goal of this is to keep
+		the playfield open when the snake is long. This should help the snake get
+		much longer than just straight BFS. I also made my code shorter and in
+		separate functions.
+	* I thought this would help me get a much higher score. It would make sense
+		too, however my driver says that the average is 43 (I think my driver is
+		broken though because it does that whether I put in true for obstacles or
+		not). I have yet to witness a run where I get a super low score. Maybe I
+		just need to run it more. When I've ran it without obstacles, I get in the
+		50's every time and nearly above 60 every time. With obstacles, I can almost
+		always get into the 50's. I guess I'll just have to run it more without the
+		driver. Also, the driver runs super slow. I think this is because of how
+		many turns it takes to the edge hugging. Overall, the turn time shouldn't
+		be that high. I need to make sure it's below 0.01 though.
+	* Ideally, I would like to use a weighted graph, however, I'm still confused
+		on how to implement it. I know Dr. Hinker said he would put up code for it,
+		so I think it was more worth working on this rather than trying to figure
+		out weighted graphs. I know we had an example implementation in the videos
+		given to us that was in Java, but they didn't make too much sense in terms
+		of implementation.
+	* As you've seen, I started working on this yesterday afternoon, and I worked
+		on it from 10 this morning until 8 tonight. I've worked pretty hard on this
+		and it's really frustrating how little I've improved. I honestly didn't
+		mind working on it all day, but I would have liked to have improved more.
+		It's days like this that make me think: I like programming but I'm such a
+		terrible programmer.
+	* For tomorrow:
+		Look at the code and try to witness a low score. Maybe the Manhattan isn't
+		working for the hugging algorithm? Or it's trapping itself somehow? I guess
+		we'll see. I have a few ideas.
+		Continue cleaning up code.
+		Put functions in private part of class if they're implementation! 
