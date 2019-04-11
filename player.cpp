@@ -459,12 +459,12 @@ ValidMove Player::moveBottomRight(const int *grid, int headSpot, int foodSpot, b
     return NONE;
   }
 
-  std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo/*PLAYFIELD_WIDTH - 1*/);
+  std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo);
 
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(rightMoveTo))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot, rightMoveTo);
 
 
   // go to it
@@ -537,7 +537,7 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot, corner);
 
   // go to it
   nextIndex = pathToFood.front();
@@ -606,12 +606,12 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool 
   }
 
 
-  std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH*/ corner);
+  std::list<int>pathToFood = BFSpath.PathTo(corner);
 
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot, corner);
 
   // go to it
   nextIndex = pathToFood.front();
@@ -681,7 +681,7 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bo
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot, corner);
 
 
   // go to it
