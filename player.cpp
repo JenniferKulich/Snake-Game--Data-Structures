@@ -57,13 +57,32 @@ ValidMove Player::makeMove(const Playfield *pf)
 
   //if searching for food, do a BFS to the food
 
+  //if the food eaten (aka tail length) is less than the smaller of the width
+  //and height of the board, just do BFS. Once gets length, won't do BFS
+  int smallest;
+  if(PLAYFIELD_WIDTH < PLAYFIELD_HEIGHT)
+    smallest = PLAYFIELD_WIDTH;
+  else
+    smallest = PLAYFIELD_HEIGHT;
+
+  if(foodEaten < smallest)
+  {
+    startingBFS = true;
+    searchingFood = false;
+  }
+  else
+    startingBFS = false;
+  if(foodEaten == smallest)
+  {
+    searchingFood = true;
+  }
   //if not searching for food, do BFS to the the bottom right, then top right
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
   //if cannot do the BFS to the walls/corners, then do manhattan path to it
   bool contin = false;
   ValidMove nonSearchingMove;
-  while(!searchingFood)
+  while(!searchingFood && !startingBFS)
   {
     BFSPaths BFSpath(&graph, headSpot);
 
@@ -136,6 +155,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   {
     if(grid[nextIndex] == FOOD_VALUE)
     {
+      foodEaten +=1;
       searchingFood = false;
 
       //check if food it's in top row, if it is, set toTopLeft to true
@@ -155,6 +175,8 @@ ValidMove Player::makeMove(const Playfield *pf)
   {
     if(grid[nextIndex] == FOOD_VALUE)
     {
+      foodEaten +=1;
+
       searchingFood = false;
       if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
@@ -171,6 +193,8 @@ ValidMove Player::makeMove(const Playfield *pf)
   {
     if(grid[nextIndex] == FOOD_VALUE)
     {
+      foodEaten +=1;
+
       searchingFood = false;
       if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
@@ -188,6 +212,8 @@ ValidMove Player::makeMove(const Playfield *pf)
   {
     if(grid[nextIndex] == FOOD_VALUE)
     {
+      foodEaten +=1;
+
       searchingFood = false;
       if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
