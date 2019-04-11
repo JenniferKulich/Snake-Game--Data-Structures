@@ -243,7 +243,7 @@ ValidMove Player::makeMove(const Playfield *pf)
  * @return - the move for the Manhattan move
  *
  *****************************************************************************/
-ValidMove ManhattanMove(const int *grid)
+ValidMove Player::ManhattanMove(const int *grid)
 {
   ValidMove move = NONE;
   std::pair<int, int> head = getLocation(grid, HEAD_VALUE);
@@ -292,7 +292,7 @@ ValidMove ManhattanMove(const int *grid)
  * @param[in] headIndex - where the head of the snake is located
  *
  *****************************************************************************/
-void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex)
+void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex)
 {
   //function will take in a move, if the move cannot be made, a new move and
   //call this function again to see if that move can be made
@@ -347,7 +347,7 @@ void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int coun
 }
 
 
-int toRightSide(const int *grid, int playerIndex)
+int Player::toRightSide(const int *grid, int playerIndex)
 {
   //get the right most index based in row you're on
   int mostRightIndex;
@@ -385,7 +385,7 @@ int toRightSide(const int *grid, int playerIndex)
 }
 
 
-int  newBottomRightCorner(const int *grid)
+int  Player::newBottomRightCorner(const int *grid)
 {
   //start at playfieldWidth - 1 + playfieldWidth
   for(int i = ((PLAYFIELD_WIDTH - 1) + PLAYFIELD_WIDTH); i < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 * PLAYFIELD_WIDTH); i = i + PLAYFIELD_WIDTH)
@@ -398,7 +398,7 @@ int  newBottomRightCorner(const int *grid)
   return 1;
 }
 
-int newTopRightCorner(const int *grid)
+int Player::newTopRightCorner(const int *grid)
 {
   //start at width * height - 2 and go until width * height - width + 1
   for(int i = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 2; i > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH + 1; i --)
@@ -411,7 +411,7 @@ int newTopRightCorner(const int *grid)
   return 1;
 }
 
-int newTopLeftCorner(const int *grid)
+int Player::newTopLeftCorner(const int *grid)
 {
   //start at width * height) - width )- width  greater than width i--
   for(int i = ((PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH; i > PLAYFIELD_WIDTH; i--)
@@ -425,7 +425,7 @@ int newTopLeftCorner(const int *grid)
   return 1;
 }
 
-int newBottomLeftCorner(const int *grid)
+int Player::newBottomLeftCorner(const int *grid)
 {
   //start at 1 and go until (width - 1) - 1 i++
   for(int i = 1; i < PLAYFIELD_WIDTH - 2; i++)
@@ -459,12 +459,12 @@ ValidMove Player::moveBottomRight(const int *grid, int headSpot, int foodSpot, b
     return NONE;
   }
 
-  std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo);
+  std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo/*PLAYFIELD_WIDTH - 1*/);
 
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(rightMoveTo))
-    return ManhattanChecker(grid, headSpot, rightMoveTo);
+    return ManhattanChecker(grid, headSpot, foodSpot);
 
 
   // go to it
@@ -537,7 +537,7 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, corner);
+    return ManhattanChecker(grid, headSpot, foodSpot);
 
   // go to it
   nextIndex = pathToFood.front();
@@ -606,12 +606,12 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool 
   }
 
 
-  std::list<int>pathToFood = BFSpath.PathTo(corner);
+  std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH*/ corner);
 
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, corner);
+    return ManhattanChecker(grid, headSpot, foodSpot);
 
   // go to it
   nextIndex = pathToFood.front();
@@ -681,7 +681,7 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bo
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, corner);
+    return ManhattanChecker(grid, headSpot, foodSpot);
 
 
   // go to it

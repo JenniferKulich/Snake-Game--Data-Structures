@@ -8,14 +8,6 @@
 #include "BFSPath.h"
 #include "DFSPath.h"
 
-ValidMove ManhattanMove(const int *grid);
-void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
-
-int  newBottomRightCorner(const int *grid);
-int newTopRightCorner(const int *grid);
-int newTopLeftCorner(const int *grid);
-int toRightSide(const int *grid, int playerIndex);
-int newBottomLeftCorner(const int *grid);
 
 class Player
 {
@@ -25,20 +17,31 @@ class Player
   bool toTopRight = false;
   bool toTopLeft = false;
   bool toBottomLeft = false;
+  int foodEaten = 0;
+
 public:
    Player ();
    ValidMove makeMove(const Playfield *);
    static int food;
    static int moveCount;
-   int foodEaten = 0;
-   ValidMove moveBottomRight(const int *grid, int headSpot, int foodSpot, bool &contin);
-   ValidMove moveTopRight(const int *grid, int headSpot, int foodSpot, bool &contin);
-   ValidMove moveTopLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
-   ValidMove moveBottomLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
-   ValidMove ManhattanChecker(const int *grid, int headSpot, int foodSpot);
-
 
 private:
+  ValidMove ManhattanMove(const int *grid);
+  void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
+
+  ValidMove moveBottomRight(const int *grid, int headSpot, int foodSpot, bool &contin);
+  ValidMove moveTopRight(const int *grid, int headSpot, int foodSpot, bool &contin);
+  ValidMove moveTopLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
+  ValidMove moveBottomLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
+  ValidMove ManhattanChecker(const int *grid, int headSpot, int foodSpot);
+
+  int  newBottomRightCorner(const int *grid);
+  int newTopRightCorner(const int *grid);
+  int newTopLeftCorner(const int *grid);
+  int toRightSide(const int *grid, int playerIndex);
+  int newBottomLeftCorner(const int *grid);
+
+
 };
 
 #endif
