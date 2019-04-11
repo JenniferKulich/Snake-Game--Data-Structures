@@ -29,13 +29,12 @@ private:
   ValidMove ManhattanMove(const int *grid);
   void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
 
-  ValidMove moveBottomRight(const int *grid, int headSpot, int foodSpot, bool &contin);
-  ValidMove moveTopRight(const int *grid, int headSpot, int foodSpot, bool &contin);
-  ValidMove moveTopLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
-  ValidMove moveBottomLeft(const int *grid, int headSpot, int foodSpot, bool &contin);
-  ValidMove ManhattanChecker(const int *grid, int headSpot, int foodSpot);
+  ValidMove moveRightSide(const int *grid, int headSpot, bool &contin);
+  ValidMove moveTopRight(const int *grid, int headSpot, bool &contin);
+  ValidMove moveTopLeft(const int *grid, int headSpot, bool &contin);
+  ValidMove moveBottomLeft(const int *grid, int headSpot, bool &contin);
+  ValidMove ManhattanChecker(const int *grid, int headSpot);
 
-  int  newBottomRightCorner(const int *grid);
   int newTopRightCorner(const int *grid);
   int newTopLeftCorner(const int *grid);
   int toRightSide(const int *grid, int playerIndex);

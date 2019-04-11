@@ -90,7 +90,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     contin = false;
     if(toBottomRight)
     {
-      nonSearchingMove= moveBottomRight(grid,headSpot, foodSpot, contin);
+      nonSearchingMove= moveRightSide(grid,headSpot, contin);
       if(contin == true)
         continue;
       else
@@ -100,7 +100,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     contin = false;
     if(toTopRight)
     {
-      nonSearchingMove= moveTopRight(grid,headSpot, foodSpot, contin);
+      nonSearchingMove= moveTopRight(grid,headSpot, contin);
       if(contin == true)
         continue;
       else
@@ -111,7 +111,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     if(toTopLeft)
     {
-      nonSearchingMove= moveTopLeft(grid,headSpot, foodSpot, contin);
+      nonSearchingMove= moveTopLeft(grid,headSpot, contin);
       if(contin == true)
         continue;
       else
@@ -122,7 +122,7 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     if(toBottomLeft)
     {
-      nonSearchingMove= moveBottomLeft(grid,headSpot, foodSpot, contin);
+      nonSearchingMove= moveBottomLeft(grid,headSpot, contin);
       if(contin == true)
         continue;
       else
@@ -142,7 +142,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(foodSpot))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot);
 
   //go through the first item in the list and determine where to move to
   nextIndex = pathToFood.front();
@@ -160,10 +160,12 @@ ValidMove Player::makeMove(const Playfield *pf)
 
       //check if food it's in top row, if it is, set toTopLeft to true
       //check if food is on left wall, if it is, set toBottomLeft to true
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-    nextIndex >= 0))
+      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
         toBottomLeft = true;
       else
         toBottomRight = true;
@@ -178,10 +180,12 @@ ValidMove Player::makeMove(const Playfield *pf)
       foodEaten +=1;
 
       searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-      nextIndex >= 0))
+      else if(foodSpot % PLAYFIELD_WIDTH == 0
+        && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
           toBottomLeft = true;
       else
         toBottomRight = true;
@@ -196,10 +200,12 @@ ValidMove Player::makeMove(const Playfield *pf)
       foodEaten +=1;
 
       searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-      nextIndex >= 0))
+      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
           toBottomLeft = true;
       else
         toBottomRight = true;
@@ -215,10 +221,12 @@ ValidMove Player::makeMove(const Playfield *pf)
       foodEaten +=1;
 
       searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) && nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
         toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-      nextIndex >= 0))
+      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
           toBottomLeft = true;
       else
         toBottomRight = true;
@@ -346,7 +354,21 @@ void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, 
 
 }
 
-
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will help the snake find its way to the right side of the board based
+ * on where it currently is. It will try to stay in the same row if it can.
+ * Does check to make sure that the snake will no be trapping itself.
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] playerIndex - the index of where the snake is
+ *
+ * @return - the index of where the snake should go to or a very large number
+ *           meaning that it cannot go to the right side of the board
+ *
+ *****************************************************************************/
 int Player::toRightSide(const int *grid, int playerIndex)
 {
   //get the right most index based in row you're on
@@ -360,14 +382,18 @@ int Player::toRightSide(const int *grid, int playerIndex)
   mostRightIndex = trialIndex - 1;
 
   //check if that spot is open and the spot above it is open
-  if((grid[mostRightIndex] == CLEAR_VALUE || grid[mostRightIndex] == FOOD_VALUE) &&
-  (grid[mostRightIndex + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[mostRightIndex + PLAYFIELD_WIDTH] == FOOD_VALUE))
+  if((grid[mostRightIndex] == CLEAR_VALUE || grid[mostRightIndex] == FOOD_VALUE)
+  && (grid[mostRightIndex + PLAYFIELD_WIDTH] == CLEAR_VALUE ||
+     grid[mostRightIndex + PLAYFIELD_WIDTH] == FOOD_VALUE))
     return mostRightIndex;
 
   //if that spot is not open, go up in the board until hit the corner - 1
-  for(int i = mostRightIndex + PLAYFIELD_WIDTH; i < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH; i += PLAYFIELD_WIDTH)
+  for(int i = mostRightIndex + PLAYFIELD_WIDTH;
+     i < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH;
+      i += PLAYFIELD_WIDTH)
   {
-    if((grid[i] == CLEAR_VALUE || grid[i] == FOOD_VALUE) && (grid[i + PLAYFIELD_WIDTH] == CLEAR_VALUE
+    if((grid[i] == CLEAR_VALUE || grid[i] == FOOD_VALUE) &&
+    (grid[i + PLAYFIELD_WIDTH] == CLEAR_VALUE
       || grid[i + PLAYFIELD_WIDTH] == FOOD_VALUE))
       return i;
   }
@@ -381,27 +407,27 @@ int Player::toRightSide(const int *grid, int playerIndex)
 
   //return massive number if got nothing
   return 20000;
-
 }
 
 
-int  Player::newBottomRightCorner(const int *grid)
-{
-  //start at playfieldWidth - 1 + playfieldWidth
-  for(int i = ((PLAYFIELD_WIDTH - 1) + PLAYFIELD_WIDTH); i < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 * PLAYFIELD_WIDTH); i = i + PLAYFIELD_WIDTH)
-  {
-    if(grid[i] == CLEAR_VALUE || grid[i] == FOOD_VALUE)
-      return i;
-  }
-
-  //if can't do that, return a 1 which means that will just go to next corner
-  return 1;
-}
-
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will go through top row and find a new corner point for the snake if the
+ * actual corner is filled up
+ *
+ * @param[in] grid - The playfield and everything in it
+ *
+ * @return - the index of the first spot on the top row that's open, a 1 if
+ *           nothing is open.
+ *
+ *****************************************************************************/
 int Player::newTopRightCorner(const int *grid)
 {
   //start at width * height - 2 and go until width * height - width + 1
-  for(int i = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 2; i > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH + 1; i --)
+  for(int i = (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - 2;
+  i > (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH + 1; i --)
   {
     if(grid[i] == CLEAR_VALUE || grid[i] == FOOD_VALUE)
       return i;
@@ -411,20 +437,48 @@ int Player::newTopRightCorner(const int *grid)
   return 1;
 }
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will go through the left column and find a new corner point for the
+ * snake if the actual corner is filled up
+ *
+ * @param[in] grid - The playfield and everything in it
+ *
+ * @return - the index of the first spot on the left column that's open, a 1 if
+ *           nothing is open
+ *
+ *****************************************************************************/
 int Player::newTopLeftCorner(const int *grid)
 {
   //start at width * height) - width )- width  greater than width i--
-  for(int i = ((PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH; i > PLAYFIELD_WIDTH; i--)
+  for(int i = ((PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 * PLAYFIELD_WIDTH));
+   i > PLAYFIELD_WIDTH; i--)
   {
     if(grid[i] == CLEAR_VALUE || grid[i] == FOOD_VALUE)
       return i;
-
   }
 
   //if can't do that, return 1 which means that will just go to next corner
   return 1;
 }
 
+
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will go through the bottom row and find a new corner point for the
+ * snake if the actual corner is filled up
+ *
+ * @param[in] grid - The playfield and everything in it
+ *
+ * @return - the index of the first spot on the bottom row that's open, a 1 if
+ *           nothing is open
+ *
+ *****************************************************************************/
 int Player::newBottomLeftCorner(const int *grid)
 {
   //start at 1 and go until (width - 1) - 1 i++
@@ -439,7 +493,22 @@ int Player::newBottomLeftCorner(const int *grid)
 }
 
 
-ValidMove Player::moveBottomRight(const int *grid, int headSpot, int foodSpot, bool &contin)
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will have the snake attempt to move to the right side of the board. If
+ * it cannot find a path, it will do the Manhattan move
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] headSpot - the head index of the snake
+ * @param[in,out] contin - if there is no new corner, continue
+ *
+ * @return - the move the snake needs to make to get to the right side of the
+ *           board
+ *
+ *****************************************************************************/
+ValidMove Player::moveRightSide(const int *grid, int headSpot, bool &contin)
 {
   int rightMoveTo;
   int nextIndex;
@@ -459,12 +528,12 @@ ValidMove Player::moveBottomRight(const int *grid, int headSpot, int foodSpot, b
     return NONE;
   }
 
-  std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo/*PLAYFIELD_WIDTH - 1*/);
+  std::list<int>pathToFood = BFSpath.PathTo(rightMoveTo);
 
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(rightMoveTo))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot);
 
 
   // go to it
@@ -490,7 +559,22 @@ ValidMove Player::moveBottomRight(const int *grid, int headSpot, int foodSpot, b
     return NONE;
 }
 
-ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool &contin)
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will have the snake attempt to move to the top right corner of the
+ * board. If it cannot find a path, it will do the Manhattan move
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] headSpot - the head index of the snake
+ * @param[in,out] contin - if there is no new corner, continue
+ *
+ * @return - the move the snake needs to make to get to the top right corner of
+ *           the board
+ *
+ *****************************************************************************/
+ValidMove Player::moveTopRight(const int *grid, int headSpot, bool &contin)
 {
   int corner;
   int nextIndex;
@@ -513,11 +597,12 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool
   //try to stick to the very right wall
 
 //if on right wall and can keep being in top row, do it
-  if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH && headSpot > PLAYFIELD_WIDTH &&
-    (headSpot + 1) % PLAYFIELD_WIDTH == 0)
+  if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH
+  && headSpot > PLAYFIELD_WIDTH && (headSpot + 1) % PLAYFIELD_WIDTH == 0)
   {
       //check if can keep moving right
-      if(grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH] == FOOD_VALUE)
+      if(grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE ||
+        grid[headSpot + PLAYFIELD_WIDTH] == FOOD_VALUE)
           return UP;
   }
 
@@ -528,7 +613,8 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool
   {
     //see if can move right and will be able to move up after it
     if((grid[headSpot + 1] == CLEAR_VALUE || grid[headSpot + 1] == FOOD_VALUE)
-    && (grid[headSpot + 1 + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot + 1 + PLAYFIELD_WIDTH] == FOOD_VALUE))
+    && (grid[headSpot + 1 + PLAYFIELD_WIDTH] == CLEAR_VALUE ||
+      grid[headSpot + 1 + PLAYFIELD_WIDTH] == FOOD_VALUE))
       return RIGHT;
   }
 
@@ -537,7 +623,7 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot);
 
   // go to it
   nextIndex = pathToFood.front();
@@ -562,7 +648,23 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, int foodSpot, bool
     return NONE;
 }
 
-ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool &contin)
+
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will have the snake attempt to move to the top left corner of the board.
+ * If it cannot find a path, it will do the Manhattan move
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] headSpot - the head index of the snake
+ * @param[in,out] contin - if there is no new corner, continue
+ *
+ * @return - the move the snake needs to make to get to the top left corner of
+ *           the board
+ *
+ *****************************************************************************/
+ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
 {
   int corner;
   int nextIndex;
@@ -587,7 +689,8 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool 
   //sure you can also move left after moving into the top row
 
   //if in top row and can keep being in top row, do it
-  if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 && headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH)
+  if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+  headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH)
   {
     //check if can keep moving right
     if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
@@ -600,18 +703,20 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool 
   {
     //check if can move up, if so, check if can also move left after the
     //move up
-    if((grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH] == FOOD_VALUE)
-      && (grid[headSpot + PLAYFIELD_WIDTH - 1] == CLEAR_VALUE || grid[headSpot + PLAYFIELD_WIDTH - 1] == FOOD_VALUE))
+    if((grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE ||
+      grid[headSpot + PLAYFIELD_WIDTH] == FOOD_VALUE)
+      && (grid[headSpot + PLAYFIELD_WIDTH - 1] == CLEAR_VALUE ||
+        grid[headSpot + PLAYFIELD_WIDTH - 1] == FOOD_VALUE))
         return UP;
   }
 
 
-  std::list<int>pathToFood = BFSpath.PathTo(/*(PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH*/ corner);
+  std::list<int>pathToFood = BFSpath.PathTo(corner);
 
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot);
 
   // go to it
   nextIndex = pathToFood.front();
@@ -636,7 +741,23 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, int foodSpot, bool 
     return NONE;
 }
 
-ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bool &contin)
+
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will have the snake attempt to move to the bottom left corner of the
+ * board. If it cannot find a path, it will do the Manhattan move
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] headSpot - the head index of the snake
+ * @param[in,out] contin - if there is no new corner, continue
+ *
+ * @return - the move the snake needs to make to get to the bottom left corner
+ *           of the board
+ *
+ *****************************************************************************/
+ValidMove Player::moveBottomLeft(const int *grid, int headSpot, bool &contin)
 {
   int corner;
   int nextIndex;
@@ -657,10 +778,12 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bo
   }
 
   //if on column, keep there if can
-  if(headSpot % PLAYFIELD_WIDTH == 0 && (headSpot > 0 && headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH))
+  if(headSpot % PLAYFIELD_WIDTH == 0 && (headSpot > 0 &&
+    headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH))
   {
     //check if can keep moving down
-    if(grid[headSpot - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE)
+    if(grid[headSpot - PLAYFIELD_WIDTH] == CLEAR_VALUE ||
+      grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE)
       return DOWN;
   }
   //check if can move over to top wall at all, if can, do that and
@@ -681,7 +804,7 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bo
   //check if there is a path
   //if there's not a path, do the Manhattan move
   if(!BFSpath.hasPath(corner))
-    return ManhattanChecker(grid, headSpot, foodSpot);
+    return ManhattanChecker(grid, headSpot);
 
 
   // go to it
@@ -710,7 +833,21 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, int foodSpot, bo
 }
 
 
-ValidMove Player::ManhattanChecker(const int *grid, int headSpot, int foodSpot)
+/**************************************************************************//**
+ * @author Dr. Hinker, Jennifer Kulich
+ *
+ * @par Description:
+ * This will make sure that the Manhattan move that's being made is a valid
+ * move.
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] headSpot - the head index of the snake
+ *
+ * @return - the move the snake needs to make to get to the top left corner of
+ *           the board
+ *
+ *****************************************************************************/
+ValidMove Player::ManhattanChecker(const int *grid, int headSpot)
 {
   //CODE FOR MANHATTAN MOVE
   ValidMove newPossibleMove = NONE;
@@ -724,12 +861,14 @@ ValidMove Player::ManhattanChecker(const int *grid, int headSpot, int foodSpot)
   grid[headSpot - 1] != FOOD_VALUE))
     return NONE;
 
-  else if(newPossibleMove == UP && (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
-grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
+  else if(newPossibleMove == UP &&
+    (grid[headSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+      grid[headSpot + PLAYFIELD_WIDTH] != FOOD_VALUE))
     return NONE;
 
-  else if(newPossibleMove == DOWN && (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
-  grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
+  else if(newPossibleMove == DOWN &&
+    (grid[headSpot - PLAYFIELD_WIDTH] != CLEAR_VALUE &&
+      grid[headSpot - PLAYFIELD_WIDTH] != FOOD_VALUE))
     return NONE;
 
   else if(newPossibleMove == NONE)
