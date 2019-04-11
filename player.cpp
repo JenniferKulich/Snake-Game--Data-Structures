@@ -68,6 +68,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     BFSPaths BFSpath(&graph, headSpot);
 
     //if the botom right is set to true, go to the bottom right corner
+    contin = false;
     if(toBottomRight)
     {
       nonSearchingMove= moveBottomRight(grid,headSpot, foodSpot, contin);
@@ -77,6 +78,7 @@ ValidMove Player::makeMove(const Playfield *pf)
         return nonSearchingMove;
     }
 
+    contin = false;
     if(toTopRight)
     {
       nonSearchingMove= moveTopRight(grid,headSpot, foodSpot, contin);
@@ -86,6 +88,8 @@ ValidMove Player::makeMove(const Playfield *pf)
         return nonSearchingMove;
     }
 
+    contin = false;
+
     if(toTopLeft)
     {
       nonSearchingMove= moveTopLeft(grid,headSpot, foodSpot, contin);
@@ -94,6 +98,8 @@ ValidMove Player::makeMove(const Playfield *pf)
       else
         return nonSearchingMove;
     }
+
+    contin = false;
 
     if(toBottomLeft)
     {

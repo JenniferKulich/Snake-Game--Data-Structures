@@ -38,7 +38,7 @@ void utilityCentral(Event *event)
    // Passing a true parameter to the Playfield constructor will include
    // obstacles on the playfield.  Passing nothing or false prevents
    // obstacles from being added
-   static Playfield *playfield = new Playfield(true); //run without obstacles
+   static Playfield *playfield = new Playfield(); //run without obstacldes
    static Game *game = new Game(player, playfield);
 
    if (game->isGameOver())
