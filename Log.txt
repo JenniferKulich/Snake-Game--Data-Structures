@@ -242,4 +242,19 @@ April 10 (Wednesday)
 		working for the hugging algorithm? Or it's trapping itself somehow? I guess
 		we'll see. I have a few ideas.
 		Continue cleaning up code.
-		Put functions in private part of class if they're implementation! 
+		Put functions in private part of class if they're implementation!
+
+	April 11 (Thursday)
+		* So I ran my code using a driver Dalton gave me. And my scores seemed
+			1) much more accurate and 2) they actually changed based on if there were
+			obstacle are not. Now without obstacles, my average is 61. And with
+			obstacles, it's 51. This is much less frustrating that before.
+		* I was also able to test the time it take for each turn and it's 0.0037
+			seconds per turn. I was worried it was taking much longer considering how
+			long it took for the driver to run. It's probably from what I thought: I
+			take so many turns.
+		* I changed a couple of lines of code in my hugging wall algorithm. Before
+			when it was going to do the Manhattan distance, it was searching for food
+			rather than the corner it should have been going to. This should have
+			helped the score some.
+		* 

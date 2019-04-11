@@ -16,7 +16,7 @@ int main()
    // Passing the Playfield constructor a true value will include objstacles
    // In the Playfield.  Eg.
    // Playfield *playfield = new Playfield(true);
-   Playfield *playfield = new Playfield();
+   Playfield *playfield = new Playfield(true);
    Game *game = new Game(player, playfield);
 
    while (!game->isGameOver())
