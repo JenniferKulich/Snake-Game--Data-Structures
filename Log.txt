@@ -257,4 +257,6 @@ April 10 (Wednesday)
 			when it was going to do the Manhattan distance, it was searching for food
 			rather than the corner it should have been going to. This should have
 			helped the score some.
-		* 
+		* Put functions in the private part of the class. The user does not need
+			to use them at all since they're all about determining what move should
+			be made based on where the snake is in the game. 
