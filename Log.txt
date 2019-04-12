@@ -131,7 +131,7 @@ April 4 (Thursday)
 		looks like a more complicated version of Dijkstra's. I'm naming it
 		'complicated Dijkstra'
 
-	April 7 (Sunday)
+April 7 (Sunday)
 		* Worked on trying to get complicated Dijkstra to work. I spent
 			quite some time just debugging  it and trying not to get any errors or
 			warning. This didn't help because in the video, a list was used, but I
@@ -146,7 +146,7 @@ April 4 (Thursday)
 			to make sure that I understand what's going on first.
 		* I'll investigate tomorrow why this is happening.
 
-	April 8 (Monday)
+April 8 (Monday)
 		* Integrated the code from Hinker so that the graph will not produced a
 			biconnected graph.
 		* Deleted my complicated Dijkstras code. I realized that it was just not
@@ -244,7 +244,7 @@ April 10 (Wednesday)
 		Continue cleaning up code.
 		Put functions in private part of class if they're implementation!
 
-	April 11 (Thursday)
+April 11 (Thursday)
 		* So I ran my code using a driver Dalton gave me. And my scores seemed
 			1) much more accurate and 2) they actually changed based on if there were
 			obstacle are not. Now without obstacles, my average is 61. And with
@@ -266,11 +266,14 @@ April 10 (Wednesday)
 		* Added documentation to code.
 
 April 12 (Firday)
-	* Added the weighted graph class, edge class, index class, and the Dijkstra's 
-	  class to my code. I created a seperate branch to do this on in case things 
-	  don't work out. Also, since I'm doing this on a Friday and I don't know if 
-	  I'll get it done by the time the checkpoint is due, I won't have to worry 
-	  about the wrong code being pulled. 
-	* Added a function to the weighted graph class to take in a grid. This was 
+	* Added the weighted graph class, edge class, index class, and the Dijkstra's
+	  class to my code. I created a seperate branch to do this on in case things
+	  don't work out. Also, since I'm doing this on a Friday and I don't know if
+	  I'll get it done by the time the checkpoint is due, I won't have to worry
+	  about the wrong code being pulled.
+	* Added a function to the weighted graph class to take in a grid. This was
 	  pretty much a copy of my graph class constructor but adding weights of 0
 	  to every edge when it's created.
+	* Was able to implement the weighted graph class and figure out how to use
+		Dijkstra's. This is all being done in the trial branch to avoid me
+		messing anything up.
