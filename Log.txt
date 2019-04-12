@@ -263,4 +263,14 @@ April 10 (Wednesday)
 		* Cleaned up code (took out commented out code that I forgot about, took out
 			a surprising amount of unused variables that were being passed into
 			function, made lines less than 80 characters, etc)
-		* Added documentation to code. 
+		* Added documentation to code.
+
+April 12 (Firday)
+	* Added the weighted graph class, edge class, index class, and the Dijkstra's 
+	  class to my code. I created a seperate branch to do this on in case things 
+	  don't work out. Also, since I'm doing this on a Friday and I don't know if 
+	  I'll get it done by the time the checkpoint is due, I won't have to worry 
+	  about the wrong code being pulled. 
+	* Added a function to the weighted graph class to take in a grid. This was 
+	  pretty much a copy of my graph class constructor but adding weights of 0
+	  to every edge when it's created.
