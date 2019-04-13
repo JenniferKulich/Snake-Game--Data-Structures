@@ -265,9 +265,9 @@ April 11 (Thursday)
 			function, made lines less than 80 characters, etc)
 		* Added documentation to code.
 
-April 12 (Firday)
+April 12 (Friday)
 	* Added the weighted graph class, edge class, index class, and the Dijkstra's
-	  class to my code. I created a seperate branch to do this on in case things
+	  class to my code. I created a separate branch to do this on in case things
 	  don't work out. Also, since I'm doing this on a Friday and I don't know if
 	  I'll get it done by the time the checkpoint is due, I won't have to worry
 	  about the wrong code being pulled.
@@ -277,3 +277,14 @@ April 12 (Firday)
 	* Was able to implement the weighted graph class and figure out how to use
 		Dijkstra's. This is all being done in the trial branch to avoid me
 		messing anything up.
+	* Was able to get the edges of the adjacent nodes and do my weight
+		calculations. This was only done for the headSpot node, and I haven't tested
+		it yet, but it compiles. I would keep working on it, but I'd kind of like
+		to get some sleep. Anyway, I don't think implementing the rest should be
+		too hard tomorrow.
+	* My calculations for the weight - you add the dx and dx for the food and the
+		head to adjacent nodes. You then pick the one with the lowest number and
+		do the same thing. Eventually you should be able to get a path with the
+		lowest weights which is where Dijkstra's comes in. There's obviously more
+		details to the implementation, but that's the basic idea of it. This is
+		mostly based off of the video I wanted (link above).
