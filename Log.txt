@@ -1,5 +1,5 @@
 March 17 (Sunday):
-	* Downloaded Hinker's startup code
+	* Downloaded Dr.Hinker's startup code
 	* Made a new repository (csc315_sp2019_project3)
 	* Made first commit of the startup code source
 
@@ -31,7 +31,7 @@ March 25 (Monday)
 	* Tried using the BFS class from in class to make sure I could implement it
 	* Not quite sure how to be able to use the path list in order to make the
 	  moves - I think I could create a constant list in the player class, but I'm
-		not sure. I'll be asking Hinker tomorrow
+		not sure. I'll be asking Dr. Hinker tomorrow
 
 March 26 (Tuesday)
 	* Worked on implementing BFS for my snake to use
@@ -94,7 +94,7 @@ April 2 (Tuesday)
 		to someone.
 	* The random moves makes my snake kill itself a lot (will core dump), but the
 		average on a board with obstacles a 38 with a max of 93. I talked to Dalton,
-		and he used the original Manhattan code that Hinker gave us to make
+		and he used the original Manhattan code that Dr. Hinker gave us to make
 		'random' moves. He also checked to make sure that the move the snake was
 		making would not end the game. I'm going to try this.
 	* Added documentation and cleaned up the code
@@ -122,7 +122,7 @@ April 4 (Thursday)
 		algorithm from the video mentioned above. I think this will help make my snake a
 		a little smarter.
 	* Dijkstra's algorithm looks to be very similar to what the video was showing, so I
-		may wait until tomorrow when Hinker shows the code to actually implement anything.
+		may wait until tomorrow when Dr. Hinker shows the code to actually implement anything.
 	* Going to add a heap class since that's what we talked about using in class for
 		Dijkstra's, and that's what the video was showing to use to optimize their code
 	* Added the code from the video to some files just so I can mess around with it and
@@ -147,10 +147,10 @@ April 7 (Sunday)
 		* I'll investigate tomorrow why this is happening.
 
 April 8 (Monday)
-		* Integrated the code from Hinker so that the graph will not produced a
+		* Integrated the code from Dr. Hinker so that the graph will not produced a
 			biconnected graph.
 		* Deleted my complicated Dijkstras code. I realized that it was just not
-			going to work- there were too many things wrong with it, and if Hinker was
+			going to work- there were too many things wrong with it, and if Dr.Hinker was
 			going to put up the code for it, I didn't think it was worth my time.
 			Also, what I was doing didn't make a weighted graph class, and at this
 			point, I would much rather use that, but I'm not sure how I would put it
@@ -288,3 +288,18 @@ April 12 (Friday)
 		lowest weights which is where Dijkstra's comes in. There's obviously more
 		details to the implementation, but that's the basic idea of it. This is
 		mostly based off of the video I wanted (link above).
+
+April 13 (Saturday)
+	* After talking to Dr.Hinker the night before, I would need to make my weighted
+		graph class use and return a list of edges for me to use. I spent some
+		time working on this, but I coudn't get very far on what needed to be done.
+
+April 14 (Sunday)
+	* I hadn't noticed that Dr. Hinker had pushed up code the night before, so I
+		kept trying to work on the code. I thought that the addEdge function would
+		need to have a list<Edge> passed into it which caused me a massive headache
+		trying to work around. It wasn't until late afternoon that I realized code
+		had been pushed up. I didn't realize this before because I didn't have
+		compiling code, so I had no reason to push or pull from the repo.
+	* I now get multiple edges returned which is a big improvement. I hope I can
+		do the rest of the work like I planned. Thank you Dr. Hinker for the code.
