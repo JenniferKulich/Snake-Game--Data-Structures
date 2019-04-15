@@ -76,6 +76,33 @@ ValidMove Player::makeMove(const Playfield *pf)
   {
     searchingFood = true;
   }
+
+  //check if the food is right below the top row,there's an obstacle close to
+  //the food (2 to the left, under, or one to the right)
+  //won't want to be doing a search for food!
+  int rowFood = food.second;
+  if(rowFood == PLAYFIELD_HEIGHT - 2 && (foodSpot + 2 + PLAYFIELD_WIDTH != CLEAR_VALUE
+  || foodSpot + 1 + PLAYFIELD_WIDTH != CLEAR_VALUE || foodSpot + PLAYFIELD_WIDTH != CLEAR_VALUE
+  || foodSpot - 1 + PLAYFIELD_WIDTH != CLEAR_VALUE))
+  {
+    //if the food is not 2 away from the food, just have the snake go to
+    //the bottom right corner and proceed
+    if(foodSpot + 2 + PLAYFIELD_WIDTH == CLEAR_VALUE)
+    {
+      searchingFood = false;
+      toBottomRight = true;
+    }
+    //if the food is 2 away from the food, have snake go to bottom right
+    //corner and set flag for the food being in the top row, two away
+    if(foodSpot + 2 + PLAYFIELD_WIDTH != CLEAR_VALUE)
+    {
+      searchingFood = false;
+      toBottomRight = true;
+      foodSecondTop = true;
+    }
+  }
+
+
   //if not searching for food, do BFS to the the bottom right, then top right
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
@@ -153,6 +180,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   //check to see if the next thing doing is eating food. If so, change the bools
   if(nextIndex == headSpot - 1)
   {
+
     if(grid[nextIndex] == FOOD_VALUE)
     {
       foodEaten +=1;
@@ -701,6 +729,12 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
   //check if the moving up will not allow it to move left after
   if(headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
   {
+    //first check if there is food that you need to eat because of a block
+    if(foodSecondTop == true)
+    {
+      foodSecondTop = false;
+      return LEFT;
+    }
     //check if can move up, if so, check if can also move left after the
     //move up
     if((grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE ||

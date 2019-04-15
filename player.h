@@ -17,6 +17,7 @@ class Player
   bool toTopRight = false;
   bool toTopLeft = false;
   bool toBottomLeft = false;
+  bool foodSecondTop = false;
   int foodEaten = 0;
 
 public:
