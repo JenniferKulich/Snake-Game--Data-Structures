@@ -319,4 +319,25 @@ April 14 (Sunday)
 		works.
 	* Ran the driver on the code I wrote, and the averages are back down to 40
 	  for the obstacle board and 43 for the clear board. This clearly did not
-		work. 
+		work.
+
+April 15 (Monday)
+	* So the algorithm I tried was pretty much a smarter version of BFS. The snake
+		may make smarter moves part of the time, but it's really not enough to
+		justify using it especially when I already have an algorithm that gets a
+		higher average score.
+		Because of this, I don't know if I want to try using a weighted graph. I
+		want to give it more thought on how/what I could do, but right now, I'm not
+		sure. Even after talking to a couple of people, I don't really know what I
+		could do.
+	* I'm thinking about making my Manhattan move smarter. Currently it will
+		sometimes trap itself by wrapping itself into an enclosed circle. Right now
+		I'm thinking that I may do something with a weighted graph for this. I may
+		weigh the blocks around the tail high and then radiating out low numbers
+		so the snake will have an incentive to get away from itself?
+		I may also try checking if the snake is splitting the board. If it is and
+		the food is on the other side, I may have the snake move away from the
+		food until it has a path open.
+	* I also need to add a check to my food BFS function. The snake will kill
+		itself if the food is in the second to top row and there's an obstacle in
+		the top row to the right of it.
