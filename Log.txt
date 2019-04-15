@@ -303,3 +303,17 @@ April 14 (Sunday)
 		compiling code, so I had no reason to push or pull from the repo.
 	* I now get multiple edges returned which is a big improvement. I hope I can
 		do the rest of the work like I planned. Thank you Dr. Hinker for the code.
+	* Have my algorithm working now, but it's very messy. I need to go through and
+		put things into separate functions. I ran the driver, and I got an average
+		of 40 which is pretty good. I don't think my Manhattan code is working, so
+		I would need to go through and see why.
+	* The more I look at my code, the more I think I really did not do the
+		smartest way. I went through each node and create a shortest path. That's
+		already an algorithm. I think I just got to wrapped up in what the video I
+		had watched had me do.
+	* What I think I'm going to try next is just calculating the weight for every
+		node on the graph using the algorithm I used before, and let some path
+		finding algorithm like Dijkstra's do the work for me instead. I'll need to
+		think of some way to weight things uniquely so there aren't two of the same
+		lowest weights. Or maybe I'll just let the snake pick one and see how that
+		works.  
