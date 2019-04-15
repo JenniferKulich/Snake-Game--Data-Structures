@@ -316,4 +316,7 @@ April 14 (Sunday)
 		finding algorithm like Dijkstra's do the work for me instead. I'll need to
 		think of some way to weight things uniquely so there aren't two of the same
 		lowest weights. Or maybe I'll just let the snake pick one and see how that
-		works.  
+		works.
+	* Ran the driver on the code I wrote, and the averages are back down to 40
+	  for the obstacle board and 43 for the clear board. This clearly did not
+		work. 
