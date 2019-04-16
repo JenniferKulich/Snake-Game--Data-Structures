@@ -382,12 +382,30 @@ int Player::toRightSide(const int *grid, int playerIndex)
   //get the right most index based in row you're on
   int mostRightIndex;
   int trialIndex = playerIndex;
+  int newIndex;
 
   //loop through everything in the row until get to
   while(trialIndex % PLAYFIELD_WIDTH != 0)
     trialIndex += 1;
 
   mostRightIndex = trialIndex - 1;
+
+  //check to see if the index is in the two rows below the top row. If it is,
+  //then will want side index to go to to be below it somewhere
+  if(playerIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 * PLAYFIELD_WIDTH) &&
+    playerIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (3 * PLAYFIELD_WIDTH))
+    {
+      newIndex = trialIndex - PLAYFIELD_WIDTH;
+      //make the index be further down
+      while(newIndex >= PLAYFIELD_WIDTH - 1)
+      {
+        if(grid[newIndex - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[newIndex - PLAYFIELD_WIDTH] == FOOD_VALUE)
+          return newIndex;
+        newIndex -= PLAYFIELD_WIDTH;
+      }
+    }
+
+
 
   //check if that spot is open and the spot above it is open
   if((grid[mostRightIndex] == CLEAR_VALUE || grid[mostRightIndex] == FOOD_VALUE)

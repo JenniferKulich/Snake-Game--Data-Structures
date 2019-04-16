@@ -365,3 +365,14 @@ April 16 (Tuesday)
 		therefore trap the snake if it goes to the food. This would be pretty hard
 		to test though.
 	* May also try to make the Manhattan algorithm better.
+	* Added code so that when the snake is moving to the right side of the board,
+		it will not be trapping the traversal of the upper edge. This is done by
+		checking if the snake is in the two rows below the top row while trying to
+		get to the right side of the board. If there are obstacles in the way, it
+		will make the spot it's trying to go to on the right side of the board
+		lower so the BFS will not take the snake higher up in the rows and trap its
+		traversal along the top edge. The snake should never be attempting to go to
+		the right side on the row below the top row, but I added this as an extra
+		safeguard. I ran the driver for the obstacle map so it did 50 games, and my
+		average went slightly up from 51 to 53. I assume some of that was attributed
+		to this added feature. Driver didn't hang either
