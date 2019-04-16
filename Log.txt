@@ -341,3 +341,15 @@ April 15 (Monday)
 	* I also need to add a check to my food BFS function. The snake will kill
 		itself if the food is in the second to top row and there's an obstacle in
 		the top row to the right of it.
+	* What I tried wasn't working, and it was just too complicated to find the
+		bug- I spent over an hour on it and I just couldn't figure it out. So I
+		reverted my code, and I'm going to try starting over.
+	* I tried rewriting it, and it works most of the time. Sometimes it'll enter
+		an infinite look, but it's so hard to recreate it. Every time I run the
+		driver, it seems to enter the infinite the loop a lot. I don't think it's
+		worth it at this point to do this. I think it would be a much better use of
+		my time to do something else. Or maybe I just need to look at it tomorrow
+		morning.
+	* Something to do: get adj list of the food- if surrounded for all but one,
+		do the Manhattan code (maybe in opposite direction?) so you don't trap
+		yourself.
