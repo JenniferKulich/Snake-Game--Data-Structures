@@ -130,26 +130,7 @@ ValidMove Player::makeMove(const Playfield *pf)
     }
   }
 
-  //check if there is food in the second to top row
-  int foodrow = food.second;
-  while(searchingFood && !startingBFS && (foodrow == PLAYFIELD_HEIGHT - 2 && (grid[foodSpot + 2 + PLAYFIELD_WIDTH] != CLEAR_VALUE
-  || grid[foodSpot + 1 + PLAYFIELD_WIDTH] != CLEAR_VALUE || grid[foodSpot + PLAYFIELD_WIDTH != CLEAR_VALUE]
-|| grid[foodSpot - 1 + PLAYFIELD_WIDTH] != CLEAR_VALUE)))
-  {
-    //if it's not 2 away, just go right to the right
-    if(grid[foodSpot + 2 + PLAYFIELD_WIDTH] == CLEAR_VALUE)
-    {
-      //go to the right
-      searchingFood = false;
-      toBottomRight = true;
-    }
-    else
-    {
-      searchingFood = false;
-      toBottomRight = true;
-      foodSecondTop = true;
-    }
-  }
+
   //construct BFS
   BFSPaths BFSpath(&graph, headSpot);
 
@@ -711,19 +692,6 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
   if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
   headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH)
   {
-    /*int thing = grid[headSpot -PLAYFIELD_WIDTH];
-    int thing2 = FOOD_VALUE;
-    std::cout << "In top row so should keep going" << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-    std::cout << "grid[headSpot - PLAYFIELD_WIDTH]: " << thing << std::endl;
-    std::cout << "FOOD_VALUE: " << thing2 << std::endl;
-    std::cout << std::endl << std::endl;
-    */
-    if(foodSecondTop == true && grid[headSpot -PLAYFIELD_WIDTH] == FOOD_VALUE)
-    {
-      foodSecondTop = false;
-      return DOWN;
-    }
     //check if can keep moving right
     if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
       return LEFT;
@@ -733,11 +701,6 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
   //check if the moving up will not allow it to move left after
   if(headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
   {
-    if(foodSecondTop == true && grid[headSpot - 1] == FOOD_VALUE)
-    {
-      foodSecondTop = false;
-      return LEFT;
-    }
     //check if can move up, if so, check if can also move left after the
     //move up
     if((grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE ||
