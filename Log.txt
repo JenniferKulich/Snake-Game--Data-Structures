@@ -353,3 +353,15 @@ April 15 (Monday)
 	* Something to do: get adj list of the food- if surrounded for all but one,
 		do the Manhattan code (maybe in opposite direction?) so you don't trap
 		yourself.
+
+April 16 (Tuesday)
+	* Added code that will stop the snake from traversing the second to top row
+		if it is looking for food. This appears to work better than the code last
+		night. I ran the driver, and it seemed to hang once of twice, but I haven't
+		been able to reproduce it. For now, I'm going to assume that it's a fluke.
+	* Need to add code that will stop it from every traversing the second to top
+		row when doing BFS to the right side.
+	* May also add code that will make sure that the food is not trapped and
+		therefore trap the snake if it goes to the food. This would be pretty hard
+		to test though.
+	* May also try to make the Manhattan algorithm better.
