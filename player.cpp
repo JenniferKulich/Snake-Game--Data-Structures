@@ -76,56 +76,6 @@ ValidMove Player::makeMove(const Playfield *pf)
   {
     searchingFood = true;
   }
-
-  //check if the food is right below the top row,there's an obstacle close to
-  //the food (2 to the left, under, or one to the right)
-  //won't want to be doing a search for food!
-  int rowFood = food.second;
-  if(searchingFood && rowFood == PLAYFIELD_HEIGHT - 2 && (grid[foodSpot + 2 + PLAYFIELD_WIDTH] != CLEAR_VALUE
-  || grid[foodSpot + 1 + PLAYFIELD_WIDTH] != CLEAR_VALUE || grid[foodSpot + PLAYFIELD_WIDTH] != CLEAR_VALUE
-  || grid[foodSpot - 1 + PLAYFIELD_WIDTH] != CLEAR_VALUE))
-  {
-    //if the food is not 2 away from the food, just have the snake go to
-    //the bottom right corner and proceed
-    if(grid[foodSpot + 2 + PLAYFIELD_WIDTH] == CLEAR_VALUE)
-    {
-      searchingFood = false;
-      toBottomRight = true;
-      std::cout << "Top and 2 over clear" << std::endl;
-      std::cout << "headSpot: " << headSpot << std::endl;
-      std::cout << "searchingFood: " << searchingFood << std::endl;
-      std::cout << "toBottomRight: " << toBottomRight << std::endl;
-      std::cout << "toTopRight: " << toTopRight << std::endl;
-      std::cout << "toTopLeft: " << toTopLeft << std::endl;
-      std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-      std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-      std::cout << std::endl << std::endl;
-
-
-    }
-    //if the food is 2 away from the food, have snake go to bottom right
-    //corner and set flag for the food being in the top row, two away
-    if(grid[foodSpot + 2 + PLAYFIELD_WIDTH] != CLEAR_VALUE)
-    {
-      searchingFood = false;
-      toBottomRight = true;
-      foodSecondTop = true;
-      std::cout << std::endl << std::endl;
-
-      std::cout << "Top and 2 over not clear" << std::endl;
-      std::cout << "headSpot: " << headSpot << std::endl;
-      std::cout << "searchingFood: " << searchingFood << std::endl;
-      std::cout << "toBottomRight: " << toBottomRight << std::endl;
-      std::cout << "toTopRight: " << toTopRight << std::endl;
-      std::cout << "toTopLeft: " << toTopLeft << std::endl;
-      std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-      std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-      std::cout << std::endl << std::endl;
-
-    }
-  }
-
-
   //if not searching for food, do BFS to the the bottom right, then top right
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
@@ -203,7 +153,6 @@ ValidMove Player::makeMove(const Playfield *pf)
   //check to see if the next thing doing is eating food. If so, change the bools
   if(nextIndex == headSpot - 1)
   {
-
     if(grid[nextIndex] == FOOD_VALUE)
     {
       foodEaten +=1;
@@ -285,13 +234,6 @@ ValidMove Player::makeMove(const Playfield *pf)
     return UP;
   }
 
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
     //if can't do anything, do nothing
     return NONE;
 }
@@ -583,16 +525,6 @@ ValidMove Player::moveRightSide(const int *grid, int headSpot, bool &contin)
     toBottomRight = false;
     toTopRight = true;
     contin = true;
-    std::cout << "Move Right Side 1" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-    std::cout << std::endl << std::endl;
-
     return NONE;
   }
 
@@ -622,16 +554,6 @@ ValidMove Player::moveRightSide(const int *grid, int headSpot, bool &contin)
   //this will be the index for moving up
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
     return UP;
-
-    std::cout << "Move Right Side 2" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-    std::cout << std::endl << std::endl;
 
     //if can't do anything, do nothing
     return NONE;
@@ -669,15 +591,6 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, bool &contin)
     toTopRight = false;
     toTopLeft = true;
     contin = true;
-    std::cout << "To Top Right 1" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-
     return NONE;
   }
 
@@ -731,16 +644,6 @@ ValidMove Player::moveTopRight(const int *grid, int headSpot, bool &contin)
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
     return UP;
 
-
-    std::cout << "To Top Right 2" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
-
     //if can't do anything, do nothing
     return NONE;
 }
@@ -778,14 +681,6 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
     toTopRight = false;
     toTopLeft = true;
     contin = true;
-    std::cout << "To Top Left" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
     return NONE;
   }
 
@@ -806,12 +701,6 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
   //check if the moving up will not allow it to move left after
   if(headSpot < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
   {
-    //first check if there is food that you need to eat because of a block
-    if(foodSecondTop == true)
-    {
-      foodSecondTop = false;
-      return LEFT;
-    }
     //check if can move up, if so, check if can also move left after the
     //move up
     if((grid[headSpot + PLAYFIELD_WIDTH] == CLEAR_VALUE ||
@@ -847,15 +736,6 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
   //this will be the index for moving up
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
     return UP;
-
-    std::cout << "To Top Left" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
 
     //if can't do anything, do nothing
     return NONE;
@@ -894,14 +774,6 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, bool &contin)
     toTopLeft = false;
     searchingFood = true;
     contin = true;
-    std::cout << "To Bottom Left" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
     return NONE;
   }
 
@@ -955,15 +827,6 @@ ValidMove Player::moveBottomLeft(const int *grid, int headSpot, bool &contin)
   //this will be the index for moving up
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
     return UP;
-
-    std::cout << "To Bottom Left" << std::endl;
-    std::cout << "headSpot: " << headSpot << std::endl;
-    std::cout << "searchingFood: " << searchingFood << std::endl;
-    std::cout << "toBottomRight: " << toBottomRight << std::endl;
-    std::cout << "toTopRight: " << toTopRight << std::endl;
-    std::cout << "toTopLeft: " << toTopLeft << std::endl;
-    std::cout << "toBottomLeft: " << toBottomLeft << std::endl;
-    std::cout << "foodSecondTop: " << foodSecondTop << std::endl;
 
     //if can't do anything, do nothing
     return NONE;
