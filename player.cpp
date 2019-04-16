@@ -55,6 +55,15 @@ ValidMove Player::makeMove(const Playfield *pf)
   //construct a graph
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
 
+  int foodRow = food.second;
+  if(searchingFood && !startingBFS && (foodRow == PLAYFIELD_HEIGHT - 2))
+  {
+    //since in top row, just go to bottom right corner
+    searchingFood = false;
+    toBottomRight = true;
+    foodSecondTop = true;
+  }
+
   //if searching for food, do a BFS to the food
 
   //if the food eaten (aka tail length) is less than the smaller of the width
@@ -129,7 +138,6 @@ ValidMove Player::makeMove(const Playfield *pf)
         return nonSearchingMove;
     }
   }
-
 
   //construct BFS
   BFSPaths BFSpath(&graph, headSpot);
@@ -692,6 +700,25 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
   if(headSpot < (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
   headSpot > (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - PLAYFIELD_WIDTH)
   {
+    if(foodSecondTop == true)
+    {
+      //check if the food is below it, and not onde down and right of the corner
+      if(grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - PLAYFIELD_WIDTH != (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 *PLAYFIELD_WIDTH) + 1)
+      {
+        foodSecondTop = false;
+        return DOWN;
+      }
+
+      //if the food is down and right one of the corner, just go to the bottom
+      //left corner from there
+      else if (grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - PLAYFIELD_WIDTH == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 *PLAYFIELD_WIDTH) + 1)
+      {
+        toTopLeft = false;
+        toBottomLeft = true;
+        foodSecondTop = false;
+        return DOWN;
+      }
+    }
     //check if can keep moving right
     if(grid[headSpot - 1] == CLEAR_VALUE || grid[headSpot - 1] == FOOD_VALUE)
       return LEFT;
