@@ -723,7 +723,8 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
     if(foodSecondTop == true)
     {
       //check if the food is below it, and not onde down and right of the corner
-      if(grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - 1 != (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      if(grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE &&
+        headSpot - 1 != (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
       {
         foodSecondTop = false;
         return DOWN;
@@ -731,9 +732,9 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
 
       //if the food is down and right one of the corner, just go to the bottom
       //left corner from there
-      else if (grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - 1 == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      else if (grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE &&
+        headSpot - 1 == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
       {
-        std::cout << "Getting in here" << std::endl;
         toTopLeft = false;
         toBottomLeft = true;
         foodSecondTop = false;
