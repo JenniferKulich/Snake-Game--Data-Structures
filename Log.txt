@@ -385,3 +385,19 @@ April 16 (Tuesday)
 		have killed it. The possibility of this happening again would probably be
 		pretty low. I've only seen the driver hang a couple of times. I'm not overly
 		worried about this right now unless I see it happening way more often
+
+April 17 (Wednesday)
+	* A while ago I had put in a check to make sure that if the snake sought food
+		in the two rows below the top row, it wouldn't try to going to the same row
+		on the right side. I noticed that that check wasn't working, so I added and
+		extra check into the while loop to make sure that the row was below the
+		required one, and it's fixed now. (It's kind of hard to explain without
+		drawing I guess).
+	* I noticed that the code for when the food is kitty-corner to the top left
+		corner isn't working, so the snake kills itself. It's very hard to reproduce
+		this case, but it's bugging me, so I'd like to fix it.
+	* I'm thinking of adding my Hamilton code back into the game. When it starts
+		up for the first time, I could go through and check the board for obstacles.
+		If there are no obstacles, I could run my Hamilton circuit code. This would
+		be a O(n^2) check, but it would only be done when the program starts up and
+		I already wrote it haha.
