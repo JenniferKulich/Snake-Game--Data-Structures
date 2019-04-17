@@ -392,14 +392,16 @@ int Player::toRightSide(const int *grid, int playerIndex)
 
   //check to see if the index is in the two rows below the top row. If it is,
   //then will want side index to go to to be below it somewhere
-  if(playerIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 * PLAYFIELD_WIDTH) &&
-    playerIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (3 * PLAYFIELD_WIDTH))
+  if((playerIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 * PLAYFIELD_WIDTH) &&
+    playerIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (3 * PLAYFIELD_WIDTH)) ||
+    (playerIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH) )
     {
       newIndex = trialIndex - PLAYFIELD_WIDTH;
       //make the index be further down
       while(newIndex >= PLAYFIELD_WIDTH - 1)
       {
-        if(grid[newIndex - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[newIndex - PLAYFIELD_WIDTH] == FOOD_VALUE)
+        if((grid[newIndex - PLAYFIELD_WIDTH] == CLEAR_VALUE || grid[newIndex - PLAYFIELD_WIDTH] == FOOD_VALUE)
+          && (newIndex < (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (3 * PLAYFIELD_WIDTH)))
           return newIndex;
         newIndex -= PLAYFIELD_WIDTH;
       }
@@ -721,7 +723,7 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
     if(foodSecondTop == true)
     {
       //check if the food is below it, and not onde down and right of the corner
-      if(grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - PLAYFIELD_WIDTH != (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 *PLAYFIELD_WIDTH) + 1)
+      if(grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - 1 != (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
       {
         foodSecondTop = false;
         return DOWN;
@@ -729,8 +731,9 @@ ValidMove Player::moveTopLeft(const int *grid, int headSpot, bool &contin)
 
       //if the food is down and right one of the corner, just go to the bottom
       //left corner from there
-      else if (grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - PLAYFIELD_WIDTH == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - (2 *PLAYFIELD_WIDTH) + 1)
+      else if (grid[headSpot - PLAYFIELD_WIDTH] == FOOD_VALUE && headSpot - 1 == (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
       {
+        std::cout << "Getting in here" << std::endl;
         toTopLeft = false;
         toBottomLeft = true;
         foodSecondTop = false;
