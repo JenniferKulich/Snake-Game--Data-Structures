@@ -403,3 +403,13 @@ April 17 (Wednesday)
 		If there are no obstacles, I could run my Hamilton circuit code. This would
 		be a O(n^2) check, but it would only be done when the program starts up and
 		I already wrote it haha.
+	* One unexpected behaviors that I'm getting is that now makes sense is that
+		because the top row is full- the snake gets super long, instead of the snake
+		wanted to traverse the row below it, it just wants to go to the next corner.
+		I remember doing this to make the coding at the time easy, but now it's an
+		actual problem. Because of this, some of the corner cases I'm handling
+		will get messed up. Granted, this would initially be a decently easy problem
+		to fix, and I probably should. However, I would also have to go through and
+		fix the corner cases too, and that might be more of a pain than it's worth
+		it. Or I could potentially just forget about the corner cases. We'll see
+		how it goes and what I have time for.
