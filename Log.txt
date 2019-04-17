@@ -376,3 +376,12 @@ April 16 (Tuesday)
 		safeguard. I ran the driver for the obstacle map so it did 50 games, and my
 		average went slightly up from 51 to 53. I assume some of that was attributed
 		to this added feature. Driver didn't hang either
+	* Witnessed a time when the snake entered an infinite loop. There was an
+		upside down L on the top of the board, the snake was long, and food spawned
+		in the L (so it looked like a cube now). The snake would trap the food
+		within the L and then wouldn't be able to get to it. It pretty much
+		completed the same circle over and over. Could it have gotten out of the
+		infinite loop? Possibly eventually, but not before Dr. Hinker's script would
+		have killed it. The possibility of this happening again would probably be
+		pretty low. I've only seen the driver hang a couple of times. I'm not overly
+		worried about this right now unless I see it happening way more often
