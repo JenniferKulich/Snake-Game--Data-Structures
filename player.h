@@ -14,7 +14,7 @@ class Player
   bool startOfGame = true;
   bool clearBoard = true;
   bool startingBFS = true;
-  bool searchingFood = false /*true*/;
+  bool searchingFood = false;
   bool toBottomRight = false;
   bool toTopRight = false;
   bool toTopLeft = false;
@@ -31,6 +31,12 @@ public:
 private:
   ValidMove ManhattanMove(const int *grid);
   void newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex);
+
+  void checkBoardClear(const int *grid);
+  void checkIfTailLength();
+
+  ValidMove traversalEdges(const int *grid, int headSpot);
+
 
   ValidMove moveRightSide(const int *grid, int headSpot, bool &contin);
   ValidMove moveTopRight(const int *grid, int headSpot, bool &contin);

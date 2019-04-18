@@ -58,26 +58,14 @@ ValidMove Player::makeMove(const Playfield *pf)
   //at the very beginning of the game, check if there are no obstacles on
   //the board
   if(startOfGame)
-  {
-    for(int i = 0; i < PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT; i++)
-    {
-      if(grid[i] != CLEAR_VALUE && grid[i] != HEAD_VALUE && grid[i] != FOOD_VALUE)
-      {
-        clearBoard = false;
-        startOfGame = false;
-      }
-      if(clearBoard == false)
-        i = PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
+    checkBoardClear(grid);
 
-    }
-    startOfGame = false;
-  }
 
   //if the board is clear, do the Hamilton circuit
   if(clearBoard == true)
   {
     //check to see if rows (height) is odd
-  if(PLAYFIELD_HEIGHT % 2 != 0)
+    if(PLAYFIELD_HEIGHT % 2 != 0)
       return rowsOdd(head.first, head.second, food.first, food.second);
 
     //check to see if rows (height) is even
@@ -85,37 +73,23 @@ ValidMove Player::makeMove(const Playfield *pf)
     return rowsEven(head.first, head.second);
   }
 
-
+  //check to see if food in top rows
+  //if the food is in the top row, go to the bottom right corner instead of
+  //going to the food
   int foodRow = food.second;
   if(searchingFood && !startingBFS && (foodRow == PLAYFIELD_HEIGHT - 2))
   {
-    //since in top row, just go to bottom right corner
     searchingFood = false;
     toBottomRight = true;
     foodSecondTop = true;
   }
 
-  //if searching for food, do a BFS to the food
 
   //if the food eaten (aka tail length) is less than the smaller of the width
   //and height of the board, just do BFS. Once gets length, won't do BFS
-  int smallest;
-  if(PLAYFIELD_WIDTH < PLAYFIELD_HEIGHT)
-    smallest = PLAYFIELD_WIDTH;
-  else
-    smallest = PLAYFIELD_HEIGHT;
+  checkIfTailLength();
 
-  if(foodEaten < smallest)
-  {
-    startingBFS = true;
-    searchingFood = false;
-  }
-  else
-    startingBFS = false;
-  if(foodEaten == smallest)
-  {
-    searchingFood = true;
-  }
+
   //if not searching for food, do BFS to the the bottom right, then top right
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
@@ -123,52 +97,7 @@ ValidMove Player::makeMove(const Playfield *pf)
   bool contin = false;
   ValidMove nonSearchingMove;
   while(!searchingFood && !startingBFS)
-  {
-    BFSPaths BFSpath(&graph, headSpot);
-
-    //if the botom right is set to true, go to the bottom right corner
-    contin = false;
-    if(toBottomRight)
-    {
-      nonSearchingMove= moveRightSide(grid,headSpot, contin);
-      if(contin == true)
-        continue;
-      else
-        return nonSearchingMove;
-    }
-
-    contin = false;
-    if(toTopRight)
-    {
-      nonSearchingMove= moveTopRight(grid,headSpot, contin);
-      if(contin == true)
-        continue;
-      else
-        return nonSearchingMove;
-    }
-
-    contin = false;
-
-    if(toTopLeft)
-    {
-      nonSearchingMove= moveTopLeft(grid,headSpot, contin);
-      if(contin == true)
-        continue;
-      else
-        return nonSearchingMove;
-    }
-
-    contin = false;
-
-    if(toBottomLeft)
-    {
-      nonSearchingMove= moveBottomLeft(grid,headSpot, contin);
-      if(contin == true)
-        continue;
-      else
-        return nonSearchingMove;
-    }
-  }
+    return traversalEdges(grid, headSpot);
 
   //construct BFS
   BFSPaths BFSpath(&graph, headSpot);
@@ -276,6 +205,100 @@ ValidMove Player::makeMove(const Playfield *pf)
     //if can't do anything, do nothing
     return NONE;
 }
+
+
+void Player::checkBoardClear(const int *grid)
+{
+  for(int i = 0; i < PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT; i++)
+  {
+    if(grid[i] != CLEAR_VALUE && grid[i] != HEAD_VALUE && grid[i] != FOOD_VALUE)
+    {
+      clearBoard = false;
+      startOfGame = false;
+    }
+    if(clearBoard == false)
+      i = PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
+
+  }
+  startOfGame = false;
+}
+
+void Player::checkIfTailLength()
+{
+  int smallest;
+  if(PLAYFIELD_WIDTH < PLAYFIELD_HEIGHT)
+    smallest = PLAYFIELD_WIDTH;
+  else
+    smallest = PLAYFIELD_HEIGHT;
+
+  if(foodEaten < smallest)
+  {
+    startingBFS = true;
+    searchingFood = false;
+  }
+  else
+    startingBFS = false;
+  if(foodEaten == smallest)
+  {
+    searchingFood = true;
+  }
+}
+
+ValidMove Player::traversalEdges(const int *grid, int headSpot)
+{
+  bool contin = false;
+  ValidMove nonSearchingMove;
+  //construct a graph
+  Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
+  //construct BFS
+  BFSPaths BFSpath(&graph, headSpot);
+
+    //if the botom right is set to true, go to the bottom right corner
+    contin = false;
+    if(toBottomRight)
+    {
+      nonSearchingMove= moveRightSide(grid,headSpot, contin);
+      if(contin == true)
+        return traversalEdges(grid, headSpot);
+      else
+        return nonSearchingMove;
+    }
+
+    contin = false;
+    if(toTopRight)
+    {
+      nonSearchingMove= moveTopRight(grid,headSpot, contin);
+      if(contin == true)
+        return traversalEdges(grid, headSpot);
+      else
+        return nonSearchingMove;
+    }
+
+    contin = false;
+
+    if(toTopLeft)
+    {
+      nonSearchingMove= moveTopLeft(grid,headSpot, contin);
+      if(contin == true)
+        return traversalEdges(grid, headSpot);
+      else
+        return nonSearchingMove;
+    }
+
+    contin = false;
+
+    if(toBottomLeft)
+    {
+      nonSearchingMove= moveBottomLeft(grid,headSpot, contin);
+      if(contin == true)
+        return traversalEdges(grid, headSpot);
+      else
+        return nonSearchingMove;
+    }
+
+}
+
+
 
 
 /**************************************************************************//**
