@@ -11,6 +11,8 @@
 
 class Player
 {
+  bool startOfGame = true;
+  bool clearBoard = true;
   bool startingBFS = true;
   bool searchingFood = false /*true*/;
   bool toBottomRight = false;
@@ -40,6 +42,9 @@ private:
   int newTopLeftCorner(const int *grid);
   int toRightSide(const int *grid, int playerIndex);
   int newBottomLeftCorner(const int *grid);
+
+  ValidMove rowsEven(int headX, int headY);
+  ValidMove rowsOdd(int headX, int headY, int foodX, int foodY);
 
 
 };

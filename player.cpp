@@ -55,6 +55,37 @@ ValidMove Player::makeMove(const Playfield *pf)
   //construct a graph
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
 
+  //at the very beginning of the game, check if there are no obstacles on
+  //the board
+  if(startOfGame)
+  {
+    for(int i = 0; i < PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT; i++)
+    {
+      if(grid[i] != CLEAR_VALUE && grid[i] != HEAD_VALUE && grid[i] != FOOD_VALUE)
+      {
+        clearBoard = false;
+        startOfGame = false;
+      }
+      if(clearBoard == false)
+        i = PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
+
+    }
+    startOfGame = false;
+  }
+
+  //if the board is clear, do the Hamilton circuit
+  if(clearBoard == true)
+  {
+    //check to see if rows (height) is odd
+  if(PLAYFIELD_HEIGHT % 2 != 0)
+      return rowsOdd(head.first, head.second, food.first, food.second);
+
+    //check to see if rows (height) is even
+   if(PLAYFIELD_HEIGHT % 2 == 0)
+    return rowsEven(head.first, head.second);
+  }
+
+
   int foodRow = food.second;
   if(searchingFood && !startingBFS && (foodRow == PLAYFIELD_HEIGHT - 2))
   {
@@ -924,4 +955,117 @@ ValidMove Player::ManhattanChecker(const int *grid, int headSpot)
     return NONE;
 
   return newPossibleMove;
+}
+
+
+
+
+ValidMove Player::rowsEven(int headX, int headY)
+{
+  //zig-zag ignore obstacles!!
+  //will go down left side of board and then zig zag up- only works on even
+  //number of rows and no obstacles
+
+  //check to see if snake on top row and not in top left corner
+  if(headY == PLAYFIELD_HEIGHT - 1 && headX != 0)
+    return LEFT;
+ //check to see if snake in the bottom row
+ if(headY == 0  && headX != PLAYFIELD_WIDTH - 1)
+   return RIGHT;
+  //check to see if in middle of play field
+  if(headX > 0 && headY > 0)
+  {
+    //if on spot (--,1), move up
+    //if on spot (--,PLAYFIELD_WIDTH), move up
+    if(headX == 1 || headX == PLAYFIELD_WIDTH - 1)
+    {
+      //check to see if it should be moving Left
+      if(headX == PLAYFIELD_WIDTH - 1 && headY % 2 != 0)
+       return LEFT;
+     //check if should be moving right
+     if(headX == 1 && headY % 2 == 0)
+       return RIGHT;
+      return UP;
+    }
+
+    //if on an odd row, be moving left
+    if(headY % 2 != 0)
+      return LEFT;
+    //if on even row, be moving right
+    if(headY % 2 == 0)
+      return RIGHT;
+  }
+
+    //start  by moving to top left corner
+    //check if starting on left side
+    if(headX == 0 && headY > 0)
+         return DOWN;
+
+   //check to see if the snake is in the bottom left corner
+    if(headX == 0 && headY == 0)
+         return RIGHT;
+
+   //check to see if the snake is in the bottom right corner
+   if(headX == PLAYFIELD_WIDTH - 1 && headY == 0)
+         return UP;
+
+    return RIGHT;
+}
+
+
+
+ValidMove Player::rowsOdd(int headX, int headY, int foodX, int foodY)
+{
+  //check to see if snake on top row and not in top left corner
+  if(headY == PLAYFIELD_HEIGHT - 1 && headX != 0)
+    return LEFT;
+ //check to see if snake in the bottom row
+ if(headY == 0  && headX != PLAYFIELD_WIDTH - 1)
+   return RIGHT;
+  //check to see if in middle of play field
+  if(headX > 0 && headY > 0)
+  {
+    //if on spot (--,1), move up
+    //if on spot (--,PLAYFIELD_WIDTH), move up
+    if(headX == 1 || headX == PLAYFIELD_WIDTH - 1)
+    {
+
+      //if there's food in second from top row, skip the fourth from top
+      if(foodY == PLAYFIELD_HEIGHT - 2 && headY == PLAYFIELD_HEIGHT - 4)
+        return UP;
+
+      //if food isn't in second from top and head there, skip it
+      if(foodY != PLAYFIELD_HEIGHT - 2 && headY == PLAYFIELD_HEIGHT - 2)
+        return UP;
+      //check to see if it should be moving Left
+      if(headX == PLAYFIELD_WIDTH - 1 && headY % 2 != 0)
+       return LEFT;
+     //check if should be moving right
+     if(headX == 1 && headY % 2 == 0)
+       return RIGHT;
+      return UP;
+    }
+
+    //if on an odd row, be moving left
+    if(headY % 2 != 0)
+      return LEFT;
+    //if on even row, be moving right
+    if(headY % 2 == 0)
+      return RIGHT;
+  }
+
+    //start  by moving to top left corner
+    //check if starting on left side
+    if(headX == 0 && headY > 0)
+         return DOWN;
+
+   //check to see if the snake is in the bottom left corner
+    if(headX == 0 && headY == 0)
+         return RIGHT;
+
+   //check to see if the snake is in the bottom right corner
+   if(headX == PLAYFIELD_WIDTH - 1 && headY == 0)
+         return UP;
+
+    return RIGHT;
 }

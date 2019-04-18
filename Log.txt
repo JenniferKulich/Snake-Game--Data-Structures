@@ -413,3 +413,4 @@ April 17 (Wednesday)
 		fix the corner cases too, and that might be more of a pain than it's worth
 		it. Or I could potentially just forget about the corner cases. We'll see
 		how it goes and what I have time for.
+	* Added the code that will do the Hamilton circuit if the board is empty.
