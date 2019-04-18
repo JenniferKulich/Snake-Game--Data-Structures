@@ -414,3 +414,8 @@ April 17 (Wednesday)
 		it. Or I could potentially just forget about the corner cases. We'll see
 		how it goes and what I have time for.
 	* Added the code that will do the Hamilton circuit if the board is empty.
+
+April 18 (Thursday)
+	* Worked on a comprehensive program writeup that went over all of the
+		strategies I tried and what I would have liked to have done if I had more
+		time.
