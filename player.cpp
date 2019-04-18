@@ -126,8 +126,20 @@ ValidMove Player::makeMove(const Playfield *pf)
 }
 
 
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Will go throught the board at the very beginning of the game and check if it
+ * is clear. Will set the appropriate flags if the board is found to be clear
+ * or not
+ *
+ * @param[in] grid - The playfield and everything in it
+ *
+ *****************************************************************************/
 void Player::checkBoardClear(const int *grid)
 {
+  //loop through the grid and look for an obstacle
   for(int i = 0; i < PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT; i++)
   {
     if(grid[i] != CLEAR_VALUE && grid[i] != HEAD_VALUE && grid[i] != FOOD_VALUE)
@@ -137,19 +149,33 @@ void Player::checkBoardClear(const int *grid)
     }
     if(clearBoard == false)
       i = PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
-
   }
+  //only needed this flag to know it was the very beginning of the game
+  //don't need to be set true anymore since the board has been checked
   startOfGame = false;
 }
 
+
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Will check if the snake is the length of the smallest parameter of the board
+ * (width or height). If the snake is smaller, than it will continue doing the
+ * BFS move. If it isn't, it will go to the searching for food mode.
+ *
+ *****************************************************************************/
 void Player::checkIfTailLength()
 {
   int smallest;
+
+  //check what's smaller, the width or height
   if(PLAYFIELD_WIDTH < PLAYFIELD_HEIGHT)
     smallest = PLAYFIELD_WIDTH;
   else
     smallest = PLAYFIELD_HEIGHT;
 
+  //check if the snake is smaller than smallest parameter
   if(foodEaten < smallest)
   {
     startingBFS = true;
@@ -157,12 +183,26 @@ void Player::checkIfTailLength()
   }
   else
     startingBFS = false;
+
+  //if the snake is equal to the smallest parameter, will begin the searching
+  //for food part of the board traversal
   if(foodEaten == smallest)
-  {
     searchingFood = true;
-  }
 }
 
+
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Will see if moves can be made to traverse the edges of the board
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] grid - Index of where the snake head is at
+ *
+ * @return  - which way to move based on where the snake is going
+ *
+ *****************************************************************************/
 ValidMove Player::traversalEdges(const int *grid, int headSpot)
 {
   bool contin = false;
@@ -217,6 +257,23 @@ ValidMove Player::traversalEdges(const int *grid, int headSpot)
 
 }
 
+
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Will take in the next index spot to move based on the BFS path. Will check if
+ * the move that's going to be made is possible. Will also check if food is in
+ * the top row- if it is, it will be handled differently.
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] nextIndex - where the snake will be moving next
+ * @param[in] headSpot - index of where the snake head is
+ * @param[in] foodSpot - index of where the food head is
+ *
+ * @return - which way the snake should move next
+ *
+ *****************************************************************************/
 ValidMove Player::BFSnextMove(const int *grid, int nextIndex, int headSpot, int foodSpot)
 {
   if(nextIndex == headSpot - 1)

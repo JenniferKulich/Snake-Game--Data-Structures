@@ -34,9 +34,7 @@ private:
 
   void checkBoardClear(const int *grid);
   void checkIfTailLength();
-
   ValidMove traversalEdges(const int *grid, int headSpot);
-
   ValidMove BFSnextMove(const int *grid, int nextIndex, int headSpot, int foodSpot);
 
 
