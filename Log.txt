@@ -419,3 +419,5 @@ April 18 (Thursday)
 	* Worked on a comprehensive program writeup that went over all of the
 		strategies I tried and what I would have liked to have done if I had more
 		time.
+	* Cleaning up code by putting things that should be in separate functions into
+		separate functions, documenting them, and making sure comments are correct.

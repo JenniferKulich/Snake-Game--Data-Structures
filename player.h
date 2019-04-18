@@ -37,6 +37,8 @@ private:
 
   ValidMove traversalEdges(const int *grid, int headSpot);
 
+  ValidMove BFSnextMove(const int *grid, int nextIndex, int headSpot, int foodSpot);
+
 
   ValidMove moveRightSide(const int *grid, int headSpot, bool &contin);
   ValidMove moveTopRight(const int *grid, int headSpot, bool &contin);

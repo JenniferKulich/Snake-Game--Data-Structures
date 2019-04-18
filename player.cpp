@@ -119,91 +119,10 @@ ValidMove Player::makeMove(const Playfield *pf)
   //this will the be index for moving left
   //check if the headspot is right next to the foodspot
   //check to see if the next thing doing is eating food. If so, change the bools
-  if(nextIndex == headSpot - 1)
-  {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-      searchingFood = false;
 
-      //check if food it's in top row, if it is, set toTopLeft to true
-      //check if food is on left wall, if it is, set toBottomLeft to true
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
-        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-        toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
-    return LEFT;
-  }
-  //this will be index for moving right
-  else if(nextIndex == headSpot + 1)
-  {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
+  return BFSnextMove(grid, nextIndex, headSpot, foodSpot);
 
-      searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0
-        && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-          toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
-    return RIGHT;
-  }
-  //this will be the index for moving down
-  else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
-  {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-
-      searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
-        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-          toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
-        return DOWN;
-  }
-
-  //this will be the index for moving up
-  else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
-  {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-
-      searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
-        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-          toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
-    return UP;
-  }
-
-    //if can't do anything, do nothing
-    return NONE;
+  return NONE;
 }
 
 
@@ -298,7 +217,95 @@ ValidMove Player::traversalEdges(const int *grid, int headSpot)
 
 }
 
+ValidMove Player::BFSnextMove(const int *grid, int nextIndex, int headSpot, int foodSpot)
+{
+  if(nextIndex == headSpot - 1)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      foodEaten +=1;
+      searchingFood = false;
 
+      //check if food it's in top row, if it is, set toTopLeft to true
+      //check if food is on left wall, if it is, set toBottomLeft to true
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
+        toBottomLeft = true;
+      else
+        toBottomRight = true;
+    }
+    return LEFT;
+  }
+  //this will be index for moving right
+  else if(nextIndex == headSpot + 1)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      foodEaten +=1;
+
+      searchingFood = false;
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else if(foodSpot % PLAYFIELD_WIDTH == 0
+        && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
+          toBottomLeft = true;
+      else
+        toBottomRight = true;
+    }
+    return RIGHT;
+  }
+  //this will be the index for moving down
+  else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      foodEaten +=1;
+
+      searchingFood = false;
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
+          toBottomLeft = true;
+      else
+        toBottomRight = true;
+    }
+        return DOWN;
+  }
+
+  //this will be the index for moving up
+  else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
+  {
+    if(grid[nextIndex] == FOOD_VALUE)
+    {
+      foodEaten +=1;
+
+      searchingFood = false;
+      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+        toTopLeft = true;
+      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+        nextIndex >= 0))
+          toBottomLeft = true;
+      else
+        toBottomRight = true;
+    }
+    return UP;
+  }
+
+    //if can't do anything, do nothing
+    return NONE;
+
+}
 
 
 /**************************************************************************//**
