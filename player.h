@@ -42,11 +42,14 @@ private:
   ValidMove moveTopRight(const int *grid, int headSpot, bool &contin);
   ValidMove moveTopLeft(const int *grid, int headSpot, bool &contin);
   ValidMove moveBottomLeft(const int *grid, int headSpot, bool &contin);
+  ValidMove traversalMovementChecker(int headSpot, int nextIndex);
+
   ValidMove ManhattanChecker(const int *grid, int headSpot);
 
   int newTopRightCorner(const int *grid);
   int newTopLeftCorner(const int *grid);
   int toRightSide(const int *grid, int playerIndex);
+  int newTopSideIndex(const int *grid, int trialIndex);
   int newBottomLeftCorner(const int *grid);
 
   ValidMove rowsEven(int headX, int headY);

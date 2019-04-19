@@ -11,13 +11,13 @@
  *****************************************************************************/
 Graph::Graph()
 {
-  numVertices = 0;
-  numEdges = 0;
+    numVertices = 0;
+    numEdges = 0;
 }
 
 
 /**************************************************************************//**
- * @author Dr. Hinker
+ * @author Dr. Hinker and Jennifer Kulich
  *
  * @par Description:
  * Constructor for the graph class that takes in a grid and its width and height
@@ -30,132 +30,146 @@ Graph::Graph()
  *****************************************************************************/
 Graph::Graph(const int *grid, int width, int height)
 {
-  //create all the nodes
- for(int i = 0; i < width*height; i++)
- {
-    //passing in the same number twice will create a node with no edges
-    addEdge(i, i);
- }
-
-  for(int column = 0; column < width; column++)
-  {
-    for(int row = 0; row < height; row++)
+    //create all the nodes
+    for(int i = 0; i < width*height; i++)
     {
-
-      int index = (row * width) + column;
-      //check to make sure the spots are open
-      if(grid[index] != CLEAR_VALUE && grid[index] != FOOD_VALUE && grid[index] != HEAD_VALUE)
-      {
-        continue;
-      }
-      //  continue;
-      //check if in corner
-      //bottom left corner
-      else if(column == 0 && row == 0)
-      {
-          //add edge up and right
-          if(grid[index + width] == CLEAR_VALUE || grid[index + width] == FOOD_VALUE)
-            addEdge(index, index + width);
-          if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
-            addEdge(index, index + 1);
-          continue;
-      }
-      //bottom right corner
-      else if(row == 0 && column == width - 1)
-      {
-          //add edge up and left
-          if(grid[index + width] == CLEAR_VALUE || grid[index + width] == FOOD_VALUE)
-            addEdge(index, index + width);
-          if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
-            addEdge(index, index - 1);
-          continue;
-      }
-      //top left corner
-      else if(column == 0 && row == height - 1)
-      {
-        //add edge down and right
-        if(grid[index - width] == CLEAR_VALUE || grid[index - width] == FOOD_VALUE)
-          addEdge(index, index - width);
-        if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
-          addEdge(index, index + 1);
-        continue;
-      }
-      //top right corner
-      else if(column == width - 1 && row == height - 1 )
-      {
-        //add edge down and left
-        if(grid[index - width] == CLEAR_VALUE || grid[index - width] == FOOD_VALUE)
-          addEdge(index, index - width);
-        if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
-          addEdge(index, index - 1);
-        continue;
-      }
-      //check if in edge
-      //bottom edge
-      else if(row == 0 && (column > 0 && column < width) )
-      {
-        //add edge, up right and left
-        if(grid[index + width] == CLEAR_VALUE || grid[index + width] == FOOD_VALUE)
-          addEdge(index, index + width);
-        if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
-          addEdge(index, index - 1);
-        if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
-          addEdge(index, index + 1);
-        continue;
-      }
-      //top edge
-      else if(row == height - 1 && (column > 0 && column < width))
-      {
-        //add edge down right and left
-        if(grid[index - width] == CLEAR_VALUE || grid[index - width] == FOOD_VALUE)
-          addEdge(index, index - width);
-        if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
-          addEdge(index, index + 1);
-        if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
-          addEdge(index, index - 1);
-        continue;
-      }
-      //left edge
-      else if(column == 0 && (row > 0 && row < height))
-      {
-        //add edge up down and right
-        if(grid[index + width] == CLEAR_VALUE || grid[index + width] == FOOD_VALUE)
-          addEdge(index, index + width);
-        if(grid[index - width] == CLEAR_VALUE || grid[index - width] == FOOD_VALUE)
-          addEdge(index, index - width);
-        if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
-          addEdge(index, index + 1);
-        continue;
-      }
-      //right edge
-      else if(column == width - 1 && (row > 0 && row < height) )
-      {
-        //add edge up down and left
-        if(grid[index + width] == CLEAR_VALUE || grid[index + width] == FOOD_VALUE)
-          addEdge(index, index + width);
-        if(grid[index - width] == CLEAR_VALUE || grid[index - width] == FOOD_VALUE)
-          addEdge(index, index - width);
-        if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
-          addEdge(index, index - 1);
-        continue;
-      }
-      //if in middle, do all of the add edges
-      else
-      {
-        //add edge up down right and left
-        if(grid[index + width] == CLEAR_VALUE || grid[index + width] == FOOD_VALUE)
-          addEdge(index, index + width);
-        if(grid[index - width] == CLEAR_VALUE || grid[index - width] == FOOD_VALUE)
-          addEdge(index, index - width);
-        if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
-          addEdge(index, index + 1);
-        if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
-          addEdge(index, index - 1);
-      }
-
+        //passing in the same number twice will create a node with no edges
+        addEdge(i, i);
     }
-  }
-  numVertices = vertices.size();
+
+    for(int column = 0; column < width; column++)
+    {
+        for(int row = 0; row < height; row++)
+        {
+
+            int index = (row * width) + column;
+            //check to make sure the spots are open
+            if(grid[index] != CLEAR_VALUE &&
+              grid[index] != FOOD_VALUE && grid[index] != HEAD_VALUE)
+            {
+                continue;
+            }
+            //  continue;
+            //check if in corner
+            //bottom left corner
+            else if(column == 0 && row == 0)
+            {
+                //add edge up and right
+                if(grid[index + width] == CLEAR_VALUE ||
+                    grid[index + width] == FOOD_VALUE)
+                    addEdge(index, index + width);
+                if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
+                    addEdge(index, index + 1);
+                continue;
+            }
+            //bottom right corner
+            else if(row == 0 && column == width - 1)
+            {
+                //add edge up and left
+                if(grid[index + width] == CLEAR_VALUE ||
+                    grid[index + width] == FOOD_VALUE)
+                    addEdge(index, index + width);
+                if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
+                    addEdge(index, index - 1);
+                continue;
+            }
+            //top left corner
+            else if(column == 0 && row == height - 1)
+            {
+                //add edge down and right
+                if(grid[index - width] == CLEAR_VALUE ||
+                  grid[index - width] == FOOD_VALUE)
+                    addEdge(index, index - width);
+                if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
+                    addEdge(index, index + 1);
+                continue;
+            }
+            //top right corner
+            else if(column == width - 1 && row == height - 1 )
+            {
+                //add edge down and left
+                if(grid[index - width] == CLEAR_VALUE ||
+                  grid[index - width] == FOOD_VALUE)
+                    addEdge(index, index - width);
+                if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
+                    addEdge(index, index - 1);
+                continue;
+            }
+            //check if in edge
+            //bottom edge
+            else if(row == 0 && (column > 0 && column < width) )
+            {
+                //add edge, up right and left
+                if(grid[index + width] == CLEAR_VALUE ||
+                    grid[index + width] == FOOD_VALUE)
+                    addEdge(index, index + width);
+                if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
+                    addEdge(index, index - 1);
+                if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
+                    addEdge(index, index + 1);
+                continue;
+            }
+            //top edge
+            else if(row == height - 1 && (column > 0 && column < width))
+            {
+                //add edge down right and left
+                if(grid[index - width] == CLEAR_VALUE ||
+                    grid[index - width] == FOOD_VALUE)
+                    addEdge(index, index - width);
+                if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
+                    addEdge(index, index + 1);
+                if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
+                    addEdge(index, index - 1);
+                continue;
+            }
+            //left edge
+            else if(column == 0 && (row > 0 && row < height))
+            {
+                //add edge up down and right
+                if(grid[index + width] == CLEAR_VALUE ||
+                  grid[index + width] == FOOD_VALUE)
+                    addEdge(index, index + width);
+                if(grid[index - width] == CLEAR_VALUE ||
+                        grid[index - width] == FOOD_VALUE)
+                    addEdge(index, index - width);
+                if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
+                    addEdge(index, index + 1);
+                continue;
+            }
+            //right edge
+            else if(column == width - 1 && (row > 0 && row < height) )
+            {
+                //add edge up down and left
+                if(grid[index + width] == CLEAR_VALUE ||
+                  grid[index + width] == FOOD_VALUE)
+                    addEdge(index, index + width);
+                if(grid[index - width] == CLEAR_VALUE ||
+                        grid[index - width] == FOOD_VALUE)
+                    addEdge(index, index - width);
+                if(grid[index - 1] == CLEAR_VALUE ||
+                        grid[index - 1] == FOOD_VALUE)
+                    addEdge(index, index - 1);
+                continue;
+            }
+            //if in middle, do all of the add edges
+            else
+            {
+                //add edge up down right and left
+                if(grid[index + width] == CLEAR_VALUE ||
+                        grid[index + width] == FOOD_VALUE)
+                    addEdge(index, index + width);
+                if(grid[index - width] == CLEAR_VALUE ||
+                        grid[index - width] == FOOD_VALUE)
+                    addEdge(index, index - width);
+                if(grid[index + 1] == CLEAR_VALUE || grid[index + 1] == FOOD_VALUE)
+                    addEdge(index, index + 1);
+                if(grid[index - 1] == CLEAR_VALUE || grid[index - 1] == FOOD_VALUE)
+                    addEdge(index, index - 1);
+            }
+
+        }
+    }
+    numVertices = vertices.size();
 }
 
 
@@ -170,7 +184,7 @@ Graph::Graph(const int *grid, int width, int height)
  *****************************************************************************/
 std::set<int> Graph::adj(int v)
 {
-  return vertices.at(v);
+    return vertices.at(v);
 }
 
 
@@ -186,15 +200,15 @@ std::set<int> Graph::adj(int v)
  *****************************************************************************/
 void Graph::addEdge(int one, int two)
 {
-  if(vertices[one].find(two) == vertices[one].end())
-  {
-    numEdges++;
-    //std::cout << "adding edge[" << one << ", " << two << "]\n" ;
-    (vertices[one]).insert(two);
-    (vertices[two]).insert(one);
-    numVertices = vertices.size();
+    if(vertices[one].find(two) == vertices[one].end())
+    {
+        numEdges++;
+        //std::cout << "adding edge[" << one << ", " << two << "]\n" ;
+        (vertices[one]).insert(two);
+        (vertices[two]).insert(one);
+        numVertices = vertices.size();
 
-  }
+    }
 }
 
 
@@ -209,7 +223,7 @@ void Graph::addEdge(int one, int two)
  *****************************************************************************/
 int Graph::V() const
 {
-	return numVertices;
+    return numVertices;
 }
 
 
@@ -224,7 +238,7 @@ int Graph::V() const
  *****************************************************************************/
 int Graph::E() const
 {
-	return numEdges;
+    return numEdges;
 }
 
 
@@ -239,10 +253,10 @@ int Graph::E() const
  *****************************************************************************/
 std::set<int> Graph::Vertices() const
 {
-  std::set<int>all;
+    std::set<int>all;
 
-  for(auto x : vertices)
-    all.insert(x.first);
+    for(auto x : vertices)
+        all.insert(x.first);
 
-  return all;
+    return all;
 }
