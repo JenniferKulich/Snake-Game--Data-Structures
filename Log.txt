@@ -421,3 +421,8 @@ April 18 (Thursday)
 		time.
 	* Cleaning up code by putting things that should be in separate functions into
 		separate functions, documenting them, and making sure comments are correct.
+
+April 19 (Friday)
+	* Cleaned up code more, put things into their own functions, documented, etc.
+	* Ran astyle on the player.cpp and graph.cpp files. It kind of made things
+		look weird in places, but I tried fixing what I could.
