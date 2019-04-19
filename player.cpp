@@ -45,12 +45,12 @@ ValidMove Player::makeMove(const Playfield *pf)
    std::pair<int, int> food = getLocation(grid, FOOD_VALUE);
 
   //calculate in the one-d array where the head is at
-  //index = row * width + column
-  //int index = (head.first * PLAYFIELD_WIDTH) + head.second;
-  int nextIndex = 0;
   int headSpot =(head.second * PLAYFIELD_WIDTH) + head.first;
   int foodSpot = (food.second * PLAYFIELD_WIDTH) + food.first;
 
+  int nextIndex = 0;
+  bool contin = false;
+  ValidMove nonSearchingMove;
 
   //construct a graph
   Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
@@ -93,22 +93,20 @@ ValidMove Player::makeMove(const Playfield *pf)
   //if not searching for food, do BFS to the the bottom right, then top right
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
-  //if cannot do the BFS to the walls/corners, then do manhattan path to it
   //NOTE: I know that this should be a seperate function. I did try this, and
   //because of the nature of what it does, it will go into an infinite loop
   //and cause the program to hang. I was not able to come up with a solution
   //for this, so I decided to not make it a seperate function
-  bool contin = false;
-  ValidMove nonSearchingMove;
   while(!searchingFood && !startingBFS)
   {
     BFSPaths BFSpath(&graph, headSpot);
 
-    //if the botom right is set to true, go to the bottom right corner
+    //if the botom right is set to true, go to the bottom right side
     contin = false;
     if(toBottomRight)
     {
       nonSearchingMove= moveRightSide(grid,headSpot, contin);
+      //if contin is true, then cannot move to that corner
       if(contin == true)
         continue;
       else
@@ -116,9 +114,12 @@ ValidMove Player::makeMove(const Playfield *pf)
     }
 
     contin = false;
+
+    //if the top right is set to true, go to the top right corner
     if(toTopRight)
     {
       nonSearchingMove= moveTopRight(grid,headSpot, contin);
+      //if contin is true, then cannot move to that corner
       if(contin == true)
         continue;
       else
@@ -127,9 +128,11 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     contin = false;
 
+    //if the top left is set to true, go to the top left corner
     if(toTopLeft)
     {
       nonSearchingMove= moveTopLeft(grid,headSpot, contin);
+      //if contin is true, then cannot move to that corner
       if(contin == true)
         continue;
       else
@@ -138,9 +141,11 @@ ValidMove Player::makeMove(const Playfield *pf)
 
     contin = false;
 
+    //if the bottom left is set to true, go to the bottom left corner
     if(toBottomLeft)
     {
       nonSearchingMove= moveBottomLeft(grid,headSpot, contin);
+      //if contin is true, then cannot move to that corner
       if(contin == true)
         continue;
       else
@@ -152,7 +157,6 @@ ValidMove Player::makeMove(const Playfield *pf)
   //construct BFS
   BFSPaths BFSpath(&graph, headSpot);
 
-
   //get the list of spots which is the path to the food
   std::list<int>pathToFood = BFSpath.PathTo(foodSpot);
 
@@ -162,16 +166,14 @@ ValidMove Player::makeMove(const Playfield *pf)
   if(!BFSpath.hasPath(foodSpot))
     return ManhattanChecker(grid, headSpot);
 
-  //go through the first item in the list and determine where to move to
+  //go to the first item in the list and determine where to move to
   nextIndex = pathToFood.front();
 
-  //calculate how this index relates to the head index
-  //this will the be index for moving left
-  //check if the headspot is right next to the foodspot
-  //check to see if the next thing doing is eating food. If so, change the bools
-
+  //will calculate if the BFS move is possible and which way to move
   return BFSnextMove(grid, nextIndex, headSpot, foodSpot);
 
+
+  //if abolsutly nothing can be done, return NONE to end game
   return NONE;
 }
 
@@ -200,6 +202,7 @@ void Player::checkBoardClear(const int *grid)
     if(clearBoard == false)
       i = PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT;
   }
+
   //only needed this flag to know it was the very beginning of the game
   //don't need to be set true anymore since the board has been checked
   startOfGame = false;
@@ -259,25 +262,29 @@ void Player::checkIfTailLength()
  *****************************************************************************/
 ValidMove Player::BFSnextMove(const int *grid, int nextIndex, int headSpot, int foodSpot)
 {
+  //check if nextIndex is to the left
   if(nextIndex == headSpot - 1)
   {
+    //check if the food is along the edge traversal path
     foodAlongTraversal(grid, nextIndex, foodSpot);
     return LEFT;
   }
-  //this will be index for moving right
+
+  //check if nextIndex is to the right
   else if(nextIndex == headSpot + 1)
   {
     foodAlongTraversal(grid, nextIndex, foodSpot);
     return RIGHT;
   }
-  //this will be the index for moving down
+
+  //check if nextIndex is down
   else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
   {
     foodAlongTraversal(grid, nextIndex, foodSpot);
         return DOWN;
   }
 
-  //this will be the index for moving up
+  //check if nextIndex is up
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
   {
     foodAlongTraversal(grid, nextIndex, foodSpot);
@@ -289,26 +296,44 @@ ValidMove Player::BFSnextMove(const int *grid, int nextIndex, int headSpot, int 
 }
 
 
+/**************************************************************************//**
+ * @author Jennifer Kulich
+ *
+ * @par Description:
+ * Will check if the next places along the traversal is food. If it is, will
+ * not want to have searchingFood set to true and will want to proceed to the
+ * correct corner
+ *
+ * @param[in] grid - The playfield and everything in it
+ * @param[in] nextIndex - where the snake will be moving next
+ * @param[in] foodSpot - index of where the food head is
+ *
+ *****************************************************************************/
 void Player::foodAlongTraversal(const int *grid, int nextIndex, int foodSpot)
 {
+  //check the index the snake is moving to next is food.
   if(grid[nextIndex] == FOOD_VALUE)
   {
     foodEaten +=1;
     searchingFood = false;
 
     //check if food it's in top row, if it is, set toTopLeft to true
-    //check if food is on left wall, if it is, set toBottomLeft to true
     if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
     nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
       toTopLeft = true;
+
+    //check if food is on left wall, if it is, set toBottomLeft to true
     else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
       (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
       nextIndex >= 0))
       toBottomLeft = true;
+
+    //if not along those walls, just move to the bottom right
     else
       toBottomRight = true;
   }
 }
+
 
 /**************************************************************************//**
  * @author Dr. Hinker, Jennifer Kulich
@@ -361,8 +386,11 @@ ValidMove Player::ManhattanMove(const int *grid)
  * @author Jennifer Kulich with help of Dalton Baker
  *
  * @par Description:
- * Will check if the move is valid. If it is not a valid move, will try to find
- * a new valid move to make through a permutation
+ * Will take in a move. If the move canot be made, a new move will be picked,
+ * and the function will be recurrively called to see if the move can be made.
+ * If the move can be made, it will be returned. Will keep track of how many
+ * times the function recurrively called. If it's gone through all moves,
+ * it will return NONE since no moves can made.
  *
  * @param[in] grid - The playfield with everything in it
  * @param[in,out] move - the move that will be made
@@ -371,15 +399,16 @@ ValidMove Player::ManhattanMove(const int *grid)
  * @param[in] headIndex - where the head of the snake is located
  *
  *****************************************************************************/
-void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, int count, int headIndex)
+void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove,
+  int count, int headIndex)
 {
-  //function will take in a move, if the move cannot be made, a new move and
-  //call this function again to see if that move can be made
-  //if this is the first check, set the trialMove to the origional  move
+  //base case
+  //if first time calling function, set origionalMove to the move passed in
   if(count == 0)
     origionalMove = move;
 
-  //if the origional move passd in was valid, don't do anything and return
+  //exit condition
+  //if the cycled through all possible moves and cannot make any, return NONE
   if(count > 0 && move == origionalMove)
   {
     move = NONE;
@@ -387,8 +416,7 @@ void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, 
   }
 
   count = count + 1;
-  //if the right move cannot be made, try moving down and make sure it would
-  //work
+  //if the right move cannot be made, try moving down
   //check to make sure right is not clear or on far right wall
   if((move == RIGHT) && (grid[headIndex + 1] != CLEAR_VALUE ||
     (headIndex + 1) == PLAYFIELD_WIDTH - 1))
@@ -397,8 +425,7 @@ void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, 
     newMove(grid, move, origionalMove, count, headIndex);
   }
 
-  //if the down move cannot be made, try moving left and make sure it would
-  //work
+  //if the down move cannot be made, try moving left
   else if((move == DOWN) && (grid[headIndex - PLAYFIELD_WIDTH] != CLEAR_VALUE ||
     (headIndex <= PLAYFIELD_WIDTH - 1)))
   {
@@ -406,7 +433,7 @@ void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, 
     newMove(grid, move, origionalMove,count,headIndex);
   }
 
-  //if the LEFT move cannot be made, try moving up and make sure it would work
+  //if the LEFT move cannot be made, try moving up
   else if((move == LEFT) && (grid[headIndex - 1] != CLEAR_VALUE ||
   (headIndex % PLAYFIELD_WIDTH) == 0))
   {
@@ -415,7 +442,7 @@ void Player::newMove(const int *grid, ValidMove &move, ValidMove origionalMove, 
   }
 
 
-  //jf the UP move cannot be made, try moving right and make sure it would work
+  //fi the UP move cannot be made, try moving right 
   else if((move == UP) && (grid[headIndex + PLAYFIELD_WIDTH] != CLEAR_VALUE ||
 ((headIndex / PLAYFIELD_WIDTH) == (PLAYFIELD_HEIGHT - 1))))
   {
