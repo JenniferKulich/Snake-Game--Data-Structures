@@ -94,10 +94,60 @@ ValidMove Player::makeMove(const Playfield *pf)
   //corner, then top left corner, then bottom left corner. Will set searching
   //for food to false and where've you're heading to true
   //if cannot do the BFS to the walls/corners, then do manhattan path to it
+  //NOTE: I know that this should be a seperate function. I did try this, and
+  //because of the nature of what it does, it will go into an infinite loop
+  //and cause the program to hang. I was not able to come up with a solution
+  //for this, so I decided to not make it a seperate function
   bool contin = false;
   ValidMove nonSearchingMove;
   while(!searchingFood && !startingBFS)
-    return traversalEdges(grid, headSpot);
+  {
+    BFSPaths BFSpath(&graph, headSpot);
+
+    //if the botom right is set to true, go to the bottom right corner
+    contin = false;
+    if(toBottomRight)
+    {
+      nonSearchingMove= moveRightSide(grid,headSpot, contin);
+      if(contin == true)
+        continue;
+      else
+        return nonSearchingMove;
+    }
+
+    contin = false;
+    if(toTopRight)
+    {
+      nonSearchingMove= moveTopRight(grid,headSpot, contin);
+      if(contin == true)
+        continue;
+      else
+        return nonSearchingMove;
+    }
+
+    contin = false;
+
+    if(toTopLeft)
+    {
+      nonSearchingMove= moveTopLeft(grid,headSpot, contin);
+      if(contin == true)
+        continue;
+      else
+        return nonSearchingMove;
+    }
+
+    contin = false;
+
+    if(toBottomLeft)
+    {
+      nonSearchingMove= moveBottomLeft(grid,headSpot, contin);
+      if(contin == true)
+        continue;
+      else
+        return nonSearchingMove;
+    }
+  }
+
 
   //construct BFS
   BFSPaths BFSpath(&graph, headSpot);
@@ -195,73 +245,6 @@ void Player::checkIfTailLength()
  * @author Jennifer Kulich
  *
  * @par Description:
- * Will see if moves can be made to traverse the edges of the board
- *
- * @param[in] grid - The playfield and everything in it
- * @param[in] grid - Index of where the snake head is at
- *
- * @return  - which way to move based on where the snake is going
- *
- *****************************************************************************/
-ValidMove Player::traversalEdges(const int *grid, int headSpot)
-{
-  bool contin = false;
-  ValidMove nonSearchingMove;
-  //construct a graph
-  Graph graph(grid, PLAYFIELD_WIDTH, PLAYFIELD_HEIGHT);
-  //construct BFS
-  BFSPaths BFSpath(&graph, headSpot);
-
-    //if the botom right is set to true, go to the bottom right corner
-    contin = false;
-    if(toBottomRight)
-    {
-      nonSearchingMove= moveRightSide(grid,headSpot, contin);
-      if(contin == true)
-        return traversalEdges(grid, headSpot);
-      else
-        return nonSearchingMove;
-    }
-
-    contin = false;
-    if(toTopRight)
-    {
-      nonSearchingMove= moveTopRight(grid,headSpot, contin);
-      if(contin == true)
-        return traversalEdges(grid, headSpot);
-      else
-        return nonSearchingMove;
-    }
-
-    contin = false;
-
-    if(toTopLeft)
-    {
-      nonSearchingMove= moveTopLeft(grid,headSpot, contin);
-      if(contin == true)
-        return traversalEdges(grid, headSpot);
-      else
-        return nonSearchingMove;
-    }
-
-    contin = false;
-
-    if(toBottomLeft)
-    {
-      nonSearchingMove= moveBottomLeft(grid,headSpot, contin);
-      if(contin == true)
-        return traversalEdges(grid, headSpot);
-      else
-        return nonSearchingMove;
-    }
-
-}
-
-
-/**************************************************************************//**
- * @author Jennifer Kulich
- *
- * @par Description:
  * Will take in the next index spot to move based on the BFS path. Will check if
  * the move that's going to be made is possible. Will also check if food is in
  * the top row- if it is, it will be handled differently.
@@ -278,92 +261,54 @@ ValidMove Player::BFSnextMove(const int *grid, int nextIndex, int headSpot, int 
 {
   if(nextIndex == headSpot - 1)
   {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-      searchingFood = false;
-
-      //check if food it's in top row, if it is, set toTopLeft to true
-      //check if food is on left wall, if it is, set toBottomLeft to true
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
-        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-        toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
+    foodAlongTraversal(grid, nextIndex, foodSpot);
     return LEFT;
   }
   //this will be index for moving right
   else if(nextIndex == headSpot + 1)
   {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-
-      searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0
-        && (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-          toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
+    foodAlongTraversal(grid, nextIndex, foodSpot);
     return RIGHT;
   }
   //this will be the index for moving down
   else if(nextIndex == headSpot - PLAYFIELD_WIDTH)
   {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-
-      searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
-        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-          toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
+    foodAlongTraversal(grid, nextIndex, foodSpot);
         return DOWN;
   }
 
   //this will be the index for moving up
   else if(nextIndex == headSpot + PLAYFIELD_WIDTH)
   {
-    if(grid[nextIndex] == FOOD_VALUE)
-    {
-      foodEaten +=1;
-
-      searchingFood = false;
-      if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
-      nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
-        toTopLeft = true;
-      else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
-        (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
-        nextIndex >= 0))
-          toBottomLeft = true;
-      else
-        toBottomRight = true;
-    }
+    foodAlongTraversal(grid, nextIndex, foodSpot);
     return UP;
   }
 
     //if can't do anything, do nothing
     return NONE;
-
 }
 
+
+void Player::foodAlongTraversal(const int *grid, int nextIndex, int foodSpot)
+{
+  if(grid[nextIndex] == FOOD_VALUE)
+  {
+    foodEaten +=1;
+    searchingFood = false;
+
+    //check if food it's in top row, if it is, set toTopLeft to true
+    //check if food is on left wall, if it is, set toBottomLeft to true
+    if(nextIndex <= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) &&
+    nextIndex >= (PLAYFIELD_WIDTH * PLAYFIELD_HEIGHT) - PLAYFIELD_WIDTH)
+      toTopLeft = true;
+    else if(foodSpot % PLAYFIELD_WIDTH == 0 &&
+      (nextIndex <= (PLAYFIELD_HEIGHT * PLAYFIELD_WIDTH) - 1 &&
+      nextIndex >= 0))
+      toBottomLeft = true;
+    else
+      toBottomRight = true;
+  }
+}
 
 /**************************************************************************//**
  * @author Dr. Hinker, Jennifer Kulich
